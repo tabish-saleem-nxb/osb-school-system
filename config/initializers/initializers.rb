@@ -386,6 +386,6 @@ CUSTOM_FIELDS = {
         ]
 }
 
-ROLES = ['admin', 'manager', 'staff']
+ROLES = ['admin', 'manager', 'staff', 'clerk']
 
 ENTITIES = ['Account','Category', 'Client', 'Company', 'CompanyEmailTemplate', 'CompanyEntity', 'Currency', 'EmailTemplate', 'Estimate', 'ExpenseCategory', 'Expense', 'InvoiceLineItem', 'InvoiceTask', 'Invoice', 'Item', 'LineItemTax', 'Log', 'PaymentTerm', 'Payment', 'ProjectTask', 'Project', 'RecurringProfileLineItem', 'RecurringProfile', 'Role', 'SentEmail', 'Staff', 'Task', 'TeamMember']
