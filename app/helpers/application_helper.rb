@@ -263,4 +263,8 @@ module ApplicationHelper
     can? method, klass
   end
 
+  def editable_for_clerk?(invoice)
+    !(invoice.status.eql?('paid') && (current_user.roles.include?(Role.find_by_name :clerk)))
+  end
+
 end

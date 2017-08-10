@@ -22,8 +22,12 @@
           <td class="align_center"> <span><%= invoice.inv_type %> </span> </td>
           <td class="align_center">
             <% if invoice.deleted_at.nil? and !invoice.invoice_type.eql?("ProjectInvoice") %>
-                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                <% if editable_for_clerk?(invoice) %>
+                    <%= link_to t('.edit', :default => t("helpers.links.edit")),
                             edit_invoice_path(invoice) %>
+                <% else %>
+                    read-only
+                <% end %>
             <% else %>
                 <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
                             "javascript:;", class: "single-recover-link" if params[:status] == "deleted" %>

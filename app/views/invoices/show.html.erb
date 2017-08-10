@@ -12,7 +12,7 @@
           <ul>
             <% unless @invoice.invoice_type.eql?("ProjectInvoice") %>
             <li class="grid_control_sep sep_right">
-              <%= link_to t('helpers.links.edit'), edit_invoice_path(@invoice) %>
+              <%= link_to t('helpers.links.edit'), edit_invoice_path(@invoice) if editable_for_clerk?(@invoice)%>
             </li>
             <% end %>
             <!--<li><a href="#">Send</a></li>-->
