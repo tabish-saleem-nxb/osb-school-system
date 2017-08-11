@@ -267,6 +267,20 @@ class InvoicesController < ApplicationController
     redirect_to(invoice_path(invoice), notice: 'Invoice sent successfully.')
   end
 
+  def term_invoices
+    # binding.pry
+    @invoice = Services::InvoiceService.build_new_invoice(params)
+    @client = Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
+    @client = @invoice.client if params[:id].present?
+    @invoice.currency = @client.currency if @client.present?
+    get_clients_and_items
+    @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
+    respond_to do |format|
+      format.html # new.html.erb
+      format.js
+      #format.json { render :json => @invoice }
+    end
+  end
 
   private
 

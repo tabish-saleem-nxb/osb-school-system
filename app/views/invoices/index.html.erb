@@ -68,6 +68,11 @@
                     new_invoice_path,
                     :class => 'btn_large' %>
       </div>
+      <div class="content_bottom">
+        <%= link_to (content_tag(:span, t('header.links.invoices.generate.term.invoices'))),
+                    term_invoices_path,
+                    :class => 'btn_large' %>
+      </div>
       <!--content_bottom-->
   <% end %>
 </div><!--invoice-->

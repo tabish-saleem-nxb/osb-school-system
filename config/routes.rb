@@ -134,6 +134,9 @@ Osb::Application.routes.draw do
     resources :invoice_line_items
 
     resources :invoices do
+      collection do
+        get 'term_invoices', as: :term
+      end
       resources :invoice_line_items
       collection do
         get 'filter_invoices'

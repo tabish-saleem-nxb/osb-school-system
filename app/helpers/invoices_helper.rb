@@ -230,4 +230,8 @@ module InvoicesHelper
     #line_item.tax2.present? ? taxes.prepend([line_item.tax2.name, line_item.tax2.id, {'data-type' => 'active_line_item_tax','data-tax_2' => line_item.tax2.percentage }]) : taxes
   end
 
+  def term_invoice_action(params)
+    params[:controller].eql?('invoices') && params[:action].eql?('term_invoices')
+  end
+
 end
