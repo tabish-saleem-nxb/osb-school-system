@@ -18,6 +18,7 @@ module OSB
     SMTP_SETTING ||= APP_CONFIG[:smtp_setting]
 
     ENCRYPTION_KEY ||= APP_CONFIG[:encryption_key]
+    LATE_FEE_PERCENTAGE = 0.05
 
   end
 end
