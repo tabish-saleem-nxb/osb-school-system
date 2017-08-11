@@ -1,3 +1,4 @@
 class ClientType < ActiveRecord::Base
-  belongs_to :late_fee
+  has_one :penalty_rule
+  has_one :term_rule
 end
