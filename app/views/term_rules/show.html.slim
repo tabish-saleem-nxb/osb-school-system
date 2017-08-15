@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @term_rule.name
+
+  strong description:
+  = @term_rule.description
+
+  strong Frequency:
+  = @term_rule.frequency
+
+= link_to 'Edit', edit_term_rule_path(@term_rule)
+'  |
+= link_to 'Back', term_rules_path

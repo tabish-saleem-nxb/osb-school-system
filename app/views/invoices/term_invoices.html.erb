@@ -1,5 +1,4 @@
 <%- model_class = Invoice -%>
-<%# binding.pry %>
 
 <div class="content_top">
   <div class="primary_heading">
@@ -8,16 +7,16 @@
   </div>
 </div><!--content_top-->
 
-<%= render :partial => 'form' %>
+<%= render :partial => 'term_invoices_form' %>
 <div id="clients_holder" style="display: none;" class="quick_create_wrapper">
-  <%#= render 'clients/new_client' %>
+  <%= render 'clients/new_client' %>
 </div>
 <div id="items_holder" style="display: none;" class="quick_create_wrapper">
-  <%#= render 'items/new_item' %>
+  <%= render 'items/new_item' %>
 </div>
 <div id="payment_terms_holder" style="display: none;" class="quick_create_wrapper">
-  <%#= render 'payment_terms/new_term' %>
+  <%= render 'payment_terms/new_term' %>
 </div>
 <div id="taxes_holder" style="display: none;" class="quick_create_wrapper">
-  <%#= render 'taxes/new_tax' %>
+  <%= render 'taxes/new_tax' %>
 </div>

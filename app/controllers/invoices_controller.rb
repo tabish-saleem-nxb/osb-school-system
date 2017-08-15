@@ -268,7 +268,6 @@ class InvoicesController < ApplicationController
   end
 
   def term_invoices
-    # binding.pry
     @invoice = Services::InvoiceService.build_new_invoice(params)
     @client = Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
     @client = @invoice.client if params[:id].present?
@@ -281,6 +280,62 @@ class InvoicesController < ApplicationController
       #format.json { render :json => @invoice }
     end
   end
+
+  def generate_term_invoices
+    binding.pry
+    asd
+    if Client.count > 0 && !params[:term_duration].blank?
+      term_duration = params[:term_duration]
+
+      students = Client.joins(:client_type, :invoices).where('client_type.title = ? AND invoices.due_date > ?', 'students', Date.today)
+      students.each do |student|
+        invoice_params[:invoice][:client_id] = student.id
+        @invoice = Invoice.new(invoice_params)
+        @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
+        @invoice.invoice_type = "Invoice"
+        @invoice.company_id = get_company_id()
+        @invoice.create_line_item_taxes()
+        TermRule.create(name: params[:term][:name], description: params[:term][:term_description], frequency: params[:term][:frequency])
+        if @invoice.save
+          # @invoice.notify(current_user, @invoice.id) if params[:commit].present?
+          new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft])
+        end
+      end
+      # send success;
+      redirect_to(edit_invoice_url(invoices_path), :notice => new_invoice_message)
+      return
+    else
+      # send error;
+      format.html { render :action => 'new' }
+      format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
+    end
+  end
+
+  # def abc
+  #   validate all fields params;
+  #   if validated
+  #     loop on students as student
+  #     invoice_params[:invoice][:client_id] = student.id
+  #     @invoice = Invoice.new(invoice_params)
+  #     @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
+  #     @invoice.invoice_type = "Invoice"
+  #     @invoice.company_id = get_company_id()
+  #     @invoice.create_line_item_taxes()
+  #     @invoice.save
+  #     # loop end
+  #     # send success;
+  #     @invoice.notify(current_user, @invoice.id)  if params[:commit].present?
+  #     new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft])
+  #     redirect_to(edit_invoice_url(@invoice), :notice => new_invoice_message)
+  #     return
+  #   else
+  #
+  #     # send error;
+  #     format.html { render :action => 'new' }
+  #     format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
+  #
+  #   end
+  # end
 
   private
 

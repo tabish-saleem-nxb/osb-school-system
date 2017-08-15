@@ -1,0 +1,24 @@
+= form_for(@term_rule) do |f|
+  - if @term_rule.errors.any?
+    #error_explanation
+      h2 = pluralize(@term_rule.errors.count, "error")
+      | prohibited this term rule from being saved:
+      ul
+        - @term_rule.errors.full_messages.each do |message|
+        li = message
+
+
+  .field
+    = f.label :name
+    br
+    = f.text_field :name
+  .field
+    = f.label :description
+    br
+    = f.text_field :description
+  .field
+    = f.label :frequency
+    br
+    = f.text_field :frequency
+  .actions
+    = f.submit

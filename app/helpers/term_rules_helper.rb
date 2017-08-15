@@ -1,0 +1,2 @@
+module TermRulesHelper
+end

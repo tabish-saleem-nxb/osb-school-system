@@ -1,0 +1,23 @@
+h1 Term Rules
+
+table
+  thead
+    tr
+      th Name
+      th Description
+      th Frequency
+      th
+
+  tbody
+    - @term_rules.each do |term_rule|
+      tr
+        td = term_rule.name
+        td = term_rule.description
+        td = term_rule.frequency
+        td = link_to 'Show', term_rule
+        td = link_to 'Edit', edit_term_rule_path(term_rule)
+        td = link_to 'Destroy', term_rule, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Term Rule', new_term_rule_path
