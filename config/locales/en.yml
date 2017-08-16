@@ -22,6 +22,7 @@ en:
   past: "Past"
   edit: "Edit"
   estimate: "Estimate"
+  term_rules: 'Term Rules'
 
   date:
     formats:
@@ -94,6 +95,10 @@ en:
       help: "Help"
       applications: "Applications"
       api_docs: "API Documentation"
+      term_rules:
+        new: 'New Term Rule'
+
+
 
   views:
     common:
@@ -388,6 +393,13 @@ en:
       no_record_msg: "You haven't created any expenses yet."
       no_archived_expense: "You don't have any archived expense."
       no_deleted_expense: "You don't have any deleted expense."
+
+    term_rules:
+      name: 'Name'
+      new_term_rule: 'New Term Rule'
+      frequency: 'Frequency'
+      description: 'Description'
+      term_rules: 'Term Rules'
 
     items:
       add_new_item: 'Add New Item'
