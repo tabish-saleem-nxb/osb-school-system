@@ -3,12 +3,15 @@ p#notice = notice
 p
   strong Name:
   = @term_rule.name
+  br
 
   strong description:
   = @term_rule.description
+  br
 
   strong Frequency:
   = @term_rule.frequency
+  br
 
 = link_to 'Edit', edit_term_rule_path(@term_rule)
 '  |

@@ -66,27 +66,24 @@
             </div>
 
             <!--field_row-->
-              <script>$(".field_row.description").last().css('min-height', '46px');</script>
-              <div class="label_field left single"><%= label_tag 'Term Duration' %></div>
+            <script>$(".field_row.description").last().css('min-height', '46px');</script>
+            <div class="field_row description">
+              <div class="label_field left single"><%= label_tag ('Select Term') %></div>
               <div class="small_field">
-                <% @term_rules = TermRule.all.collect {|a| [a.name, a.id]} %>
-                <%= select_tag '[term][frequency]', options_for_select(@term_rules) %>
+                <%= select_tag '[term_rule][id]', options_for_select(TermRule.all.collect {|term_rule| [term_rule.name, term_rule.id]})%>
               </div>
+            </div>
+
+            <div class="field_row description">
+              <div class="label_field left single"><%= label_tag ('Select Penalty') %></div>
+              <div class="small_field">
+                <%= select_tag '[penalty_rule][id]', options_for_select(PenaltyRule.all.collect {|penalty_rule| [penalty_rule.name, penalty_rule.id]})%>
+              </div>
+            </div>
 
           </div>
 
           <div class="fields_content_right">
-
-            <div class="field_row description right-fields">
-              <div class="label_field left single"><%= f.label :invoice_number, content_tag(:span, 'Invoice #') %></div>
-              <div class="small_field">
-                <%= f.text_field :invoice_number, :readonly => "", :required => "" %>
-                <ul class="field_description">
-                  <li><%= t('views.invoices.auto_generated') %></li>
-                </ul>
-              </div>
-            </div>
-            <!--field_row-->
 
             <div class="field_row description right-fields">
               <div class="label_field left single"><%= f.label :invoice_date, content_tag(:span, t('views.invoices.invoice_date')) %></div>

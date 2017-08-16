@@ -185,7 +185,7 @@ jQuery ->
     e.preventDefault()
 
   # Add date picker to invoice date , invoice due date and payment date.
-  jQuery("#invoice_invoice_date, #invoice_due_date, .date_picker_class").datepicker
+  jQuery("#invoice_invoice_date, #invoice_due_date, .date_picker_class, #penalty_rule_due_date").datepicker
     dateFormat: DateFormats.format()
     beforeShow: (input, inst) ->
       widget = jQuery(inst).datepicker('widget')

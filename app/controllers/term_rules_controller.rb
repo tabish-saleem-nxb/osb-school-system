@@ -1,4 +1,5 @@
 class TermRulesController < ApplicationController
+  helper_method :sort_column, :sort_direction
   before_action :set_term_rule, only: [:show, :edit, :update, :destroy]
 
   # GET /term_rules
@@ -62,6 +63,22 @@ class TermRulesController < ApplicationController
   end
 
   private
+
+  def set_per_page_session
+    session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
+  end
+
+  def sort_column
+    params[:sort] ||= 'created_at'
+    sort_col = params[:sort]
+  end
+
+  def sort_direction
+    params[:direction] ||= 'desc'
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+
+
   # Use callbacks to share common setup or constraints between actions.
   def set_term_rule
     @term_rule = TermRule.find(params[:id])

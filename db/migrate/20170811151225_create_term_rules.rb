@@ -4,6 +4,7 @@ class CreateTermRules < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.string :frequency
+      t.integer :client_type_id
 
       t.timestamps
     end

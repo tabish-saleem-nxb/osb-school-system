@@ -80,6 +80,8 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(client_params)
     company_id = get_company_id()
+    client_type = ClientType.find(params[:client_type_id])
+    @client.client_type_id = client_type.id
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
 
     associate_entity(options, @client)
@@ -104,6 +106,8 @@ class ClientsController < ApplicationController
   # PUT /clients/1.json
   def update
     @client = Client.find(params[:id])
+    client_type = ClientType.find(params[:client_type_id])
+    @client.update_column(:client_type_id, client_type.id)
     associate_entity(params, @client)
 
     #add/update available credit
@@ -207,7 +211,7 @@ class ClientsController < ApplicationController
                                    :organization_name, :postal_zip_code, :province_state,
                                    :send_invoice_by, :email, :home_phone, :first_name, :last_name,
                                    :mobile_number, :client_contacts_attributes, :archive_number,
-                                   :archived_at, :deleted_at,:currency_id,
+                                   :archived_at, :deleted_at,:currency_id, :client_type_id,
                                    client_contacts_attributes: [:id, :client_id, :email, :first_name, :last_name, :home_phone, :mobile_number, :_destroy]
     )
   end

@@ -1,0 +1,32 @@
+h1 Penalty Rules
+
+table
+  thead
+    tr
+      th Name
+      th Description
+      th Due Date
+      th Percentage
+      th Client Type
+      th
+
+
+  tbody
+    - @penalty_rules.each do |penalty_rule|
+      tr
+        td
+          strong = penalty_rule.name
+        td = penalty_rule.description
+        td
+          strong = penalty_rule.due_date
+        td = penalty_rule.percentage
+        strong
+          td = penalty_rule.client_type.title
+
+        td = link_to 'Show', penalty_rule
+        td = link_to 'Edit', edit_penalty_rule_path(penalty_rule)
+        td = link_to 'Destroy', penalty_rule, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Penalty Rule', new_penalty_rule_path

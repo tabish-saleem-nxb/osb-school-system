@@ -1,3 +1,3 @@
 class PenaltyRule < ActiveRecord::Base
-  has_many :client_types
+  belongs_to :client_type
 end

@@ -277,36 +277,45 @@ class InvoicesController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.js
-      #format.json { render :json => @invoice }
     end
   end
 
   def generate_term_invoices
     binding.pry
     asd
-    if Client.count > 0 && !params[:term_duration].blank?
-      term_duration = params[:term_duration]
+    if Client.count > 0 && !params[:term_rule][:id].blank? && !params[:penalty_rule][:id].blank?
+      term_rule = TermRule.find params[:term_rule][:id]
+      penalty_rule = PenaltyRule.find params[:penalty_rule][:id]
 
-      students = Client.joins(:client_type, :invoices).where('client_type.title = ? AND invoices.due_date > ?', 'students', Date.today)
-      students.each do |student|
-        invoice_params[:invoice][:client_id] = student.id
-        @invoice = Invoice.new(invoice_params)
-        @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
-        @invoice.invoice_type = "Invoice"
-        @invoice.company_id = get_company_id()
-        @invoice.create_line_item_taxes()
-        TermRule.create(name: params[:term][:name], description: params[:term][:term_description], frequency: params[:term][:frequency])
-        if @invoice.save
-          # @invoice.notify(current_user, @invoice.id) if params[:commit].present?
-          new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft])
+      Client client_type_id
+      ClientType term_rule_id, penalty_rule_id
+
+      students = Client.joins(:client_type, :invoices).where('client_types.title = ? AND invoices.due_date > ?', 'students', Date.today)
+      if !students.blank?
+        students.each do |student|
+          invoice_params[:invoice][:client_id] = student.id
+          @invoice = Invoice.new(invoice_params)
+          @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
+          @invoice.invoice_type = "Invoice"
+          @invoice.company_id = get_company_id()
+          @invoice.invoice_number = Invoice.get_next_invoice_number(nil)
+          @invoice.create_line_item_taxes()
+
+          if @invoice.save
+            # @invoice.notify(current_user, @invoice.id) if params[:commit].present?
+            new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft])
+          end
         end
+        # send success;
+        redirect_to(edit_invoice_url(invoices_path), :notice => new_invoice_message)
+        return
+      else
+        redirect_to term_invoices_path, alert: 'No students found!'
       end
-      # send success;
-      redirect_to(edit_invoice_url(invoices_path), :notice => new_invoice_message)
-      return
+
     else
       # send error;
-      format.html { render :action => 'new' }
+      format.html { render :action => 'term_invoices' }
       format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
     end
   end

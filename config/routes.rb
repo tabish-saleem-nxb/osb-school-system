@@ -133,7 +133,9 @@ Osb::Application.routes.draw do
 
     resources :invoice_line_items
 
+    resources :penalty_rules
     resources :term_rules
+
     resources :invoices do
       collection do
         get 'term_invoices', as: :term

@@ -1,24 +1,30 @@
-= form_for(@term_rule) do |f|
-  - if @term_rule.errors.any?
-    #error_explanation
-      h2 = pluralize(@term_rule.errors.count, "error")
-      | prohibited this term rule from being saved:
-      ul
-        - @term_rule.errors.full_messages.each do |message|
-        li = message
+.term_rule
+  = form_for(@term_rule) do |f|
+    .content_middle
+      - if @term_rule.errors.any?
+        #error_explanation
+          h2 = pluralize(@term_rule.errors.count, "error")
+          | prohibited this term rule from being saved:
+          ul
+            - @term_rule.errors.full_messages.each do |message|
+            li = message
 
+      .fields_content_container
+        .fields_content_data
+          .field_row
+            .label_field.left.single = t('views.term_rules.name')
+            .large_field
+              = f.text_field :name
 
-  .field
-    = f.label :name
-    br
-    = f.text_field :name
-  .field
-    = f.label :description
-    br
-    = f.text_field :description
-  .field
-    = f.label :frequency
-    br
-    = f.text_field :frequency
-  .actions
-    = f.submit
+          .field_row
+            .label_field.left.single = t('views.term_rules.description')
+            .large_field
+              = f.text_area :description
+        .fields_content_data
+          .field_row
+            .label_field.left.single = t('views.term_rules.frequency')
+            .large_field
+              = f.select :frequency, TERM_FREQUENCY
+
+      .content_bottom
+        = f.submit class: 'btn_large submit'

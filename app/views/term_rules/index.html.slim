@@ -1,23 +1,72 @@
-h1 Term Rules
+- model_class = TermRule
+.term_rules
+  .content_top
+    .primary_heading
+      h1
+        = t '.title', :default => t("term_rules")
+    .primary_btn
+      = link_to (content_tag(:span, t("header.links.term_rules.new"))), new_client_path, :class => 'btn_large'
 
-table
-  thead
-    tr
-      th Name
-      th Description
-      th Frequency
-      th
+  .grid_table
+    table.table.table_listing.client_listing cellpadding="0" cellspacing="0" class=("<%= I18n.locale %>")
+      colgroup
+        col.one
+        col.two
+        col.three
+        col.four
+        col.five
+        col.six
+        col.seven
+      thead#client_head
+        tr
+          th.align_center.not-sortable = check_box_tag 'select_all'
+          th.align_left.header class="#{sortable_class('name')}" = sortable('name',t('views.term_rules.name'))
+          th.align_left.header class="#{sortable_class('description')}" = sortable('description',t('views.term_rules.description'))
+          th.align_left.header class="#{sortable_class('frequency')}" = sortable('name',t('views.term_rules.frequency'))
+      tbody#client_body
+        - if @term_rules.length > 0
+          - @term_rules.each do |term_rule|
+            tr
+              td.align_center = check_box_tag "term_rules_ids[]", term_rule.id, false, :id => "term_#{term_rule.id}"
+              td.align_center = term_rule.name
+              td.align_center = term_rule.description
+              td.align_center = term_rule.frequency
+        - else
+          tr
+            td colspan="6"
+              .no_record_container
+                = 'No term rules found'
 
-  tbody
-    - @term_rules.each do |term_rule|
-      tr
-        td = term_rule.name
-        td = term_rule.description
-        td = term_rule.frequency
-        td = link_to 'Show', term_rule
-        td = link_to 'Edit', edit_term_rule_path(term_rule)
-        td = link_to 'Destroy', term_rule, data: { confirm: 'Are you sure?' }, method: :delete
+      tfoot#paging_links
+        /= render "application_partials/paging"
+  .content_bottom
+    = link_to (content_tag(:span, t("header.links.term_rules.new"))), new_client_path, :class => 'btn_large'
 
-br
-
-= link_to 'New Term Rule', new_term_rule_path
+/h1 Term Rules
+/
+/table
+/  thead
+/    tr
+/      th Name
+/      th Description
+/      th Frequency
+/      th
+/      th
+/      th
+/
+/
+/  tbody
+/    - @term_rules.each do |term_rule|
+/      tr
+/        td
+/          strong = term_rule.name
+/        td = term_rule.description
+/        td
+/          strong = term_rule.frequency
+/        td = link_to 'Show', term_rule
+/        td = link_to 'Edit', edit_term_rule_path(term_rule)
+/        td = link_to 'Destroy', term_rule, data: { confirm: 'Are you sure?' }, method: :delete
+/      br
+/br
+/
+/= link_to 'New Term Rule', new_term_rule_path
