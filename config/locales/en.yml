@@ -97,8 +97,8 @@ en:
       api_docs: "API Documentation"
       term_rules:
         new: 'New Term Rule'
-
-
+      penalty_rules:
+        new: 'New Penalty Rule'
 
   views:
     common:
@@ -400,6 +400,15 @@ en:
       frequency: 'Frequency'
       description: 'Description'
       term_rules: 'Term Rules'
+      client_type: 'Client Type'
+
+    penalty_rules:
+      name: 'Name'
+      new_penalty_rule: 'New Penalty Rule'
+      due_date: 'Due Date'
+      description: 'Description'
+      penalty_rules: 'Penalty Rules'
+      client_type: 'Client Type'
 
     items:
       add_new_item: 'Add New Item'

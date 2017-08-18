@@ -1,6 +1,8 @@
 class TermRulesController < ApplicationController
-  helper_method :sort_column, :sort_direction
+  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
+  before_filter :authenticate_user!
   before_action :set_term_rule, only: [:show, :edit, :update, :destroy]
+  layout :choose_layout
 
   # GET /term_rules
   # GET /term_rules.json
@@ -29,7 +31,7 @@ class TermRulesController < ApplicationController
 
     respond_to do |format|
       if @term_rule.save
-        format.html { redirect_to @term_rule, notice: 'Term Rule was successfully created.' }
+        format.html { redirect_to term_rules_path, notice: 'Term Rule was successfully created.' }
         format.json { render :show, status: :created, location: @term_rule }
       else
         format.html { render :new }
@@ -43,7 +45,7 @@ class TermRulesController < ApplicationController
   def update
     respond_to do |format|
       if @term_rule.update(term_rule_params)
-        format.html { redirect_to @term_rule, notice: 'Term Rule was successfully updated.' }
+        format.html { redirect_to term_rules_path, notice: 'Term Rule was successfully updated.' }
         format.json { render :show, status: :ok, location: @term_rule }
       else
         format.html { render :edit }
@@ -68,17 +70,6 @@ class TermRulesController < ApplicationController
     session["#{controller_name}-per_page"] = params[:per] || session["#{controller_name}-per_page"] || 10
   end
 
-  def sort_column
-    params[:sort] ||= 'created_at'
-    sort_col = params[:sort]
-  end
-
-  def sort_direction
-    params[:direction] ||= 'desc'
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
-  end
-
-
   # Use callbacks to share common setup or constraints between actions.
   def set_term_rule
     @term_rule = TermRule.find(params[:id])
@@ -86,7 +77,7 @@ class TermRulesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def term_rule_params
-    params.require(:term_rule).permit(:name, :description, :frequency)
+    params.require(:term_rule).permit(:name, :description, :frequency, :client_type_id)
   end
 
 end

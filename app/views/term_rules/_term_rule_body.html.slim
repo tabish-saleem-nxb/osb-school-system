@@ -1,0 +1,18 @@
+- if @term_rules.length > 0
+  - @term_rules.each do |term_rule|
+    tr
+      td.align_center style='visibility:hidden' = check_box_tag "term_rules_ids[]", term_rule.id, false, :id => "term_#{term_rule.id}"
+      td.align_center = term_rule.name
+      td.align_center = term_rule.description
+      td.align_center = term_rule.frequency
+      td.align_center = term_rule.client_type.try(:title)
+      td.align_center
+        = link_to t('.edit', :default => t("helpers.links.edit")), edit_term_rule_path(term_rule), :class => 'edit_action'
+        '  |
+        = link_to t('.delete', :default => t("helpers.links.delete")), term_rule, data: { confirm: 'Are you sure?' }, method: :delete
+
+- else
+  tr
+    td colspan="6"
+      .no_record_container
+        = 'No term rules found'

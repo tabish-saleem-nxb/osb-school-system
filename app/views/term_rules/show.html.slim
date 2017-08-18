@@ -13,6 +13,10 @@ p
   = @term_rule.frequency
   br
 
+  strong Client Type:
+  = @term_rule.client_type.title
+  br
+
 = link_to 'Edit', edit_term_rule_path(@term_rule)
 '  |
 = link_to 'Back', term_rules_path
