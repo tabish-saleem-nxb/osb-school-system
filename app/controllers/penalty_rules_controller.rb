@@ -1,5 +1,8 @@
 class PenaltyRulesController < ApplicationController
+  load_and_authorize_resource :only => [:index, :show, :create, :destroy, :update, :new, :edit]
+  before_filter :authenticate_user!
   before_action :set_penalty_rule, only: [:show, :edit, :update, :destroy]
+  layout :choose_layout
 
   # GET /penalty_rules
   # GET /penalty_rules.json
@@ -28,7 +31,7 @@ class PenaltyRulesController < ApplicationController
 
     respond_to do |format|
       if @penalty_rule.save
-        format.html { redirect_to @penalty_rule, notice: 'Penalty Rule was successfully created.' }
+        format.html { redirect_to penalty_rules_path, notice: 'Penalty Rule was successfully created.' }
         format.json { render :show, status: :created, location: @penalty_rule }
       else
         format.html { render :new }
@@ -42,7 +45,7 @@ class PenaltyRulesController < ApplicationController
   def update
     respond_to do |format|
       if @penalty_rule.update(penalty_rule_params)
-        format.html { redirect_to @penalty_rule, notice: 'Penalty Rule was successfully updated.' }
+        format.html { redirect_to penalty_rules_path, notice: 'Penalty Rule was successfully updated.' }
         format.json { render :show, status: :ok, location: @penalty_rule }
       else
         format.html { render :edit }

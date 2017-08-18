@@ -1,32 +1,41 @@
-= form_for(@penalty_rule) do |f|
-  - if @penalty_rule.errors.any?
-    #error_explanation
-      h2 = pluralize(@penalty_rule.errors.count, "error")
-      | prohibited this penalty rule from being saved:
-      ul
-        - @penalty_rule.errors.full_messages.each do |message|
-        li = message
+.penalty_rule
+  = form_for(@penalty_rule) do |f|
+    .content_middle
+      - if @penalty_rule.errors.any?
+        #error_explanation
+          h2 = pluralize(@penalty_rule.errors.count, "error")
+          | prohibited this penalty rule from being saved:
+          ul
+            - @penalty_rule.errors.full_messages.each do |message|
+            li = message
 
-  .field
-    = f.label :name
-    br
-    = f.text_field :name
-  .field
-    = f.label :description
-    br
-    = f.text_area :description
-  .field
-    = f.label :due_date
-    br
-    = f.text_field :due_date
-  .field
-    = f.label :percentage
-    br
-    = f.text_field :percentage
-  .field
-    = f.label :client_type
-    br
-    = f.select :client_type_id, options_for_select(ClientType.all.collect { |client_type| [client_type.title, client_type.id] }, @penalty_rule.client_type_id)
+      .fields_content_container
+        .fields_content_data
+          .field_row
+            .label_field.left.single = t('views.penalty_rules.name')
+            .large_field
+              = f.text_field :name
 
-  .actions
-    = f.submit
+          .field_row
+            .label_field.left.single = t('views.penalty_rules.description')
+            .large_field
+              = f.text_area :description
+
+        .fields_content_data
+          .field_row
+            .label_field.left.single = t('views.penalty_rules.due_date')
+            .medium_field
+              = f.text_field :due_date
+
+          .field_row
+            .label_field.left.single = t('views.penalty_rules.percentage')
+            .small_field
+              = f.text_field :percentage
+
+          .field_row
+            .label_field.left.single = t('views.penalty_rules.client_type')
+            .large_field
+              = f.select :client_type_id, options_for_select(ClientType.all.collect { |client_type| [client_type.title, client_type.id] }, @penalty_rule.client_type_id)
+
+      .content_bottom
+        = f.submit class: 'btn_large submit'

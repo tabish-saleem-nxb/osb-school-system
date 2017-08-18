@@ -1,0 +1,19 @@
+- if @penalty_rules.length > 0
+  - @penalty_rules.each do |penalty_rule|
+    tr
+      td.align_center style='visibility:hidden' = check_box_tag "penalty_rules_ids[]", penalty_rule.id, false, :id => "penalty_#{penalty_rule.id}"
+      td.align_center = penalty_rule.name
+      td.align_center = penalty_rule.description
+      td.align_center = penalty_rule.due_date
+      td.align_center = penalty_rule.percentage
+      td.align_center = penalty_rule.client_type.try(:title)
+      td.align_center
+        = link_to t('.edit', :default => t("helpers.links.edit")), edit_penalty_rule_path(penalty_rule), :class => 'edit_action'
+        '  |
+        = link_to t('.delete', :default => t("helpers.links.delete")), penalty_rule, data: { confirm: 'Are you sure?' }, method: :delete
+
+- else
+  tr
+    td colspan="6"
+      .no_record_container
+        = 'No penalty rules found'
