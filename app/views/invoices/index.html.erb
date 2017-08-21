@@ -10,9 +10,12 @@
       </h1>
     </div>
     <div class="primary_btn">
-      <%= link_to (content_tag(:span, t('header.links.invoices.new'))),
+      <%= link_to (content_tag(:span, t('header.links.invoices.generate_new'))),
                   new_invoice_path,
-                  :class => 'btn_large' %>
+                  :class => 'btn_large', id: 'generate_invoice' %>
+
+      <%= select_tag :generate_invoice, options_for_select([['simple invoice','/invoices/new'],['term invoice','/invoices/term_invoices']]),
+                     onchange: 'generateLink(this.value);' %>
     </div>
   </div>
   <!--content_top-->
@@ -64,15 +67,15 @@
       </div>
       <!--content_middle-->
       <div class="content_bottom">
-        <%= link_to (content_tag(:span, t('header.links.invoices.new'))),
+        <%= link_to (content_tag(:span, t('header.links.invoices.generate_new'))),
                     new_invoice_path,
-                    :class => 'btn_large' %>
+                    :class => 'btn_large', id: 'generate_invoice_below' %>
+
+        <%= select_tag :generate_invoice, options_for_select([['simple invoice','/invoices/new'],['term invoice','/invoices/term_invoices']]),
+                       onchange: 'generateLinkBelow(this.value);' %>
       </div>
-      <div class="content_bottom">
-        <%= link_to (content_tag(:span, t('header.links.invoices.generate.term_invoices'))),
-                    term_invoices_path,
-                    :class => 'btn_large' %>
-      </div>
+
+
       <!--content_bottom-->
   <% end %>
 </div><!--invoice-->

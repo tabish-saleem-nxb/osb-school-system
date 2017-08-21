@@ -28,15 +28,15 @@ module Services
       date_format = self.new.date_format
       if params[:invoice_for_client]
         company_id = get_company_id(params[:invoice_for_client])
-        if params[:controller].eql?('invoices') && params[:action].eql?('term_invoices')
-          invoice = ::Invoice.new({:invoice_date => Date.today.strftime(date_format), :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), :company_id => company_id})
-        else
-          invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), :company_id => company_id})
-        end
+        invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), :company_id => company_id})
         3.times { invoice.invoice_line_items.build() }
       elsif params[:id]
         invoice = ::Invoice.find(params[:id]).use_as_template
         invoice.invoice_line_items.build()
+      elsif params[:controller].eql?('invoices') && params[:action].eql?('term_invoices')
+        company_id = get_company_id(params[:invoice_for_client])
+        invoice = ::Invoice.new({:invoice_date => Date.today.strftime(date_format), :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), :company_id => company_id, due_date: Date.tomorrow})
+        3.times { invoice.invoice_line_items.build() }
       else
         invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id)})
         3.times { invoice.invoice_line_items.build() }

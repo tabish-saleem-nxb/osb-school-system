@@ -416,7 +416,7 @@ jQuery ->
     if term_days? and invoice_date?
       invoice_due_date = DateFormats.add_days_in_formated_date(invoice_date,parseInt(term_days))
       jQuery("#invoice_due_date").val(invoice_due_date)
-    else
+    else if !jQuery("#invoice_due_date").hasClass('setDueDate')
       jQuery("#invoice_due_date").val("")
 
   # re calculate invoice due date on invoice date change
@@ -498,3 +498,9 @@ jQuery ->
   jQuery(".single-recover-link").live "click", ->
     $(this).parent().parent().find("input[type=checkbox]").attr("checked", "checked");
     $(".top_links.recover_deleted").click();
+
+@generateLink = (link) ->
+  $('#generate_invoice').attr 'href', link
+
+@generateLinkBelow = (link) ->
+  $('#generate_invoice_below').attr 'href', link
