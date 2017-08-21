@@ -38,6 +38,7 @@ en:
         invoices: "Invoices"
         listing: "Invoice Listing"
         new: "New Invoice"
+        generate_new: 'Generate Invoice'
         recurring: "Recurring"
         time_tracking: "Time Tracking"
       time_tracking:
