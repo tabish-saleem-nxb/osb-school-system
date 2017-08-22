@@ -1,5 +1,6 @@
 Osb::Application.routes.draw do
 
+  #mount SimpleInvoice::Engine => "/simple_invoice"
   mount OsbApi::Engine => "/api"
   use_doorkeeper :scope => 'developer'
 
@@ -63,7 +64,7 @@ Osb::Application.routes.draw do
 
     get "dashboard" => "dashboard#index"
     post 'dashboard/chart_details' => "dashboard#chart_details"
-    post '/invoices/send_note_only' => 'invoices#send_note_only'
+    # post '/invoices/send_note_only' => 'invoices#send_note_only'
     resources :payments do
       collection do
         get 'enter_payment'
@@ -72,6 +73,7 @@ Osb::Application.routes.draw do
         get 'bulk_actions'
         get 'undo_actions'
         get 'payments_history'
+#TODO:1 following invoice payment route:
         get 'invoice_payments_history'
         post 'delete_non_credit_payments'
       end
@@ -84,13 +86,14 @@ Osb::Application.routes.draw do
       end
     end
 
-    get "invoices/unpaid_invoices" => "invoices#unpaid_invoices"
+    # get "invoices/unpaid_invoices" => "invoices#unpaid_invoices"
     post '/payments/enter_payment'
     resources :clients do
       collection do
         post :client_detail
         get 'filter_clients'
         get 'bulk_actions'
+#TODO:2 Following routes belongs to both invoices and clients
         post 'get_last_invoice'
         post 'get_last_estimate'
         get 'undo_actions'
@@ -131,32 +134,32 @@ Osb::Application.routes.draw do
       end
     end
 
-    resources :invoice_line_items
+    # resources :invoice_line_items
 
     resources :penalty_rules
     resources :term_rules
 
-    resources :invoices do
-      collection do
-        get 'term_invoices', as: :term
-        post 'generate_term_invoices', as: :generate_term
-      end
-      resources :invoice_line_items
-      collection do
-        get 'filter_invoices'
-        get 'bulk_actions'
-        get 'undo_actions'
-        post 'duplicate_invoice'
-        get 'enter_single_payment'
-        get 'send_invoice'
-        post 'paypal_payments'
-        get  'paypal_payments'
-        post 'preview'
-        get 'preview'
-        get 'credit_card_info'
-        get 'selected_currency'
-      end
-    end
+    # resources :invoices do
+    #   collection do
+    #     get 'term_invoices', as: :term
+    #     post 'generate_term_invoices', as: :generate_term
+    #   end
+    #   resources :invoice_line_items
+    #   collection do
+    #     get 'filter_invoices'
+    #     get 'bulk_actions'
+    #     get 'undo_actions'
+    #     post 'duplicate_invoice'
+    #     get 'enter_single_payment'
+    #     get 'send_invoice'
+    #     post 'paypal_payments'
+    #     get  'paypal_payments'
+    #     post 'preview'
+    #     get 'preview'
+    #     get 'credit_card_info'
+    #     get 'selected_currency'
+    #   end
+    # end
 
 
     resources :projects do
@@ -166,9 +169,9 @@ Osb::Application.routes.draw do
       end
     end
 
-    post '/invoices/delete_invoices_with_payments' => 'invoices#delete_invoices_with_payments'
-    post '/invoices/dispute_invoice' => 'invoices#dispute_invoice'
-    post '/invoices/pay_with_credit_card' => 'invoices#pay_with_credit_card'
+    # post '/invoices/delete_invoices_with_payments' => 'invoices#delete_invoices_with_payments'
+    # post '/invoices/dispute_invoice' => 'invoices#dispute_invoice'
+    # post '/invoices/pay_with_credit_card' => 'invoices#pay_with_credit_card'
 
     resources :recurring_profile_line_items
 
@@ -240,6 +243,7 @@ Osb::Application.routes.draw do
         get 'update_tasks', as: 'update_tasks'
         get 'load_view'
         get 'timer'
+#TODO:3 Following invoice routes
         get 'invoice'
         post 'invoice_form'
         post 'create_invoice'

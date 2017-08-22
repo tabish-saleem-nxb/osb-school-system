@@ -17,6 +17,12 @@ PATH
       rack-cors
       rails (~> 4.1.8)
 
+PATH
+  remote: vendor/engines/simple_invoice
+  specs:
+    simple_invoice (0.0.1)
+      rails (~> 4.1.15)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -229,6 +235,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-nav (0.2.4)
+      pry (>= 0.9.10, < 0.11.0)
     pygments.rb (0.6.3)
       posix-spawn (~> 0.3.6)
       yajl-ruby (~> 1.2.0)
@@ -387,7 +395,6 @@ DEPENDENCIES
   better_errors (= 2.1.1)
   binding_of_caller (>= 0.6.9)
   browser (= 2.1.0)
-  bundler (= 1.12.5)
   cancancan (= 1.15.0)
   carrierwave (= 0.11.2)
   coffee-rails (= 4.1.1)
@@ -416,7 +423,8 @@ DEPENDENCIES
   paper_trail (= 5.1.1)
   paranoia (= 2.1.5)
   paypal-sdk-rest (= 1.4.6)
-  pry (= 0.10.3)
+  pry
+  pry-nav
   quickbooks-ruby (= 0.4.4)
   quiet_assets (= 1.1.0)
   rails (~> 4.1.8)
@@ -432,6 +440,7 @@ DEPENDENCIES
   sass-rails (= 5.0.4)
   shoulda (~> 3.5.0)
   shoulda-matchers (= 2.8.0)
+  simple_invoice!
   slim (= 3.0.7)
   slim-rails (= 3.1.0)
   sprockets (~> 2.12.3)
@@ -449,4 +458,4 @@ RUBY VERSION
    ruby 2.0.0p451
 
 BUNDLED WITH
-   1.12.5
+   1.15.4

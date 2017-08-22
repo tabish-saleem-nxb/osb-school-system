@@ -55,15 +55,15 @@
             <li><%= active_link_to t("header.links.dashboard"), get_url %></li>
 
             <li class="dropdown">
-                <%= active_link_to t("header.links.invoices.invoices"), invoices_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown" %>
+                <%#= active_link_to t("header.links.invoices.invoices"), invoices_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown" %>
               <ul class="sub">
-                <li><%= active_link_to t("header.links.invoices.invoices"), invoices_path %></li>
+                <li><%#= active_link_to t("header.links.invoices.invoices"), invoices_path %></li>
                 <li><%= active_link_to t("header.links.invoices.recurring"), recurring_profiles_path %></li>
               </ul>
                 <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                   <ul>
-                    <li><%= active_link_to t("header.links.invoices.listing"), invoices_path %></li>
-                    <li><%= active_link_to t("header.links.invoices.new"), new_invoice_path %></li>
+                    <li><%#= active_link_to t("header.links.invoices.listing"), invoices_path %></li>
+                    <li><%#= active_link_to t("header.links.invoices.new"), new_invoice_path %></li>
                     <li><%= active_link_to t("header.links.invoices.recurring"), recurring_profiles_path %></li>
                   </ul>
                 </div>
