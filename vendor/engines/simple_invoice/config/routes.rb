@@ -31,4 +31,15 @@ SimpleInvoice::Engine.routes.draw do
   post '/invoices/dispute_invoice' => 'invoices#dispute_invoice'
   post '/invoices/pay_with_credit_card' => 'invoices#pay_with_credit_card'
 
+  resources :items do
+    collection do
+      get 'filter_items'
+      get 'bulk_actions'
+      post 'load_item_data'
+      get 'duplicate_item'
+      get 'undo_actions'
+    end
+  end
+
+
 end

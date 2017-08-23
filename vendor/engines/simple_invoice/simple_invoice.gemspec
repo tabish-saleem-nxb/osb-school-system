@@ -20,6 +20,6 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 4.1.15"
 
   s.add_development_dependency "sqlite3"
-  # s.add_runtime_dependency "jquery-rails"
-  # s.add_runtime_dependency "jquery-ui-rails"
+  s.add_runtime_dependency "jquery-rails"
+  s.add_runtime_dependency "jquery-ui-rails"
 end

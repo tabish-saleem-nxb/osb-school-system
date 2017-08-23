@@ -1,0 +1,37 @@
+<%
+   no_record_message = t('views.items.no_item_msg')
+   if params[:status] == "archived" || @action == "recovered from archived" ||  @action == "deleted from archived"
+     no_record_message = t('views.items.no_archived_msg')
+   elsif params[:status] == "deleted" || @action == "recovered from deleted"
+     no_record_message = t('views.items.no_deleted_msg')
+   end
+%>
+<% if @items.length > 0 %>
+    <% @items.each do |item| %>
+        <tr>
+          <td class="align_center"> <%= check_box_tag "item_ids[]", item.id, false, :id => "item_#{item.id}" %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= item.item_name %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= item.item_description %></td>
+          <td class="align_right"><%= number_to_currency(item.unit_cost, unit: default_currency_unit) %></td>
+          <td class="align_right"><%= item.quantity %></td>
+          <td class="align_center text-overflow-class" data-overflow-rows="2"><%= item.tax1.name rescue "" %></td>
+          <td class="align_center text-overflow-class" data-overflow-rows="2"><%= item.tax2.name rescue "" %></td>
+          <td class="align_center">
+            <% if item.deleted_at.nil? %>
+                <%= link_to 'Edit', edit_item_path(item), :class => "edit_action" %>
+            <% else %>
+                <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
+                            "javascript:;", class: "single-recover-link" %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+<% else %>
+    <tr>
+      <td colspan="9">
+        <div class="no_record_container">
+          <%= no_record_message %>
+        </div>
+      </td>
+    </tr>
+<% end %>

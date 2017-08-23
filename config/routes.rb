@@ -1,6 +1,6 @@
 Osb::Application.routes.draw do
 
-  #mount SimpleInvoice::Engine => "/simple_invoice"
+  mount SimpleInvoice::Engine => "/simple_invoice"
   mount OsbApi::Engine => "/api"
   use_doorkeeper :scope => 'developer'
 
@@ -116,15 +116,15 @@ Osb::Application.routes.draw do
     #resources :categories
 
 
-    resources :items do
-      collection do
-        get 'filter_items'
-        get 'bulk_actions'
-        post 'load_item_data'
-        get 'duplicate_item'
-        get 'undo_actions'
-      end
-    end
+    # resources :items do
+    #   collection do
+    #     get 'filter_items'
+    #     get 'bulk_actions'
+    #     post 'load_item_data'
+    #     get 'duplicate_item'
+    #     get 'undo_actions'
+    #   end
+    # end
 
     resources :expenses do
       collection do

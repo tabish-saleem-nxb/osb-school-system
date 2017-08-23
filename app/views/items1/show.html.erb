@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b><%= t('views.items.item_name') %>:</b>
+  <%= @item.item_name %>
+</p>
+
+<p>
+  <b><%= t('views.items.description') %>:</b>
+  <%= @item.item_description %>
+</p>
+
+<p>
+  <b><%= t('views.invoice_line_item.unit_cost') %>:</b>
+  <%= @item.unit_cost %>
+</p>
+
+<p>
+  <b><%= t('views.items.quantity') %>:</b>
+  <%= @item.quantity %>
+</p>
+
+<p>
+  <b><%= t('views.items.tax') %> 1:</b>
+  <%= @item.tax_1 %>
+</p>
+
+<p>
+  <b><%= t('views.items.tax') %> 2:</b>
+  <%= @item.tax_2 %>
+</p>
+
+<!--<p>-->
+<!--<b>Track invetory:</b>-->
+<!--<%#= @item.track_invetory %>-->
+<!--</p>-->
+
+<!--<p>-->
+<!--<b>Inventory:</b>-->
+<!--<%#= @item.inventory %>-->
+<!--</p>-->
+
+
+<%= link_to t('helpers.links.edit'), edit_item_path(@item) %> |
+<%= link_to t('views.common.back'), items_path %>
