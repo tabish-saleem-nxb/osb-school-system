@@ -42,14 +42,14 @@
   <div class="content_bottom top">
     <!--<a href="#">enter payment on invoice</a>-->
     <% unless @invoice.status == "paid" %>
-        <%= link_to t('views.invoices.enter_payment_on_invoice'), "enter_single_payment?ids=#{@invoice.id}", :class => "btn_large big" %>
+        <%#= link_to t('views.invoices.enter_payment_on_invoice'), "enter_single_payment?ids=#{@invoice.id}", :class => "btn_large big" %>
     <% end %>
   </div>
   <!--content_bottom-->
 
 
   <div class="content_middle">
-    <%= render :partial => "show_invoice" %>
+    <%#= render :partial => "show_invoice" %>
   </div>
   <!--content_middle-->
 

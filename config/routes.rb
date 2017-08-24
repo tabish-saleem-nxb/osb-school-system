@@ -78,13 +78,13 @@ Osb::Application.routes.draw do
         post 'delete_non_credit_payments'
       end
     end
-    resources :taxes do
-      collection do
-        get 'filter_taxes'
-        get 'bulk_actions'
-        get 'undo_actions'
-      end
-    end
+    # resources :taxes do
+    #   collection do
+    #     get 'filter_taxes'
+    #     get 'bulk_actions'
+    #     get 'undo_actions'
+    #   end
+    # end
 
     # get "invoices/unpaid_invoices" => "invoices#unpaid_invoices"
     post '/payments/enter_payment'

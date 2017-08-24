@@ -259,12 +259,8 @@ module ApplicationHelper
     Currency.default_currency.code
   end
 
-  def has_access_right?(method, klass)
-    can? method, klass
-  end
-
-  def editable_for_clerk?(invoice)
-    !(invoice.status.eql?('paid') && (current_user.roles.include?(Role.find_by_name :clerk)))
-  end
+  # def editable_for_clerk?(invoice)
+  #   !(invoice.status.eql?('paid') && (current_user.roles.include?(Role.find_by_name :clerk)))
+  # end
 
 end

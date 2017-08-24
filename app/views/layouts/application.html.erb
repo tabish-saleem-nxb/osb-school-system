@@ -12,6 +12,9 @@
 <div class="main_container">
   <div class="white_container">
 
+<% if params[:controller].partition('/').first.eql?('simple_invoice') %>
+    <%= render 'layouts/simple_invoice_engine'%>
+<% else %>
     <div class="primary_header">
       <div class="logo">
         <%= link_to image_tag("logo.png", :size => "218x30"), get_url %>
@@ -207,7 +210,7 @@
       </div>
     </div>
     <!-- NAVIGATION END -->
-
+<% end %>
 
     <!-- CONTENT AREA START-->
     <div class="content <%= controller.controller_name %>-main">

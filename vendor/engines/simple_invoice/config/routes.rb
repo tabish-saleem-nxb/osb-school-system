@@ -8,6 +8,7 @@ SimpleInvoice::Engine.routes.draw do
     collection do
       get 'term_invoices', as: :term
       post 'generate_term_invoices', as: :generate_term
+      # get 'invoice_pdf', as: :pdf
     end
 
     resources :invoice_line_items
@@ -41,5 +42,12 @@ SimpleInvoice::Engine.routes.draw do
     end
   end
 
+  resources :taxes do
+    collection do
+      get 'filter_taxes'
+      get 'bulk_actions'
+      get 'undo_actions'
+    end
+  end
 
 end
