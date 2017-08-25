@@ -26,5 +26,26 @@ module SimpleInvoice
     def choose_layout
       %w(preview payments_history).include?(action_name) ? 'preview_mode' : 'application'
     end
+
+    def get_clients_and_items
+      parent = Company.find(params[:company_id] || get_company_id)
+      @get_clients = get_clients(parent)
+      @get_items = get_items(parent)
+      @parent_class = parent.class.to_s
+    end
+
+    def get_clients(parent)
+      options = ''
+      parent.clients.each { |client| options += "<option value=#{client.id} type='company_level'>#{client.organization_name}</option>" } if parent.clients.present?
+      options
+    end
+
+    # generate items options associated with company
+    def get_items(parent)
+      options = ''
+      parent.items.each { |item| options += "<option value=#{item.id} type='company_level'>#{item.item_name}</option>" } if parent.items.present?
+      options
+    end
+
   end
 end

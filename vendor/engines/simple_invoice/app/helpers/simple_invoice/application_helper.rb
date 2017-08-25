@@ -7,7 +7,7 @@ module SimpleInvoice
 
     def get_count(params)
       elem = params[:controller]
-      model = elem.classify.constantize
+      model = elem[/([^\/]+)$/].classify.constantize
       company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
 
       if %(clients items staffs tasks).include?(elem)
@@ -90,8 +90,8 @@ module SimpleInvoice
   #   end
   # end
 
-  # def has_access_right?(method, klass)
-  #   can? method, klass
-  # end
+  def has_access_right?(method, klass)
+    can? method, klass
+  end
 
 end

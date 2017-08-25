@@ -136,16 +136,16 @@
             </li>
 
             <li class="dropdown">
-              <%= active_link_to t("header.links.items.items"), items_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
+              <%= active_link_to t("header.links.items.items"), simple_invoice.items_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
               <ul class="sub">
-                <li><%= active_link_to t("header.links.items.items"), items_path %></li>
-                <li><%= active_link_to t("header.links.items.taxes"), taxes_path %></li>
+                <li><%= active_link_to t("header.links.items.items"), simple_invoice.items_path %></li>
+                <li><%= active_link_to t("header.links.items.taxes"), simple_invoice.taxes_path %></li>
               </ul>
               <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                 <ul>
-                  <li><%= active_link_to t("header.links.items.listing"), items_path %></li>
-                  <li><%= active_link_to t("header.links.items.new"), new_item_path %></li>
-                  <li><%= active_link_to t("header.links.items.taxes"), taxes_path %></li>
+                  <li><%= active_link_to t("header.links.items.listing"), simple_invoice.items_path %></li>
+                  <li><%= active_link_to t("header.links.items.new"), simple_invoice.new_item_path %></li>
+                  <li><%= active_link_to t("header.links.items.taxes"), simple_invoice.taxes_path %></li>
                 </ul>
               </div>
             </li>

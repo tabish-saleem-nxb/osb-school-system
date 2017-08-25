@@ -20,7 +20,7 @@
 #
 module SimpleInvoice
   module InvoicesHelper
-    # include ApplicationHelper
+    include ApplicationHelper
     def new_invoice id, is_draft
       message = is_draft ? "The invoice has been saved as draft." : "Invoice has been created and sent to #{@invoice.client.organization_name}."
       notice = <<-HTML
@@ -237,6 +237,17 @@ module SimpleInvoice
 
     def term_invoice_action(params)
       params[:controller].eql?('invoices') && params[:action].eql?('term_invoices')
+    end
+
+    #get Company for invoices
+    def get_invoice_company_name(invoice=nil)
+      company = invoice.company
+      if company.present?
+        company.company_name
+      else
+        company_id = session['current_company'] || current_user.current_company || current_user.first_company_id
+        Company.find(company_id).company_name
+      end
     end
 
   end

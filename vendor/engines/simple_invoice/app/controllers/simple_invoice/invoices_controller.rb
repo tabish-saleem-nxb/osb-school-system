@@ -32,9 +32,10 @@ module SimpleInvoice
     layout :choose_layout
     include InvoicesHelper
 
+
     def index
       params[:status] = params[:status] || 'active'
-      @invoices = Invoice.joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ").filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+      @invoices = ::Invoice.joins("LEFT OUTER JOIN clients ON clients.id = invoices.client_id ").filter(params,@per_page).order("#{sort_column} #{sort_direction}")
       @invoices = filter_by_company(@invoices)
       respond_to do |format|
         format.html # index.html.erb
@@ -86,7 +87,7 @@ module SimpleInvoice
 
     def new
       @invoice = Services::InvoiceService.build_new_invoice(params)
-      @client = Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
+      @client = ::Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
       @client = @invoice.client if params[:id].present?
       @invoice.currency = @client.currency if @client.present?
       get_clients_and_items
