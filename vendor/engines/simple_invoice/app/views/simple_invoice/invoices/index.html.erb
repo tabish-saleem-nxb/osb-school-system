@@ -10,12 +10,9 @@
       </h1>
     </div>
     <div class="primary_btn">
-      <%= link_to (content_tag(:span, t('header.links.invoices.generate_new'))),
+      <%= link_to (content_tag(:span, t('header.links.invoices.new'))),
                   new_invoice_path,
-                  :class => 'btn_large', id: 'generate_invoice' %>
-
-      <%= select_tag :generate_invoice, options_for_select([['simple invoice','/invoices/new'],['term invoice','/invoices/term_invoices']]),
-                     onchange: 'generateLink(this.value);' %>
+                  :class => 'btn_large' %>
     </div>
   </div>
   <!--content_top-->
@@ -23,8 +20,8 @@
       <div class="content_middle">
 
         <!--<div class="company_select">-->
-          <!--<p>Select a Company</p>-->
-          <!--<%#= filter_by_companies() %>-->
+        <!--<p>Select a Company</p>-->
+        <!--<%#= filter_by_companies() %>-->
         <!--</div>-->
         <div class="grid_control">
           <div class="grid_control_left">
@@ -52,13 +49,13 @@
               <col class="nine"/>
             </colgroup>
             <thead id="invoice_head">
-                <%= render partial: 'invoice_header' %>
+            <%= render partial: 'invoice_header' %>
             </thead>
             <tbody id="invoice_body">
-                <%= render 'invoice' %>
-                <tfoot id="paging_links">
-                    <%= render "application_partials/paging" %>
-                </tfoot>
+            <%= render 'invoice' %>
+            <tfoot id="paging_links">
+            <%= render "application_partials/paging" %>
+            </tfoot>
             </tbody>
           </table>
         </div>
@@ -66,15 +63,10 @@
       </div>
       <!--content_middle-->
       <div class="content_bottom">
-        <%= link_to (content_tag(:span, t('header.links.invoices.generate_new'))),
+        <%= link_to (content_tag(:span, t('header.links.invoices.new'))),
                     new_invoice_path,
-                    :class => 'btn_large', id: 'generate_invoice_below' %>
-
-        <%= select_tag :generate_invoice, options_for_select([['simple invoice','/invoices/new'],['term invoice','/invoices/term_invoices']]),
-                       onchange: 'generateLinkBelow(this.value);' %>
+                    :class => 'btn_large' %>
       </div>
-
-
       <!--content_bottom-->
   <% end %>
 </div><!--invoice-->

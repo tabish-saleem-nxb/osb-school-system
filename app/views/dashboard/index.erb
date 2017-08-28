@@ -4,7 +4,7 @@
       <div class="dashboart_menu">
         <ul>
           <li><%= link_to t("header.links.invoices.new"), simple_invoice.new_invoice_path %></li>
-          <li><%= link_to t("header.links.items.new"), simple_invoice.new_item_path, :class => "small" %></li>
+          <li><%= link_to t("header.links.items.new"), new_item_path, :class => "small" %></li>
           <li><%= link_to t("header.links.clients.new"), new_client_path, :class => "small" %></li>
           <li><%= link_to t("header.links.payments.new"), '/invoices/unpaid_invoices', :class => "small_last", "data-toggle" => "modal", "data-target" => "#myModal", :remote => true %></li>
           <script>$("li").last().css('margin-right', '0px');</script>
@@ -112,7 +112,7 @@
                 <% else %>
                     <% @current_invoices.each do |current_invoice| %>
                         <tr>
-                          <td class="align_left"><%#= link_to current_invoice.invoice_number, invoice_path(current_invoice) %></td>
+                          <td class="align_left"><%= link_to current_invoice.invoice_number, simple_invoice.invoice_path(current_invoice) %></td>
                           <td class="align_left text-overflow-class"  data-overflow-rows="2"><%= current_invoice.unscoped_client.organization_name rescue "" %></td>
                           <td class="align_left"><%= (current_invoice.due_date || current_invoice.invoice_date) rescue "" %></td>
                           <td class="align_right"><%= number_to_currency(current_invoice.invoice_total, unit: current_invoice.currency.present? ? current_invoice.currency.code : "$") %></td>

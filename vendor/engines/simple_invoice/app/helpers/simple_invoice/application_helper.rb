@@ -33,10 +33,6 @@ module SimpleInvoice
       link_to title, params.merge(:sort => column, :direction => direction, :page => 1), {:class => "#{css_class} sortable", :remote => true}
     end
 
-    def editable_for_clerk?(invoice)
-      !(invoice.status.eql?('paid') && (current_user.roles.include?(Role.find_by_name :clerk)))
-    end
-
     def custom_per_page
       content_tag(:select,
                   options_for_select([5, 10, 20, 50, 100], @per_page),

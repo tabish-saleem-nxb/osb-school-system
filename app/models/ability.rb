@@ -13,10 +13,6 @@ class Ability
       cannot :delete, :all
       cannot :manage, Reporting
       can [:read, :create, :update], ENTITIES.map(&:constantize)
-    elsif user.has_role? :clerk
-      can :manage, Payment
-      can :manage, Invoice
-      cannot :edit, Invoice, status: 'paid'
     end
 
   end

@@ -80,8 +80,6 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(client_params)
     company_id = get_company_id()
-    client_type = ClientType.find(params[:client_type_id])
-    @client.client_type_id = client_type.id
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
 
     associate_entity(options, @client)

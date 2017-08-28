@@ -68,15 +68,7 @@
               </div>
 
             </div>
-
-            <div class="field_row">
-              <div class="label_field left single"><%= t('views.clients.client_type') %></div>
-              <div class="medium_field">
-                <%= select_tag :client_type_id, options_for_select(ClientType.all.collect{|client_type| [client_type.title, client_type.id]}, @client.client_type_id)%>
-              </div>
-            </div>
-
-            </div>
+          </div>
 
             <div class="options_row">
               <div class="label_field left single options template"><%= t('views.clients.make_available_to') %>:</div>
