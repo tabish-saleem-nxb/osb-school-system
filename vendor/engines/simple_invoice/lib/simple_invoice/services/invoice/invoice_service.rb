@@ -50,7 +50,7 @@ module Services
 
     # invoice bulk actions
     def self.perform_bulk_action(params)
-      ServicesInvoiceBulkActionsService.new(params).perform
+      Services::InvoiceBulkActionsService.new(params).perform
     end
 
     def self.get_invoice_for_preview(encrypted_invoice_id)

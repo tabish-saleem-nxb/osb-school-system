@@ -44,12 +44,12 @@ module SimpleInvoice
     end
 
     def filter_invoices
-      @invoices = Invoice.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
+      @invoices = ::Invoice.filter(params,@per_page).order("#{sort_column} #{sort_direction}")
       @invoices = filter_by_company(@invoices)
     end
 
     def show
-      @invoice = Invoice.find(params[:id])
+      @invoice = ::Invoice.find(params[:id])
       @client = Client.unscoped.find_by_id @invoice.client_id
       respond_to do |format|
         format.html # show.html.erb
@@ -60,7 +60,7 @@ module SimpleInvoice
       # to be used in invoice_pdf view because it requires absolute path of image
       @images_path = "#{request.protocol}#{request.host_with_port}/assets"
       invoice_id = OSB::Util.decrypt(params[:id])
-      @invoice = Invoice.find(invoice_id)
+      @invoice = ::Invoice.find(invoice_id)
       @client = Client.unscoped.find_by_id @invoice.client_id
       respond_to do |format|
         format.pdf do
@@ -68,7 +68,7 @@ module SimpleInvoice
           pdf = render_to_string  pdf: "#{@invoice.invoice_number}",
             layout: 'pdf_mode.html.erb',
             encoding: "UTF-8",
-            template: 'invoices/invoice_pdf.html.erb',
+            template: 'simple_invoice/invoices/invoice_pdf.html.erb',
             footer:{
               right: 'Page [page] of [topage]'
             }
@@ -132,7 +132,7 @@ module SimpleInvoice
 
     def enter_single_payment
       invoice_ids = [params[:ids]]
-      redirect_to({:action => 'enter_payment', :controller => 'payments', :invoice_ids => invoice_ids})
+      redirect_to url_for([main_app, 'payments', 'enter_payment', invoice_ids: invoice_ids])
     end
 
     def update

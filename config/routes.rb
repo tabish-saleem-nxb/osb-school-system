@@ -136,20 +136,6 @@ Osb::Application.routes.draw do
 
     resources :invoices do
       resources :invoice_line_items
-      collection do
-        get 'filter_invoices'
-        get 'bulk_actions'
-        get 'undo_actions'
-        post 'duplicate_invoice'
-        get 'enter_single_payment'
-        get 'send_invoice'
-        post 'paypal_payments'
-        get  'paypal_payments'
-        post 'preview'
-        get 'preview'
-        get 'credit_card_info'
-        get 'selected_currency'
-      end
     end
 
     resources :projects do

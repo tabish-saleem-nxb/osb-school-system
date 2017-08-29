@@ -1,6 +1,8 @@
 module SimpleInvoice
   class ApplicationController < ActionController::Base
     protect_from_forgery with: :exception
+    before_action :set_locale
+    before_filter :set_per_page
 
     #set session of company_id
     def set_company_session
@@ -45,6 +47,28 @@ module SimpleInvoice
       options = ''
       parent.items.each { |item| options += "<option value=#{item.id} type='company_level'>#{item.item_name}</option>" } if parent.items.present?
       options
+    end
+
+    def set_per_page
+      @per_page = if params[:per]
+                    params[:per]
+                  else
+                    if current_user.present?
+                      current_user.settings.records_per_page
+                    else
+                      session["#{controller_name}-per_page"]
+                    end
+                  end
+    end
+
+    protected
+
+    def set_locale
+      I18n.locale = params[:locale] || current_user.settings.language.try(:to_sym) || I18n.default_locale if current_user
+    end
+
+    def default_url_options(options = {})
+      { locale: I18n.locale }.merge options
     end
 
   end

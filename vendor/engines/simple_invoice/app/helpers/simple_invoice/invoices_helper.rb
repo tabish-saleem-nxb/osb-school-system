@@ -26,9 +26,9 @@ module SimpleInvoice
       notice = <<-HTML
          <p>#{message}.</p>
          <ul>
-           <li><a href="/invoices/enter_single_payment?ids=#{id}">Enter payment against this invoice</a></li>
-           <li><a href="/invoices/new">Create another invoice</a></li>
-           <li><a href="/invoices/new?id=#{id}">Create another by duplicating this invoice</a></li>
+           <li><a href="/#{I18n.locale}/invoices/enter_single_payment?ids=#{id}">Enter payment against this invoice</a></li>
+           <li><a href="/#{I18n.locale}/invoices/new">Create another invoice</a></li>
+           <li><a href="/#{I18n.locale}/invoices/new?id=#{id}">Create another by duplicating this invoice</a></li>
            <li><a href="/#{I18n.locale}/invoices/invoice_pdf/#{OSB::Util::encrypt(id)}.pdf" target="_blank">Download this invoice as PDF</a></li>
          </ul>
       HTML
