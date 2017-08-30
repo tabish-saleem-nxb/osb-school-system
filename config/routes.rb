@@ -72,7 +72,6 @@ Osb::Application.routes.draw do
         get 'bulk_actions'
         get 'undo_actions'
         get 'payments_history'
-#TODO:1 following invoice payment route:
         get 'invoice_payments_history'
         post 'delete_non_credit_payments'
       end
@@ -91,7 +90,6 @@ Osb::Application.routes.draw do
         post :client_detail
         get 'filter_clients'
         get 'bulk_actions'
-#TODO:2 Following routes belongs to both invoices and clients
         post 'get_last_invoice'
         post 'get_last_estimate'
         get 'undo_actions'
@@ -216,7 +214,6 @@ Osb::Application.routes.draw do
         get 'update_tasks', as: 'update_tasks'
         get 'load_view'
         get 'timer'
-#TODO:3 Following invoice routes
         get 'invoice'
         post 'invoice_form'
         post 'create_invoice'
