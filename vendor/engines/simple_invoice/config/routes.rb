@@ -19,8 +19,13 @@ SimpleInvoice::Engine.routes.draw do
         get 'preview'
         get 'credit_card_info'
         get 'selected_currency'
+        get 'term_invoices', as: :term
+        post 'generate_term_invoices', as: :generate_term
       end
     end
+
+    resources :penalty_rules
+    resources :term_rules
 
     post '/invoices/delete_invoices_with_payments' => 'invoices#delete_invoices_with_payments'
     post '/invoices/dispute_invoice' => 'invoices#dispute_invoice'

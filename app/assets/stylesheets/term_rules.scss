@@ -1,0 +1,119 @@
+.term_rules {
+  padding: 23px 0 0 0;
+  .grid_table table col.one {
+    /*check box*/
+    width: 33px;
+  }
+  .grid_table table col.two {
+    /*organization*/
+    width: 140px;
+  }
+  .grid_table table col.three {
+    /*contacts*/
+    width: 171px;
+  }
+  .grid_table table col.four {
+    /*email*/
+    width: 171px;
+  }
+  .grid_table table col.five {
+    /*phone*/
+    width: 120px;
+  }
+  .grid_table table col.six {
+    /*available credit*/
+    width: 135px;
+  }
+  .grid_table table col.seven {
+    /*actions*/
+    width: 70px;
+  }
+  .grid_table{
+    table{
+      &.de{
+        col{
+          &.one{
+            width: 33px;
+          }
+          &.two{
+            width: 120px;
+          }
+          &.three{
+            width: 200px;
+          }
+          &.four{
+            width: 105px;
+          }
+          &.five{
+            width: 102px;
+          }
+          &.six{
+            width: 190px;
+          }
+          &.seven{
+            width: 90px;
+          }
+        }
+      }
+      &.fr{
+        col{
+          &.one{
+            width: 33px;
+          }
+          &.two{
+            width: 120px;
+          }
+          &.three{
+            width: 200px;
+          }
+          &.four{
+            width: 105px;
+          }
+          &.five{
+            width: 102px;
+          }
+          &.six{
+            width: 190px;
+          }
+          &.seven{
+            width: 90px;
+          }
+        }
+      }
+    }
+  }
+
+  .label_field.single{
+    &.template{
+      padding-top: 19px;
+    }
+  }
+  .label_field.left{
+    &.options{
+      width: 100%;
+    }
+  }
+  .options_content{
+    margin: 0px;
+    padding-left: 130px;
+  }
+  .options_content_row{
+    padding-top: 12px;
+    input[type="radio"], input[type="checkbox"], label{
+      float: left;
+    }
+    input[type="checkbox"]{
+      margin-left: 22px;
+    }
+    label{
+      line-height: normal;
+      padding: 0 0 0 10px;
+      margin: 0px;
+      font-weight: normal;
+      cursor: pointer;
+    }
+  }
+  .fields_content{
+    padding-top: 34px;
+  }
+}

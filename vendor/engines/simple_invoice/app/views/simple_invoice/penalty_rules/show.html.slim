@@ -1,0 +1,25 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @penalty_rule.name
+  br
+
+  strong Description:
+  = @penalty_rule.description
+  br
+
+  strong Due Date:
+  = @penalty_rule.due_date
+  br
+
+  strong Percentage:
+  = @penalty_rule.percentage
+  br
+
+  strong Client Type:
+  = @penalty_rule.client_type.title
+
+= link_to 'Edit', edit_penalty_rule_path(@penalty_rule)
+'  |
+= link_to 'Back', penalty_rules_path

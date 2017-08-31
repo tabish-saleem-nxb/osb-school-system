@@ -32,7 +32,7 @@ module Services
       elsif params[:id]
         invoice = ::Invoice.find(params[:id]).use_as_template
         invoice.invoice_line_items.build()
-      elsif params[:controller].eql?('invoices') && params[:action].eql?('term_invoices')
+      elsif params[:controller].eql?('simple_invoice/invoices') && params[:action].eql?('term_invoices')
         company_id = get_company_id(params[:invoice_for_client])
         invoice = ::Invoice.new({:invoice_date => Date.today.strftime(date_format), :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), :company_id => company_id, due_date: Date.tomorrow})
         3.times { invoice.invoice_line_items.build() }

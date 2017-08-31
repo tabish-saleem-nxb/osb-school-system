@@ -498,3 +498,9 @@ jQuery ->
   jQuery(".single-recover-link").live "click", ->
     $(this).parent().parent().find("input[type=checkbox]").attr("checked", "checked");
     $(".top_links.recover_deleted").click();
+
+@generateLink = (link) ->
+  $('#generate_invoice').attr 'href', link
+
+@generateLinkBelow = (link) ->
+  $('#generate_invoice_below').attr 'href', link

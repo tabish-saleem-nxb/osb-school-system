@@ -271,6 +271,48 @@ module SimpleInvoice
       redirect_to(invoice_path(invoice), notice: 'Invoice sent successfully.')
     end
 
+    def term_invoices
+      @invoice = Services::InvoiceService.build_new_invoice(params)
+      @client = Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
+      @client = @invoice.client if params[:id].present?
+      @invoice.currency = @client.currency if @client.present?
+      get_clients_and_items
+      @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
+      respond_to do |format|
+        format.html # new.html.erb
+        format.js
+      end
+    end
+
+    def generate_term_invoices
+      if Client.count > 0
+        students = Client.where(client_type_id: ClientType.where(title: 'student').first.id)
+        if !students.blank?
+          students.each do |student|
+            @invoice = Invoice.new(invoice_params)
+            @invoice.client_id = student.id
+            @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
+            @invoice.invoice_type = "Invoice"
+            @invoice.company_id = get_company_id()
+            @invoice.invoice_number = Invoice.get_next_invoice_number(nil)
+            @invoice.create_line_item_taxes()
+
+            if @invoice.save
+              @invoice.notify(current_user, @invoice.id) if params[:commit].present?
+              # new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft])
+            end
+          end
+          redirect_to(invoices_path, notice: 'Term invoices have been generated successfully')
+          return
+        else
+          redirect_to term_invoices_path, alert: 'No student found!'
+          return
+        end
+      else
+        redirect_to term_invoices_path, alert: 'No student found!'
+      end
+    end
+
     private
 
     def invoice_has_deleted_clients?(invoices)

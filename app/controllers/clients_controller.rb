@@ -80,6 +80,12 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(client_params)
     company_id = get_company_id()
+    #TODO: 4 Add following check with generator for TERM INVOICES
+    if params[:client_type_id].present?
+      client_type = ClientType.find(params[:client_type_id])
+      @client.client_type_id = client_type.id
+    end
+
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
 
     associate_entity(options, @client)
@@ -104,8 +110,11 @@ class ClientsController < ApplicationController
   # PUT /clients/1.json
   def update
     @client = Client.find(params[:id])
-    client_type = ClientType.find(params[:client_type_id])
-    @client.update_column(:client_type_id, client_type.id)
+    #TODO: 4 Add following check with generator for TERM INVOICES
+    if params[:client_type_id].present?
+      client_type = ClientType.find(params[:client_type_id])
+      @client.update_column(:client_type_id, client_type.id)
+    end
     associate_entity(params, @client)
 
     #add/update available credit

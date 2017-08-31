@@ -17,6 +17,7 @@
           <td class="align_left text-overflow-class" data-overflow-rows="2"><%= client.email %></td>
           <td class="align_left text-overflow-class" data-overflow-rows="2"><%= client.business_phone %></td>
           <td class="align_right"><%=  number_to_currency(client.client_credit, unit: client.currency_symbol) %></td>
+          <!--<td class="align_left text-overflow-class" data-overflow-rows="2"><%#= client.client_type.title if client.client_type.present? && client.client_type.title.present? %></td>-->
           <td class="align_center">
             <% if client.deleted_at.nil? %>
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),

@@ -175,6 +175,8 @@
 
           <ul class="sub">
             <li><%= active_link_to t("header.links.setting.companies"), main_app.companies_path %></li>
+            <li><%= active_link_to t("header.links.setting.term_rules"), term_rules_path %></li>
+            <li><%= active_link_to t("header.links.setting.penalty_rules"), penalty_rules_path %></li>
             <li class="secondary"><%= active_link_to t("header.links.setting.email_templates"), main_app.email_templates_path %></li>
             <% if can?(:manage, User) %>
                 <li class="secondary_02"><%= link_to t("header.links.setting.users"), main_app.sub_users_path,class: "#{'active' if params[:controller] == 'sub_users' and params[:action] != 'user_settings'}" %></li>
@@ -192,6 +194,8 @@
 
               <li><%= active_link_to  t("header.links.setting.basic_settings"), main_app.user_settings_sub_users_path %></li>
               <li><%= active_link_to  t("header.links.setting.import_data"), main_app.import_data_path %></li>
+              <li><%= active_link_to  t("header.links.setting.term_rules"), term_rules_path %></li>
+              <li><%= active_link_to  t("header.links.setting.penalty_rules"), penalty_rules_path %></li>
             </ul>
           </div>
         </li>
