@@ -1,6 +1,6 @@
 Osb::Application.routes.draw do
 
-  mount SimpleInvoice::Engine => '/'
+  mount SchoolBillingSystem::Engine => '/'
   mount OsbApi::Engine => "/api"
   use_doorkeeper :scope => 'developer'
 

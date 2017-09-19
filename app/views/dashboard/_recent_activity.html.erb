@@ -18,7 +18,7 @@
             <%- @recent_activity.each do |activity| %>
                 <tr>
                   <% if activity[:activity_type].eql?('invoice') %>
-                    <td class="align_left"><%= link_to activity[:activity_type].capitalize, activity[:activity_path].gsub('invoice', 'simple_invoice/invoice') %></a></td>
+                    <td class="align_left"><%= link_to activity[:activity_type].capitalize, activity[:activity_path].gsub('invoice', 'school_billing_system/invoice') %></a></td>
                   <% else %>
                       <td class="align_left"><%= link_to activity[:activity_type].capitalize, activity[:activity_path] %></a></td>
                   <% end %>
