@@ -79,7 +79,7 @@ module SchoolBillingSystem
 
     def preview
       @invoice = Services::InvoiceService.get_invoice_for_preview(params[:inv_id])
-      render :action => 'invoice_deleted_message', :notice => "This invoice has been deleted." if @invoice == 'invoice deleted'
+      render :action => 'invoice_deleted_message', :notice => "This fee invoice has been deleted." if @invoice == 'invoice deleted'
     end
 
     def invoice_deleted_message
@@ -145,7 +145,7 @@ module SchoolBillingSystem
         if %w(paid partial draft-partial).include?(@invoice.status)
           if Services::InvoiceService.paid_amount_on_update(@invoice, params)
             @invoice.notify(current_user, @invoice.id) if params[:commit].present?
-            redirect_to(edit_invoice_url(@invoice), notice: 'Your Invoice has been updated successfully.')
+            redirect_to(edit_invoice_url(@invoice), notice: 'Your fee invoice has been updated successfully.')
             return
           else
             redirect_to(edit_invoice_url(@invoice), alert: invoice_not_updated)
@@ -155,7 +155,7 @@ module SchoolBillingSystem
           @invoice.update_line_item_taxes()
           @invoice.notify(current_user, @invoice.id) if params[:commit].present?
           format.json { head :no_content }
-          redirect_to({:action => "edit", :controller => "invoices", :id => @invoice.id}, :notice => 'Your Invoice has been updated successfully.')
+          redirect_to({:action => "edit", :controller => "invoices", :id => @invoice.id}, :notice => 'Your fee invoice has been updated successfully.')
           return
         else
           format.html { render :action => "edit" }
@@ -268,7 +268,7 @@ module SchoolBillingSystem
     def send_invoice
       invoice = Invoice.find(params[:id])
       invoice.send_invoice(current_user, params[:id])
-      redirect_to(invoice_path(invoice), notice: 'Invoice sent successfully.')
+      redirect_to(invoice_path(invoice), notice: 'Fee invoice has been sent successfully.')
     end
 
     def term_invoices
@@ -302,7 +302,7 @@ module SchoolBillingSystem
               # new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft])
             end
           end
-          redirect_to(invoices_path, notice: 'Term invoices have been generated successfully')
+          redirect_to(invoices_path, notice: 'Term fee invoices have been generated successfully')
           return
         else
           redirect_to term_invoices_path, alert: 'No student found!'

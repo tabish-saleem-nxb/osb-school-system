@@ -6,7 +6,6 @@
       td.align_center = penalty_rule.description
       td.align_center = penalty_rule.due_date
       td.align_center = penalty_rule.percentage
-      td.align_center = penalty_rule.client_type.try(:title)
       td
         = link_to t('.edit', :default => t("helpers.links.edit")), edit_penalty_rule_path(penalty_rule), :class => 'edit_action'
         ' |

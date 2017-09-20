@@ -5,17 +5,14 @@
   <div class="content_top">
     <div class="primary_heading">
       <h1>
-        <%= t '.title', :default => model_class.model_name.human.pluralize %>
+        <%= t '.title', default: t('header.links.invoices.invoices') %>
         <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
       </h1>
     </div>
     <div class="primary_btn">
-      <%= link_to (content_tag(:span, t('header.links.invoices.generate_new'))),
+      <%= link_to (content_tag(:span, t('header.links.invoices.new'))),
                   new_invoice_path,
-                  :class => 'btn_large', id: 'generate_invoice' %>
-
-      <%= select_tag :generate_invoice, options_for_select([['simple invoice',"/#{I18n.locale}/invoices/new"],['term invoice',"/#{I18n.locale}/invoices/term_invoices"]]),
-                     onchange: 'generateLink(this.value);' %>
+                  :class => 'btn_large' %>
     </div>
   </div>
   <!--content_top-->
@@ -66,15 +63,10 @@
       </div>
       <!--content_middle-->
       <div class="content_bottom">
-        <%= link_to (content_tag(:span, t('header.links.invoices.generate_new'))),
+        <%= link_to (content_tag(:span, t('header.links.invoices.new'))),
                     new_invoice_path,
-                    :class => 'btn_large', id: 'generate_invoice_below' %>
-
-        <%= select_tag :generate_invoice, options_for_select([['simple invoice',"/#{I18n.locale}/invoices/new"],['term invoice',"/#{I18n.locale}/invoices/term_invoices"]]),
-                       onchange: 'generateLinkBelow(this.value);' %>
+                    :class => 'btn_large' %>
       </div>
-
-
       <!--content_bottom-->
   <% end %>
 </div><!--invoice-->

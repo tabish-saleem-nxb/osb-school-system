@@ -2,7 +2,7 @@
   <div class="dashboard_box">
     <div class="heading">
       <h1>
-        <%= t('invoices') %>
+        <%= t('fee_invoices') %>
       </h1>
       <% if current_user.settings.currency.present? and current_user.settings.currency == "On" %>
       <%= select_tag :currency, options_from_collection_for_select(currencies, :id, :unit,@currency.try(:id)),class: "currency" %>
