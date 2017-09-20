@@ -33,8 +33,6 @@ class Client < ActiveRecord::Base
   belongs_to :currency
   has_many :company_entities, :as => :entity
   has_many :expenses
-  #TODO:1 add client type by generator
-  belongs_to :client_type
   after_create :create_default_currency
 
   acts_as_archival

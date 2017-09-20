@@ -229,7 +229,3 @@ Role.delete_all
 ROLES.each do |role|
   Role.create name: role
 end
-
-ClientType.destroy_all
-
-ClientType.create([{title: 'student'}, {title: 'other'}])
