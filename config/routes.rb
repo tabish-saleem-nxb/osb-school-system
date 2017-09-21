@@ -85,7 +85,7 @@ Osb::Application.routes.draw do
     end
 
     post '/payments/enter_payment'
-    resources :clients do
+    resources :clients, path: :students do
       collection do
         post :client_detail
         get 'filter_clients'
