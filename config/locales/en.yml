@@ -25,6 +25,7 @@ en:
   edit: "Edit"
   estimate: "Estimate"
   term_rules: 'Term Rules'
+  parents: 'Parents'
 
   date:
     formats:
@@ -103,6 +104,10 @@ en:
         new: 'New Term Rule'
       penalty_rules:
         new: 'New Penalty Rule'
+      parent_clients:
+        parents: 'Parents'
+        listing: 'Parents Listing'
+        new: 'New Parent'
 
   views:
     common:
@@ -414,6 +419,13 @@ en:
       description: 'Description'
       penalty_rules: 'Penalty Rules'
       client_type: 'Client Type'
+
+    parent_clients:
+      parents: 'Parents'
+      organization: "Organization"
+      no_record_msg: "You haven't created any parent yet. Please click on New Parent button to create new parent."
+      no_archived_parent: "You haven't any archived parent."
+      no_deleted_parent: "You haven't any deleted parent."
 
     items:
       add_new_item: 'Add New Item'
