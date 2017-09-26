@@ -1,0 +1,105 @@
+#notice
+  p = notice
+
+p
+  strong First name:
+  = @parent_client.first_name
+
+
+p
+  strong Last name:
+  = @parent_client.last_name
+
+
+p
+  strong Email:
+  = @parent_client.email
+
+
+p
+  strong Mobile number:
+  = @parent_client.mobile_number
+
+
+p
+  strong Home number:
+  = @parent_client.home_number
+
+
+p
+  strong Business phone:
+  = @parent_client.business_phone
+
+p
+  strong Country:
+  = @parent_client.country
+
+
+p
+  strong Address street1:
+  = @parent_client.address_street1
+
+
+p
+  strong Address street2:
+  = @parent_client.address_street2
+
+
+p
+  strong City:
+  = @parent_client.city
+
+
+p
+  strong Industry:
+  = @parent_client.industry
+
+
+p
+  strong Province:
+  = @parent_client.province
+
+
+p
+  strong Postal zip code:
+  = @parent_client.postal_zip_code
+
+
+p
+  strong Fax:
+  = @parent_client.fax
+
+
+p
+  strong Internal notes:
+  = @parent_client.internal_notes
+
+
+p
+  strong Archive number:
+  = @parent_client.archive_number
+
+
+p
+  strong Archived at:
+  = @parent_client.archived_at
+
+
+p
+  strong Deleted at:
+  = @parent_client.deleted_at
+
+
+p
+  strong Available credit:
+  = @parent_client.available_credit
+
+
+p
+  strong Currency:
+  = @parent_client.currency_id
+
+
+= link_to 'Edit', edit_parent_client_path(@parent_client)
+|
+= link_to 'Back', parent_clients_path

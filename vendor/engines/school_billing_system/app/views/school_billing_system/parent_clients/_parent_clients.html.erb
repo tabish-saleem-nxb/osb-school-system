@@ -1,0 +1,40 @@
+<%
+   no_record_message = t('views.parent_clients.no_record_msg')
+   if params[:status] == "archived" || @action == "recovered from archived" ||  @action == "deleted from archived"
+     no_record_message = t('views.parent_clients.no_archived_parent')
+   elsif params[:status] == "deleted" || @action == "recovered from deleted"
+     no_record_message = t('views.parent_clients.no_deleted_parent')
+   end
+   test = @parent_clients.first
+%>
+
+<% if @parent_clients.length > 0 %>
+    <% @parent_clients.each do |parent_client| %>
+        <tr>
+          <td class="align_center"><%= check_box_tag "client_ids[]", parent_client.id, false, :id => "parent_client_#{parent_client.id}" %></td>
+          <td class="align_left"><%= link_to(parent_client.organization_name, 'javascript:', class: "parent_client_name text-overflow-class #{ 'deleted_entry' if parent_client.deleted? }", value: parent_client.id) %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= parent_client.contact_name %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= parent_client.email %></td>
+          <td class="align_left text-overflow-class" data-overflow-rows="2"><%= parent_client.business_phone %></td>
+          <td class="align_right"><%#=  number_to_currency(parent_client.parent_client_credit, unit: parent_client.currency_symbol) %></td>
+          <!--<td class="align_left text-overflow-class" data-overflow-rows="2"><%#= client.client_type.title if client.client_type.present? && client.client_type.title.present? %></td>-->
+          <td class="align_center">
+            <% if parent_client.deleted_at.nil? %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_parent_client_path(parent_client), :class => 'edit_action' %>
+            <% else %>
+                <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
+                            "javascript:;", class: "single-recover-link" %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+<% else %>
+    <tr>
+      <td colspan="6">
+        <div class="no_record_container">
+          <%= no_record_message %>
+        </div>
+      </td>
+    </tr>
+<% end %>

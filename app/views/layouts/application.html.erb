@@ -86,6 +86,20 @@
               </div>
             </li>
 
+            <li class='dropdown'>
+              <%= active_link_to t('header.links.parent_clients.parents'), school_billing_system.parent_clients_path, class: 'dropdown-toggle disabled', 'data-toggle' => 'dropdown' %>
+              <ul class='sub'>
+                <li><%= active_link_to t('header.links.parent_clients.listing'), school_billing_system.parent_clients_path %></li>
+                <li><%= active_link_to t('header.links.parent_clients.new'), school_billing_system.new_parent_client_path %></li>
+              </ul>
+              <div class='dropdown-menu' role='menu' aria-labelledby='dropdownMenu'>
+                <ul>
+                    <li><%= active_link_to t('header.links.parent_clients.listing'), school_billing_system.parent_clients_path %></li>
+                    <li><%= active_link_to t('header.links.parent_clients.new'), school_billing_system.new_parent_client_path %></li>
+                </ul>
+              </div>
+            </li>
+
             <li class="dropdown">
               <%= active_link_to t("header.links.items.items"), items_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
               <ul class="sub">
