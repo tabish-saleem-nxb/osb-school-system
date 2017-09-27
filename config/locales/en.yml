@@ -16,7 +16,7 @@ en:
   payment: "Payment"
   client: "Student"
   manager: "Manager"
-  clients: "Students"
+  clients: "Clients"
   item: "Item"
   report: "Report"
   amount: "Amount"
@@ -26,6 +26,7 @@ en:
   estimate: "Estimate"
   term_rules: 'Term Rules'
   parents: 'Parents'
+  students: 'Students'
 
   date:
     formats:
@@ -104,10 +105,14 @@ en:
         new: 'New Term Rule'
       penalty_rules:
         new: 'New Penalty Rule'
-      parent_clients:
+      parents:
         parents: 'Parents'
         listing: 'Parents Listing'
         new: 'New Parent'
+      students:
+        students: 'Students'
+        listing: 'Students Listing'
+        new: 'New Student'
 
   views:
     common:
@@ -353,11 +358,12 @@ en:
         send_estimate: "Send Estimate"
         this_estimate_was_sent_using: "This estimate was sent using"
 
-    clients:
-      client_name: "Student Name"
-      client: "Student"
-      clients: "Students"
-      new_client: "New Student"
+    students:
+      student_name: "Student Name"
+      student: "Student"
+      students: "Students"
+      new_student: "New Student"
+      create_student: "Create Student"
       organization: "Organization"
       organization_name: "Organization name"
       contact: "Contact"
@@ -367,7 +373,7 @@ en:
       additional_contacts: "Additional Contacts"
       add_new_contact: "Add new contact"
       business_phone: "Business phone"
-      contact_name: "Contact Name"
+      student_name: "Student Name"
       first_name: "First name"
       last_name: "Last name"
       industry: "Industry"
@@ -381,16 +387,56 @@ en:
       type: "Type"
       date: "Date"
       no_sent_emails: "No sent emails."
-      client_id: "Student id"
+      student_id: "Student id"
       remove_this_contact: "Remove this contact"
       outstanding_amount: "Outstanding Amount"
       total_amount_billed: "Total amount billed"
       total_payments_received: "Total payments received"
       no_record_msg: "You haven't created any student yet. Please click on New Student button to create new student."
-      no_archived_client: "You haven't any archived student."
-      no_deleted_client: "You haven't any deleted student."
-      add_new_client: "Add New Student"
+      no_archived_student: "You haven't any archived student."
+      no_deleted_student: "You haven't any deleted student."
+      add_new_student: "Add New Student"
       contact_title: "Contact title"
+    parents:
+      parent_name: "Parent Name"
+      parent: "Parent"
+      parents: "Parents"
+      new_parent: "New Parent"
+      create_parent: "Create Parent"
+      organization: "Organization"
+      organization_name: "Organization name"
+      contact: "Contact"
+      available_credit: "Available Credit"
+      available_credit_detail: "This credit can be applied to invoice for this parent."
+      make_available_to: "Make this Parent available to"
+      additional_contacts: "Additional Contacts"
+      add_new_contact: "Add new contact"
+      business_phone: "Business phone"
+      parent_name: "Parent Name"
+      first_name: "First name"
+      last_name: "Last name"
+      industry: "Industry"
+      select_an_industry: "Select an industry..."
+      company_size: "School size"
+      select_company_size: "Select school size..."
+      internal_notes: "Internal notes"
+      listing_sent_emails: "Listing sent emails"
+      subject: "Subject"
+      recipient: "Recipient"
+      type: "Type"
+      date: "Date"
+      no_sent_emails: "No sent emails."
+      parent_id: "Parent id"
+      remove_this_contact: "Remove this contact"
+      outstanding_amount: "Outstanding Amount"
+      total_amount_billed: "Total amount billed"
+      total_payments_received: "Total payments received"
+      no_record_msg: "You haven't created any parent yet. Please click on New Parent button to create new parent."
+      no_archived_parent: "You haven't any archived parent."
+      no_deleted_parent: "You haven't any deleted parent."
+      add_new_parent: "Add New Parent"
+      contact_title: "Contact title"
+
     expenses:
       expenses: "Expenses"
       listing: "Expenses Listing"
@@ -419,13 +465,6 @@ en:
       description: 'Description'
       penalty_rules: 'Penalty Rules'
       client_type: 'Client Type'
-
-    parent_clients:
-      parents: 'Parents'
-      organization: "Organization"
-      no_record_msg: "You haven't created any parent yet. Please click on New Parent button to create new parent."
-      no_archived_parent: "You haven't any archived parent."
-      no_deleted_parent: "You haven't any deleted parent."
 
     items:
       add_new_item: 'Add New Item'

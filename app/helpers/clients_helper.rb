@@ -60,4 +60,12 @@ module ClientsHelper
     flag
   end
 
+  def client_type_parent(type)
+    type.present? && type.eql?('parent')
+  end
+
+  def client_type_student(type)
+    type.present? && type.eql?('student')
+  end
+
 end

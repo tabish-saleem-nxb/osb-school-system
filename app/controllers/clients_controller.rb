@@ -32,7 +32,11 @@ class ClientsController < ApplicationController
     params[:status] = params[:status] || 'active'
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-    @clients = Client.get_clients(params.merge(get_args(method)))
+    if client_type_parent(params[:type])
+      @clients = Client.parent_clients.get_clients(params.merge(get_args(method)))
+    elsif client_type_student(params[:type])
+      @clients = Client.students.get_clients(params.merge(get_args(method)))
+    end
     @status = params[:status]
     respond_to do |format|
       format.html # index.html.erb
@@ -63,6 +67,10 @@ class ClientsController < ApplicationController
   def new
     @client = Client.new
     @client.client_contacts.build()
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    params[:status] = 'active'
+    method = mappings[params[:status].to_sym]
+    @parents = Client.parent_clients.get_clients(params.merge(get_args(method)))
     respond_to do |format|
       format.html # new.html.erb
       format.json { render :json => @client }
@@ -79,6 +87,7 @@ class ClientsController < ApplicationController
   # POST /clients.json
   def create
     @client = Client.new(client_params)
+    params[:client][:parent_client_id] = params[:client][:parent_client_id].blank? ? nil : params[:client][:parent_client_id]
     company_id = get_company_id()
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
 

@@ -21,6 +21,8 @@ class Client < ActiveRecord::Base
 
   #scopes
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
+  scope :parent_clients, lambda {where('parent_client_id is ?', nil)}
+  scope :students, lambda {where('parent_client_id is not ?', nil)}
 
   # associations
   has_many :estimates
@@ -33,7 +35,10 @@ class Client < ActiveRecord::Base
   belongs_to :currency
   has_many :company_entities, :as => :entity
   has_many :expenses
-  belongs_to :parent_client
+
+  belongs_to :parent, class_name: 'Client', foreign_key: 'parent_client_id'
+  has_many :children, class_name: 'Client', foreign_key: 'parent_client_id'
+
   after_create :create_default_currency
 
   acts_as_archival

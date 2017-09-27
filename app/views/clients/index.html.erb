@@ -6,14 +6,12 @@
   <div class="content_top">
     <div class="primary_heading">
       <h1>
-        <%= t '.title', :default => t("clients") %>
+        <%= t '.title', :default => t("#{params[:type]}s") %>
         <span>&nbsp;/&nbsp;<%= t('views.common.active') %></span>
       </h1>
     </div>
     <div class="primary_btn">
-      <%= link_to (content_tag(:span, t("header.links.clients.new"))),
-                  new_client_path,
-                  :class => 'btn_large' %>
+        <%= render "clients/#{params[:type]}s/new_#{params[:type]}" %>
     </div>
   </div>
   <!--content_top-->
@@ -58,13 +56,10 @@
       </div>
       <!--content_middle-->
       <div class="content_bottom">
-        <%= link_to (content_tag(:span, t("header.links.clients.new"))),
-                    new_client_path,
-                    :class => 'btn_large' %>
+        <%= render "clients/#{params[:type]}s/new_#{params[:type]}" %>
       </div>
       <!--content_bottom-->
       </div><!--clients-->
   <% end %>
 
   <%= render 'payments/unpaid_invoices' %>
-

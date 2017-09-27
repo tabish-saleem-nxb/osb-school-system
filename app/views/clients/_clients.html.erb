@@ -1,9 +1,10 @@
 <%
-   no_record_message = t('views.clients.no_record_msg')
+   type = params[:type]
+   no_record_message = t("views.#{type}s.no_record_msg")
    if params[:status] == "archived" || @action == "recovered from archived" ||  @action == "deleted from archived"
-     no_record_message = t('views.clients.no_archived_client')
+     no_record_message = t("views.#{type}s.no_archived_#{type}")
    elsif params[:status] == "deleted" || @action == "recovered from deleted"
-     no_record_message = t('views.clients.no_deleted_client')
+     no_record_message = t("views.#{type}s.no_deleted_#{type}")
    end
    test = @clients.first
 %>
@@ -21,7 +22,8 @@
           <td class="align_center">
             <% if client.deleted_at.nil? %>
                 <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                            edit_client_path(client), :class => 'edit_action' %>
+                            "#{type}s/#{client.id}/edit", :class => 'edit_action' %>
+                <!--"edit_#{type}_path(#{client.id})", :class => 'edit_action'-->
             <% else %>
                 <%= link_to t('views.common.recover', :default => t("helpers.links.recover")),
                             "javascript:;", class: "single-recover-link" %>
