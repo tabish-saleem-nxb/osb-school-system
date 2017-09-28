@@ -363,6 +363,7 @@ en:
       student: "Student"
       students: "Students"
       new_student: "New Student"
+      grade: 'Grade'
       create_student: "Create Student"
       organization: "Organization"
       organization_name: "Organization name"
@@ -402,6 +403,9 @@ en:
       parent: "Parent"
       parents: "Parents"
       new_parent: "New Parent"
+      alt_email: 'Alternate Email'
+      select: 'Select Parent'
+      fee_date: 'Fee Date'
       create_parent: "Create Parent"
       organization: "Organization"
       organization_name: "Organization name"
