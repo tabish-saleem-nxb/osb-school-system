@@ -87,8 +87,14 @@ module SchoolBillingSystem
 
     def new
       @invoice = Services::InvoiceService.build_new_invoice(params)
+      params[:invoice_for_client] = if params[:invoice_for_parent].present?
+                                      params[:invoice_for_parent]
+                                    elsif params[:invoice_for_student].present?
+                                      params[:invoice_for_student]
+                                    end
       @client = ::Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
       @client = @invoice.client if params[:id].present?
+      @students = get_all_students(params)
       @invoice.currency = @client.currency if @client.present?
       get_clients_and_items
       @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
@@ -311,6 +317,17 @@ module SchoolBillingSystem
       else
         redirect_to term_invoices_path, alert: 'No student found!'
       end
+    end
+
+    def get_all_students(params)
+      mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+      params[:status] = 'active'
+      method = mappings[params[:status].to_sym]
+      Client.students.get_clients(params.merge(get_args(method)), true)
+    end
+
+    def get_args(status)
+      {status: status, per: @per_page, user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id}
     end
 
     private
