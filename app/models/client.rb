@@ -177,7 +177,7 @@ class Client < ActiveRecord::Base
     self.currency.present? ? self.currency.unit : 'USD'
   end
 
-  def self.get_clients(params)
+  def self.get_clients(params, no_limit=nil)
     account = params[:user].current_account
 
     # get the clients associated with companies
@@ -194,8 +194,7 @@ class Client < ActiveRecord::Base
       a.send(params[:sort_column]) <=> b.send(params[:sort_column])
     end if params[:sort_column] && params[:sort_direction]
 
-    Kaminari.paginate_array(clients).page(params[:page]).per(params[:per])
-
+    no_limit.nil? ? Kaminari.paginate_array(clients).page(params[:page]).per(params[:per]) : clients
   end
 
   def create_default_currency

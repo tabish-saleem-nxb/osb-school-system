@@ -29,6 +29,13 @@
                 <div class="label_field right"><%= t("views.#{type}s.business_phone") %></div>
                 <div class="small_field"><%= f.text_field :business_phone %></div>
               </div>
+              <div class="field_row">
+                <div class="label_field left single"><span><%= t('views.parents.alt_email') %></span></div>
+                  <div class="medium_field">
+                    <%= f.text_field :parent_alt_email, required: true %>
+                  </div>
+                </div>
+              </div>
               <!--field_row-->
 
               <div class="field_row description">

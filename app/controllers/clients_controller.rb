@@ -67,10 +67,10 @@ class ClientsController < ApplicationController
   def new
     @client = Client.new
     @client.client_contacts.build()
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    params[:status] = 'active'
-    method = mappings[params[:status].to_sym]
-    @parents = Client.parent_clients.get_clients(params.merge(get_args(method)))
+    if client_type_student(params[:type])
+      @client.fee_date = Date.tomorrow
+      @parents = get_all_parents(params)
+    end
     respond_to do |format|
       format.html # new.html.erb
       format.json { render :json => @client }
@@ -81,13 +81,15 @@ class ClientsController < ApplicationController
   def edit
     @client = Client.find(params[:id])
     @client.payments.build({:payment_type => "credit", :payment_date => Date.today})
+    if client_type_student(params[:type])
+      @parents = get_all_parents(params)
+    end
   end
 
   # POST /clients
   # POST /clients.json
   def create
     @client = Client.new(client_params)
-    params[:client][:parent_client_id] = params[:client][:parent_client_id].blank? ? nil : params[:client][:parent_client_id]
     company_id = get_company_id()
     options = params[:quick_create] ? params.merge(company_ids: company_id) : params
 
@@ -99,8 +101,8 @@ class ClientsController < ApplicationController
       if @client.save
         format.js
         format.json { render :json => @client, :status => :created, :location => @client }
-        new_client_message = new_client(@client.id)
-        redirect_to({:action => "edit", :controller => "clients", :id => @client.id}, :notice => new_client_message) unless params[:quick_create]
+        new_client_message = new_client(@client.id, params[:type])
+        redirect_to("/#{params[:type]}s/#{@client.id}/edit", :notice => new_client_message) unless params[:quick_create]
         return
       else
         format.html { render :action => "new" }
@@ -183,6 +185,13 @@ class ClientsController < ApplicationController
     render :text => [client.last_estimate || "no estimate", client.organization_name || ""]
   end
 
+  def get_all_parents(params)
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    params[:status] = 'active'
+    method = mappings[params[:status].to_sym]
+    @parents = Client.parent_clients.get_clients(params.merge(get_args(method)), true)
+  end
+
   private
 
   def get_intimation_message(action_key, invoice_ids)
@@ -217,6 +226,7 @@ class ClientsController < ApplicationController
                                    :send_invoice_by, :email, :home_phone, :first_name, :last_name,
                                    :mobile_number, :client_contacts_attributes, :archive_number,
                                    :archived_at, :deleted_at,:currency_id, :parent_client_id,
+                                   :fee_date, :parent_alt_email, :grade,
                                    client_contacts_attributes: [:id, :client_id, :email, :first_name, :last_name, :home_phone, :mobile_number, :_destroy]
     )
   end
