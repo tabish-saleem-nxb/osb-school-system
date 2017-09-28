@@ -21,15 +21,25 @@
 module ClientsHelper
   include ApplicationHelper
 
-  def new_client id
-    notice = <<-HTML
-     <p>Client has been created successfully.</p>
-     <ul>
-      <li><a href="/clients/new">Create another client</a></li>
-      <li><a href="/invoices/new?invoice_for_client=#{id}">Create an invoice for this client</a></li>
-     </ul>
-    HTML
-    notice.html_safe
+  def new_client(id, type)
+    parent_or_student = type.capitalize
+    if type.present? && type.eql?('student')
+      notice = <<-HTML
+       <p>"#{parent_or_student} has been created successfully."</p>
+       <ul>
+        <li><a href="/#{type}s/new">"Create another #{type}"</a></li>
+        <li><a href="/invoices/new?invoice_for_#{type}=#{id}&type=#{type}">"Create an invoice for this #{type}"</a></li>
+       </ul>
+      HTML
+    else
+      notice = <<-HTML
+       <p>"#{parent_or_student} has been created successfully."</p>
+       <ul>
+        <li><a href="/#{type}s/new">"Create another #{type}"</a></li>
+       </ul>
+      HTML
+    end
+    notice.tr('"', '').html_safe
   end
 
   def clients_archived ids
