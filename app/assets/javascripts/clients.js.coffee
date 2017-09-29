@@ -47,6 +47,9 @@ jQuery ->
       flag = false
 #    else if jQuery("#client_organization_name").val() is ""
       #jQuery("#client_organization_name").val(client_email)
+    else if jQuery("#client_parent_client_id").val() is ""
+      applyPopover(jQuery("#client_parent_client_id_chzn"),"bottomMiddle","topLeft","Select a parent")
+      flag = false
     else if jQuery('#company_association').is(':checked')
       if jQuery('.options_content input[type=checkbox]:checked').length is 0
         applyQtip(jQuery("#company_association").next(),"Select a company", 'topRight')
