@@ -229,7 +229,8 @@
       </div><!--content_middle-->
 
       <div class="content_bottom">
-        <%= f.submit t("views.#{type}s.create_#{type}"), :class => "btn_large submit" %>
+        <% create_or_update = params[:action].eql?('edit') ? t("views.#{type}s.update_#{type}") : t("views.#{type}s.create_#{type}") %>
+        <%= f.submit create_or_update, :class => "btn_large submit" %>
       </div><!--content_bottom-->
   <% end %>
   </div><!--clients-->
