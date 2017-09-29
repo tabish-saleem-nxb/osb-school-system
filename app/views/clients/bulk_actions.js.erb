@@ -1,7 +1,7 @@
 jQuery(".alert").hide()
 
 <% if params[:new_invoice] %>
-    window.location.href = "/invoices/new?invoice_for_client=<%= params[:client_ids].join(",") %>";
+    window.location.href = "/invoices/new?invoice_for_<%= params[:type] %>=<%= params[:client_ids].join(",") %>";
 <%else%>
 
 <% unless params[:flag]%>
