@@ -149,7 +149,13 @@ module ApplicationHelper
 
     if %(clients items staffs tasks).include?(elem)
       account = params[:user].current_account
-      (account.send(elem).send(params[:status]) + Company.find(company_id).send(elem).send(params[:status])).size
+      if params[:type].eql?('parent')
+        (account.send(elem).send(params[:status]) + Company.find(company_id).send(elem).parent_clients.send(params[:status])).size
+      elsif params[:type].eql?('student')
+        (account.send(elem).send(params[:status]) + Company.find(company_id).send(elem).students.send(params[:status])).size
+      else
+        (account.send(elem).send(params[:status]) + Company.find(company_id).send(elem).send(params[:status])).size
+      end
     else
       model.where("company_id IN(?)", company_id).send(params[:status]).count
     end
