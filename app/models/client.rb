@@ -179,14 +179,21 @@ class Client < ActiveRecord::Base
 
   def self.get_clients(params, no_limit=nil)
     account = params[:user].current_account
-
-    # get the clients associated with companies
-    company_clients = Company.find(params[:company_id]).clients.send(params[:status])
-    #company_clients
-
-    # get the unique clients associated with companies and accounts
-    clients = (account.clients.send(params[:status]) + company_clients).uniq
-
+    if params[:type].eql?('parent')
+      # get the clients associated with companies
+      company_clients = Company.find(params[:company_id]).clients.parent_clients.send(params[:status])
+      #company_clients
+      clients = (account.clients.parent_clients.send(params[:status]) + company_clients).uniq
+    elsif params[:type].eql?('student')
+      # get the clients associated with companies
+      company_clients = Company.find(params[:company_id]).clients.students.send(params[:status])
+      #company_clients
+      clients = (account.clients.students.send(params[:status]) + company_clients).uniq
+    else
+      company_clients = Company.find(params[:company_id]).clients.send(params[:status])
+      #company_clients
+      clients = (account.clients.send(params[:status]) + company_clients).uniq
+    end
     # sort clients in ascending or descending order
     clients.sort! do |a, b|
       b, a = a, b if params[:sort_direction] == 'desc'

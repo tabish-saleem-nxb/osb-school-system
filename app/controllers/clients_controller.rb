@@ -32,11 +32,7 @@ class ClientsController < ApplicationController
     params[:status] = params[:status] || 'active'
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     method = mappings[params[:status].to_sym]
-    if client_type_parent(params[:type])
-      @clients = Client.parent_clients.get_clients(params.merge(get_args(method)))
-    elsif client_type_student(params[:type])
-      @clients = Client.students.get_clients(params.merge(get_args(method)))
-    end
+    @clients = Client.get_clients(params.merge(get_args(method)))
     @status = params[:status]
     respond_to do |format|
       format.html # index.html.erb
@@ -126,7 +122,7 @@ class ClientsController < ApplicationController
       if @client.update_attributes(client_params)
         format.html { redirect_to @client, :notice => 'Client was successfully updated.' }
         format.json { head :no_content }
-        redirect_to({:action => "edit", :controller => "clients", :id => @client.id}, :notice => 'Your client has been updated successfully.')
+        redirect_to("/#{params[:type]}s/#{@client.id}/edit", :notice => "Your #{params[:type]} has been updated successfully.")
         return
       else
         format.html { render :action => "edit" }
@@ -189,7 +185,8 @@ class ClientsController < ApplicationController
     mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
     params[:status] = 'active'
     method = mappings[params[:status].to_sym]
-    @parents = Client.parent_clients.get_clients(params.merge(get_args(method)), true)
+    params = params.merge(type: 'parent')
+    @parents = Client.get_clients(params.merge(get_args(method)), true)
   end
 
   private
