@@ -91,11 +91,13 @@ Osb::Application.routes.draw do
     get '/parents/new', to: 'clients#new', as: :new_parent, defaults: {type: 'parent'}
     get '/parents/:id/edit', to: 'clients#edit', as: :edit_parent, defaults: {type: 'parent'}
     get '/parents/bulk_actions', to: 'clients#bulk_actions', as: :bulk_actions_parents, defaults: {type: 'parent'}
+    get '/parents/undo_actions', to: 'clients#undo_actions', as: :undo_actions_parents, defaults: {type: 'parent'}
 
     get '/students', to: 'clients#index', as: :students, defaults: {type: 'student'}
     get '/students/new', to: 'clients#new', as: :new_student, defaults: {type: 'student'}
     get '/students/:id/edit', to: 'clients#edit', as: :edit_student, defaults: {type: 'student'}
     get '/students/bulk_actions', to: 'clients#bulk_actions', as: :bulk_actions_students, defaults: {type: 'student'}
+    get '/students/undo_actions', to: 'clients#undo_actions', as: :undo_actions_students, defaults: {type: 'student'}
 
 
     resources :clients do

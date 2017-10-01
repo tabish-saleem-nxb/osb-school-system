@@ -8,7 +8,7 @@ jQuery(".alert").hide()
     <% if @action == "archived" or @action == "deleted" %>
         jQuery(".alert.alert-success").show().find('span').html("<%= escape_javascript @message %>");
     <% else %>
-        jQuery(".alert.alert-success").show().find('span').html("Client(s) are <%= @action %> successfully");
+        jQuery(".alert.alert-success").show().find('span').html("<%= params[:type].capitalize %>(s) are <%= @action %> successfully");
     <% end %>
 <% end %>
 
