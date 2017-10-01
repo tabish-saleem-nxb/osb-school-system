@@ -110,6 +110,7 @@ module SchoolBillingSystem
       if @invoice.invoice_type.eql?("ProjectInvoice")
         redirect_to :back, alert:  "Project Invoice cannot be updated"
       else
+        @students = get_all_students(params)
         @invoice.invoice_line_items.build()
         get_clients_and_items
         @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
@@ -323,7 +324,8 @@ module SchoolBillingSystem
       mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
       params[:status] = 'active'
       method = mappings[params[:status].to_sym]
-      Client.students.get_clients(params.merge(get_args(method)), true)
+      params = params.merge(type: 'student')
+      Client.get_clients(params.merge(get_args(method)), true)
     end
 
     def get_args(status)
