@@ -143,6 +143,39 @@ class ClientsController < ApplicationController
     end
   end
 
+  def import_students
+    @created_clients = []
+    @corrupted_clients = []
+
+    if params[:file].present?
+      unless File.zero?(params[:clients][:students])
+        file = File.read(params[:file])
+        begin JSON.parse(file)
+          @students_hash = JSON.parse(file)
+        rescue JSON::ParserError => error
+          redirect_to :back, notice: "File is not in valid JSON format. Found error: #{error}"
+          return
+        end
+        @students_hash.each do |student|
+          if Client.create(
+            first_name: student["first_name"],
+            last_name: student["last_name"],
+            email: student["email"]
+            )
+            @created_clients << student
+          else
+            @corrupted_clients << student
+          end
+        end
+      else
+        redirect_to :back, notice: 'You have uploaded an empty file.'
+        return
+      end
+    else
+      redirect_to :back, notice: 'Sorry! File not received.'
+    end
+  end
+
   def bulk_actions
     options = params.merge(per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id)
     result = Services::ClientBulkActionsService.new(options).perform

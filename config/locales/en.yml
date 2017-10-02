@@ -364,6 +364,7 @@ en:
       students: "Students"
       new_student: "New Student"
       edit_student: "Edit Student"
+      import: 'Import Students'
       grade: 'Grade'
       create_student: "Create Student"
       update_student: "Update Student"
