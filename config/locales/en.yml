@@ -113,6 +113,11 @@ en:
         students: 'Students'
         listing: 'Students Listing'
         new: 'New Student'
+      grades:
+        grades: "Grades"
+        new: "New Grade"
+        listing: "Grades Listing"
+
 
   views:
     common:
@@ -365,7 +370,7 @@ en:
       new_student: "New Student"
       edit_student: "Edit Student"
       import: 'Import Students'
-      grade: 'Grade'
+      select_grade: 'Select a grade'
       create_student: "Create Student"
       update_student: "Update Student"
       organization: "Organization"

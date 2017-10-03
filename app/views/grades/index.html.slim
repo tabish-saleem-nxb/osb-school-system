@@ -1,0 +1,23 @@
+h1 Listing grades
+
+table
+  thead
+    tr
+      th Title
+      th Description
+      th
+      th
+      th
+
+  tbody
+    - @grades.each do |grade|
+      tr
+        td = grade.title
+        td = grade.description
+        td = link_to 'Show', grade
+        td = link_to 'Edit', edit_grade_path(grade)
+        td = link_to 'Destroy', grade, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Grade', new_grade_path

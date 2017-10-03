@@ -1,5 +1,6 @@
 Osb::Application.routes.draw do
 
+  resources :grades
   mount SchoolBillingSystem::Engine => '/'
   mount OsbApi::Engine => "/api"
   use_doorkeeper :scope => 'developer'
