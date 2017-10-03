@@ -150,23 +150,25 @@ class ClientsController < ApplicationController
     @corrupted_clients = []
 
     if params[:file].present?
-      unless File.zero?(params[:clients][:students])
-        file = File.read(params[:file])
+      unless params[:file].nil?
+        file = File.read(params[:file].path)
         begin JSON.parse(file)
-          @students_hash = JSON.parse(file)
+        @data_hash = JSON.parse(file)
         rescue JSON::ParserError => error
           redirect_to :back, notice: "File is not in valid JSON format. Found error: #{error}"
           return
         end
-        @students_hash.each do |student|
-          if Client.create(
-            first_name: student["first_name"],
-            last_name: student["last_name"],
-            email: student["email"]
-            )
-            @created_clients << student
-          else
-            @corrupted_clients << student
+        @data_hash.each do |data_item|
+          data_item.each do |key|
+            if key[0].eql?('parent') && key[1]['email'].present? && key[1]['first_name'].present? && key[1]['last_name'].present?
+              #new record
+              if Client.find_by_email(key['email']).nil?
+                @parent = Client.create(first_name: key['first_name'], last_name: key['last_name'], email: key['email'])
+              end
+              #WIP
+            else
+              key[0]
+            end
           end
         end
       else
