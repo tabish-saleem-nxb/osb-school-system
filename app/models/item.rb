@@ -31,6 +31,8 @@ class Item < ActiveRecord::Base
   belongs_to :tax2, :foreign_key => "tax_2", :class_name => "Tax"
   belongs_to :company
   has_many :company_entities, :as => :entity
+  belongs_to :grade
+  belongs_to :account
 
   # archive and delete
   acts_as_archival

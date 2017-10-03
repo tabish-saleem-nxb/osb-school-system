@@ -38,6 +38,7 @@ class Client < ActiveRecord::Base
 
   belongs_to :parent, class_name: 'Client', foreign_key: 'parent_client_id'
   has_many :children, class_name: 'Client', foreign_key: 'parent_client_id'
+  belongs_to :grade #use for student
 
   after_create :create_default_currency
 

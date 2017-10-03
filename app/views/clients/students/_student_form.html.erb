@@ -58,20 +58,19 @@
                   <%= f.select :parent_client_id, options_for_select(@parents.collect{|parent| [parent.contact_name, parent.id]}, selected: selected_parent), {prompt: '', include_blank: ''}, {'data-placeholder' => t('views.parents.select_parent'), class: 'invoice_client medium chzn-select', 'data-form-container' => 'clients_holder', 'data-dropdown-width' => '300'} %>
                 </div>
 
-                <div class="label_field right single"><span><%= t('views.students.grade') %></span></div>
+                <div class="label_field right single"><%= t('views.students.fee_date') %></div>
                 <div class="small_field">
-                  <%=f.text_field :grade, required: true%>
-                </div>
-
-                <div class="field_row description right-fields">
-                  <div class="label_field left single"><%= f.label :fee_date, t('views.students.fee_date') %></div>
-                  <div class="small_field">
-                    <%= f.text_field :fee_date, :placeholder => "TBD" %>
-                  </div>
+                  <%= f.text_field :fee_date, :placeholder => "TBD" %>
                 </div>
 
               </div>
               <!--field_row-->
+
+              <div class="label_field right single"><%= t('views.students.grade') %></div>
+              <div class="small_field">
+                <% selected_grade = @client.grade_id.present? ? @client.grade_id : nil %>
+                <%=f.select :grade_id, options_for_select(@grades.collect{|grade|[grade.title, grade.id]}, selected: selected_grade), {prompt: '', include_blank: ''}, {'data-placeholder' => t('views.students.select_grade'), class: 'invoice_client medium chzn-select', 'data-form-container' => 'clients_holder', 'data-dropdown-width' => '300'}%>
+              </div>
 
               <!--field_row-->
 

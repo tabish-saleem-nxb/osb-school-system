@@ -66,6 +66,7 @@ class ClientsController < ApplicationController
     if client_type_student(params[:type])
       @client.fee_date = Date.tomorrow
       @parents = get_all_parents(params)
+      @grades = Grade.all
     end
     respond_to do |format|
       format.html # new.html.erb
@@ -79,6 +80,7 @@ class ClientsController < ApplicationController
     @client.payments.build({:payment_type => "credit", :payment_date => Date.today})
     if client_type_student(params[:type])
       @parents = get_all_parents(params)
+      @grades = Grade.all
     end
   end
 
@@ -256,7 +258,7 @@ class ClientsController < ApplicationController
                                    :send_invoice_by, :email, :home_phone, :first_name, :last_name,
                                    :mobile_number, :client_contacts_attributes, :archive_number,
                                    :archived_at, :deleted_at,:currency_id, :parent_client_id,
-                                   :fee_date, :parent_alt_email, :grade,
+                                   :fee_date, :parent_alt_email, :grade_id,
                                    client_contacts_attributes: [:id, :client_id, :email, :first_name, :last_name, :home_phone, :mobile_number, :_destroy]
     )
   end

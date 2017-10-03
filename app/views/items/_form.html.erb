@@ -51,6 +51,15 @@
                 </div>
                 <div class="small_field right"><%= f.collection_select(:tax_2, Tax.all, :id, :name, {:prompt => ""}, {"data-placeholder" => t('views.taxes.select_a_tax'), :class => "extra_small tax2 small chzn-select"}) %></div>
               </div>
+
+              <div class="field_row">
+                <div class="label_field left single"><%= t('views.students.grade') %></div>
+                <div class="large_field">
+                  <% selected_grade = @item.grade_id.present? ? @item.grade_id : nil %>
+                  <%= f.select :grade_id, options_for_select(@grades.collect{|grade| [grade.title, grade.id]}, selected: selected_grade), {prompt: '', include_blank: ''}, {'data-placeholder' => t('views.students.select_grade'), class: 'invoice_client medium chzn-select', 'data-form-container' => 'clients_holder', 'data-dropdown-width' => '300'} %>
+                </div>
+              </div>
+
               <div class="options_row clients">
                 <div class="label_field left single options template"><%= t('views.items.make_this_item_available_to') %>:</div>
                 <div class="options_content">

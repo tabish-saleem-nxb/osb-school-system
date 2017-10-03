@@ -65,6 +65,7 @@ class ItemsController < ApplicationController
   # GET /items/new.json
   def new
     @item = params[:id] ? Item.find_by_id(params[:id]).dup : Item.new
+    @grades = Grade.all
     respond_to do |format|
       format.html # new.html.erb
       format.json { render :json => @item }
@@ -75,6 +76,7 @@ class ItemsController < ApplicationController
   # GET /items/1/edit
   def edit
     @item = Item.find(params[:id])
+    @grades = Grade.all
   end
 
   # POST /items
@@ -189,7 +191,7 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:inventory, :item_description, :item_name, :item_ids, :quantity, :tax_1, :tax_2, :track_inventory, :unit_cost, :archive_number, :archived_at, :deleted_at)
+    params.require(:item).permit(:inventory, :item_description, :item_name, :item_ids, :quantity, :tax_1, :tax_2, :track_inventory, :unit_cost, :archive_number, :archived_at, :deleted_at, :grade_id)
   end
 
 end
