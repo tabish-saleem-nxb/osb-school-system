@@ -78,4 +78,12 @@ module ClientsHelper
     type.present? && type.eql?('student')
   end
 
+  def valid_parent?(parent_data)
+    parent_data['email'].present? && parent_data['first_name'].present? && parent_data['last_name'].present?
+  end
+
+  def valid_child?(child_data)
+    child_data['email'].present? && child_data['first_name'].present? && child_data['last_name'].present?
+  end
+
 end

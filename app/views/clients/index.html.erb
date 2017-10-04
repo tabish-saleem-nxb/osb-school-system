@@ -14,7 +14,7 @@
         <%= render "clients/#{params[:type]}s/new_#{params[:type]}" %>
     </div>
     <% if params[:type].eql?('student') %>
-        <%= form_tag import_students_path, multipart: true do %>
+        <%= form_tag import_parents_and_students_path, multipart: true do %>
             <%= file_field_tag "file", class: 'primary_btn import_students' %>
             <%= submit_tag t('views.students.import'), class: 'primary_btn import_students'%>
         <% end %>

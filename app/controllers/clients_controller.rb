@@ -145,38 +145,58 @@ class ClientsController < ApplicationController
     end
   end
 
-  def import_students
-    @created_clients = []
-    @corrupted_clients = []
+  def import_parents_and_students
+    extension  = File.extname(params[:file].original_filename)
+    if extension.eql?('.json')
+      import_json_parents_and_students
+    elsif extension.eql?('.xml')
+      import_xml_parents_and_students
+    end
+  end
 
-    if params[:file].present?
-      unless params[:file].nil?
-        file = File.read(params[:file].path)
-        begin JSON.parse(file)
-        @data_hash = JSON.parse(file)
-        rescue JSON::ParserError => error
-          redirect_to :back, notice: "File is not in valid JSON format. Found error: #{error}"
-          return
-        end
-        @data_hash.each do |data_item|
-          data_item.each do |key|
-            if key[0].eql?('parent') && key[1]['email'].present? && key[1]['first_name'].present? && key[1]['last_name'].present?
-              #new record
-              if Client.find_by_email(key['email']).nil?
-                @parent = Client.create(first_name: key['first_name'], last_name: key['last_name'], email: key['email'])
-              end
-              #WIP
-            else
-              key[0]
-            end
-          end
-        end
-      else
-        redirect_to :back, notice: 'You have uploaded an empty file.'
+  def import_xml_parents_and_students
+    require 'crack/xml'
+    json = Crack::XML.parse(File.open(params[:file].path))
+  end
+  def import_json_parents_and_students
+    @invalid_parents = []
+    @invalid_students = []
+
+    unless params[:file].nil?
+      file = File.read(params[:file].path)
+      begin JSON.parse(file)
+      @data_hash = JSON.parse(file)
+      rescue JSON::ParserError => error
+        redirect_to :back, notice: "File is not in valid JSON format. Found error: #{error}"
         return
       end
+      #data_hash must not be empty
+      @data_hash.each do |data_item|
+        parent_data = data_item['parent']
+        if parent_data.present? && valid_parent?(parent_data)
+          parent = Client.find_by_email(parent_data['email'])
+          if parent.nil?
+            parent = Client.create(first_name: parent_data['first_name'], last_name: parent_data['last_name'], email: parent_data['email'])
+          end
+          children_data = data_item['children']
+          children_data.each do |child_data|
+            if child_data.present? && valid_child?(child_data)
+              if Client.find_by_email_and_parent_client_id(child_data['email'], parent.try(:id)).nil?
+                Client.create(first_name: child_data['first_name'], last_name: child_data['last_name'], email: child_data['email'], parent_client_id: parent.try(:id))
+              end
+            else
+              @invalid_students << children_data
+            end
+          end
+        else
+          @invalid_parents << parent_data
+          redirect_to :back, notice: "Invalid parent(s): #{@invalid_parents}"
+          return
+        end
+      end
     else
-      redirect_to :back, notice: 'Sorry! File not received.'
+      redirect_to :back, notice: 'You have uploaded an empty file.'
+      return
     end
   end
 
