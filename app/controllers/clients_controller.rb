@@ -27,18 +27,12 @@ class ClientsController < ApplicationController
   # GET /clients.json
   include ClientsHelper
 
-  def index
-    set_company_session
-    params[:status] = params[:status] || 'active'
-    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
-    method = mappings[params[:status].to_sym]
-    @clients = Client.get_clients(params.merge(get_args(method)))
-    @status = params[:status]
-    respond_to do |format|
-      format.html # index.html.erb
-      format.js
-      format.json { render json: @clients }
-    end
+  def parents
+    load_parents_or_students
+  end
+
+  def students
+    load_parents_or_students
   end
 
   def filter_clients
@@ -157,6 +151,7 @@ class ClientsController < ApplicationController
   def import_xml_parents_and_students
     require 'crack/xml'
     json = Crack::XML.parse(File.open(params[:file].path))
+    create_parents_and_students(json['root']['row'])
   end
   def import_json_parents_and_students
     @invalid_parents = []
@@ -165,38 +160,40 @@ class ClientsController < ApplicationController
     unless params[:file].nil?
       file = File.read(params[:file].path)
       begin JSON.parse(file)
-      @data_hash = JSON.parse(file)
+      data_hash = JSON.parse(file)
       rescue JSON::ParserError => error
         redirect_to :back, notice: "File is not in valid JSON format. Found error: #{error}"
         return
       end
       #data_hash must not be empty
-      @data_hash.each do |data_item|
-        parent_data = data_item['parent']
-        if parent_data.present? && valid_parent?(parent_data)
-          parent = Client.find_by_email(parent_data['email'])
-          if parent.nil?
-            parent = Client.create(first_name: parent_data['first_name'], last_name: parent_data['last_name'], email: parent_data['email'])
-          end
-          children_data = data_item['children']
-          children_data.each do |child_data|
-            if child_data.present? && valid_child?(child_data)
-              if Client.find_by_email_and_parent_client_id(child_data['email'], parent.try(:id)).nil?
-                Client.create(first_name: child_data['first_name'], last_name: child_data['last_name'], email: child_data['email'], parent_client_id: parent.try(:id))
-              end
-            else
-              @invalid_students << children_data
-            end
-          end
-        else
-          @invalid_parents << parent_data
-          redirect_to :back, notice: "Invalid parent(s): #{@invalid_parents}"
-          return
-        end
-      end
+      create_parents_and_students(data_hash)
     else
       redirect_to :back, notice: 'You have uploaded an empty file.'
       return
+    end
+  end
+
+  def create_parents_and_students(data_hash)
+    data_hash.each do |data_item|
+      parent_data = data_item['parent']
+      if parent_data.present? && valid_parent?(parent_data)
+        parent = Client.find_by_email(parent_data['email'])
+        if parent.nil?
+          parent = Client.create(first_name: parent_data['first_name'], last_name: parent_data['last_name'], email: parent_data['email'])
+        end
+        children_data = data_item['children']
+        children_data.each do |child_data|
+          if child_data.present? && valid_child?(child_data)
+            if Client.find_by_email_and_parent_client_id(child_data['email'], parent.try(:id)).nil?
+              Client.create(first_name: child_data['first_name'], last_name: child_data['last_name'], email: child_data['email'], parent_client_id: parent.try(:id))
+            end
+          else
+            @invalid_students << children_data
+          end
+        end
+      else
+        @invalid_parents << parent_data
+      end
     end
   end
 
@@ -283,6 +280,20 @@ class ClientsController < ApplicationController
                                    :fee_date, :parent_alt_email, :grade_id,
                                    client_contacts_attributes: [:id, :client_id, :email, :first_name, :last_name, :home_phone, :mobile_number, :_destroy]
     )
+  end
+
+  def load_parents_or_students
+    set_company_session
+    params[:status] = params[:status] || 'active'
+    mappings = {active: 'unarchived', archived: 'archived', deleted: 'only_deleted'}
+    method = mappings[params[:status].to_sym]
+    @clients = Client.get_clients(params.merge(get_args(method)))
+    @status = params[:status]
+    respond_to do |format|
+      format.html { render template: 'clients/index.html.erb' }
+      format.js   { render template: 'clients/index.js.erb' }
+      format.json { render json: @clients }
+    end
   end
 
 
