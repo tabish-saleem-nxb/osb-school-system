@@ -140,6 +140,7 @@ class ClientsController < ApplicationController
   end
 
   def import_parents_and_students
+    redirect_to :back, alert: 'Sorry! You have uploaded an empty file' and return if params[:file].nil?
     extension  = File.extname(params[:file].original_filename)
     if extension.eql?('.json')
       import_json_parents_and_students
@@ -153,24 +154,21 @@ class ClientsController < ApplicationController
     json = Crack::XML.parse(File.open(params[:file].path))
     create_parents_and_students(json['root']['row'])
   end
+
   def import_json_parents_and_students
     @invalid_parents = []
-    @invalid_students = []
+    @invalid_children = []
+    @saved_parents = []
+    @saved_children = []
 
-    unless params[:file].nil?
-      file = File.read(params[:file].path)
-      begin JSON.parse(file)
-      data_hash = JSON.parse(file)
-      rescue JSON::ParserError => error
-        redirect_to :back, notice: "File is not in valid JSON format. Found error: #{error}"
-        return
-      end
-      #data_hash must not be empty
-      create_parents_and_students(data_hash)
-    else
-      redirect_to :back, notice: 'You have uploaded an empty file.'
+    file = File.read(params[:file].path)
+    begin JSON.parse(file)
+    data_hash = JSON.parse(file)
+    rescue JSON::ParserError => error
+      redirect_to :back, notice: "File is not in valid JSON format. Found error: #{error}"
       return
     end
+    create_parents_and_students(data_hash)
   end
 
   def create_parents_and_students(data_hash)
@@ -180,19 +178,29 @@ class ClientsController < ApplicationController
         parent = Client.find_by_email(parent_data['email'])
         if parent.nil?
           parent = Client.create(first_name: parent_data['first_name'], last_name: parent_data['last_name'], email: parent_data['email'])
+          @saved_parents << parent
         end
-        children_data = data_item['children']
-        children_data.each do |child_data|
-          if child_data.present? && valid_child?(child_data)
-            if Client.find_by_email_and_parent_client_id(child_data['email'], parent.try(:id)).nil?
-              Client.create(first_name: child_data['first_name'], last_name: child_data['last_name'], email: child_data['email'], parent_client_id: parent.try(:id))
-            end
-          else
-            @invalid_students << children_data
-          end
+        if parent
+          find_or_create_children(data_item, parent)
         end
       else
         @invalid_parents << parent_data
+      end
+    end
+    respond_to do |format|
+      format.html { render template: 'clients/create_parents_and_students.html.slim' }
+    end
+  end
+
+  def find_or_create_children(data_item, parent)
+    children_data = data_item['children']
+    children_data.each do |child_data|
+      if child_data.present? && valid_child?(child_data)
+        if Client.find_by_email_and_parent_client_id(child_data['email'], parent.try(:id)).nil?
+          @saved_children << Client.create(first_name: child_data['first_name'], last_name: child_data['last_name'], email: child_data['email'], parent_client_id: parent.try(:id))
+        end
+      else
+        @invalid_children << children_data
       end
     end
   end

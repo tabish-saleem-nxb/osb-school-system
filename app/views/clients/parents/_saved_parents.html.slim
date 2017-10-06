@@ -1,0 +1,27 @@
+h2 Saved parents
+- if @saved_parents.size > 0
+  .grid_table
+    table.table.table_listing.client_listing cellpadding="0" cellspacing="0" class=("<%= I18n.locale %>")
+      colgroup
+        col.one
+        col.two
+        col.three
+      thead#client_head
+        .div
+          span.align_left.header.style
+            strong First Name
+          span.align_left.header.style
+            strong Last Name
+          span.align_left.header.style
+            strong Email Address
+  - @saved_parents.each do |saved_parent|
+    span.style
+      = saved_parent['first_name'].present? ? saved_parent['first_name'] : '<strong>Missing</strong>'.html_safe
+    span.style
+      = saved_parent['last_name'].present? ? saved_parent['last_name'] : '<strong>Missing</strong>'.html_safe
+    span.style
+      = saved_parent['email'].present? ? saved_parent['email'] : '<strong>Email Address</strong>'.html_safe
+    br
+
+- else
+  | No parent created in system.

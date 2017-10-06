@@ -1,0 +1,28 @@
+- if @saved_children.size < 0
+  h2 Saved Children
+  - if @saved_children.size > 0
+    .grid_table
+      table.table.table_listing.client_listing cellpadding="0" cellspacing="0" class=("<%= I18n.locale %>")
+        colgroup
+          col.one
+          col.two
+          col.three
+        thead#client_head
+          .div
+            span.align_left.header.style
+              strong First Name
+            span.align_left.header.style
+              strong Last Name
+            span.align_left.header.style
+              strong Email Address
+    - @saved_children.each do |saved_child|
+      span.style
+        = saved_child['first_name'].present? ? saved_child['first_name'] : '<strong>Missing</strong>'.html_safe
+      span.style
+        = saved_child['last_name'].present? ? saved_child['last_name'] : '<strong>Missing</strong>'.html_safe
+      span.style
+        = saved_child['email'].present? ? saved_child['email'] : '<strong>Email Address</strong>'.html_safe
+      br
+
+  - else
+    | No Invalid parent is found.
