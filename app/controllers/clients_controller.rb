@@ -140,7 +140,7 @@ class ClientsController < ApplicationController
   end
 
   def import_parents_and_students
-    redirect_to :back, alert: 'Sorry! You have uploaded an empty file' and return if params[:file].nil?
+    redirect_to :back, alert: 'Sorry! File not found.' and return if params[:file].nil?
     extension  = File.extname(params[:file].original_filename)
     if extension.eql?('.json')
       import_json_parents_and_students
@@ -200,7 +200,8 @@ class ClientsController < ApplicationController
           @saved_children << Client.create(first_name: child_data['first_name'], last_name: child_data['last_name'], email: child_data['email'], parent_client_id: parent.try(:id))
         end
       else
-        @invalid_children << children_data
+        child_data = child_data.merge(parent: parent)
+        @invalid_children << child_data
       end
     end
   end

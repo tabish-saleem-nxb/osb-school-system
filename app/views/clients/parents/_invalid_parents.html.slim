@@ -1,27 +1,31 @@
-h2 Invalid parents
-- if @invalid_parents.size > 0
-  .grid_table
-    table.table.table_listing.client_listing cellpadding="0" cellspacing="0" class=("<%= I18n.locale %>")
-      colgroup
-        col.one
-        col.two
-        col.three
-      thead#client_head
-        .div
-          span.align_left.header.style
-            strong First Name
-          span.align_left.header.style
-            strong Last Name
-          span.align_left.header.style
-            strong Email Address
-  - @invalid_parents.each do |invalid_parent|
-    span.style
-      = invalid_parent['first_name'].present? ? invalid_parent['first_name'] : '<strong>Missing</strong>'.html_safe
-    span.style
-      = invalid_parent['last_name'].present? ? invalid_parent['last_name'] : '<strong>Missing</strong>'.html_safe
-    span.style
-      = invalid_parent['email'].present? ? invalid_parent['email'] : '<strong>Email Address</strong>'.html_safe
-    br
+.clients
+  .content_top
+    .primary_heading
+      h1 = t 'views.parents.invalid_parents'
 
-- else
-  | No Invalid parent is found.
+  .content_middle
+    - if @invalid_parents.size > 0
+      .grid_table
+        table.table.table_listing.client_listing.border_collaspe_none cellpadding="0" cellspacing="0" class=" <%= I18n.locale %>"
+          colgroup
+            col.two
+            col.three
+            col.four
+          thead#client_head
+            tr
+              th.align_left.header.remove-bg-img = t('views.parents.first_name').capitalize
+              th.align_left.header.remove-bg-img = t('views.parents.last_name').capitalize
+              th.align_left.header.remove-bg-img = t('views.common.email')
+
+          thead#client_body
+              - @invalid_parents.each do |invalid_parent|
+                tr
+                  td.align_left
+                    /- binding.pry
+                    = invalid_parent['first_name'].present? ? invalid_parent['first_name'] : missing_attribute_msg
+                  td.align_left
+                    = invalid_parent['last_name'].present? ? invalid_parent['last_name'] : missing_attribute_msg
+                  td.align_left
+                    = invalid_parent['email'].present? ? invalid_parent['email'] : missing_attribute_msg
+    - else
+      = t 'views.parents.no_invalid_parent_found'

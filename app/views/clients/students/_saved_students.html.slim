@@ -1,28 +1,34 @@
-- if @saved_children.size < 0
-  h2 Saved Children
-  - if @saved_children.size > 0
-    .grid_table
-      table.table.table_listing.client_listing cellpadding="0" cellspacing="0" class=("<%= I18n.locale %>")
-        colgroup
-          col.one
-          col.two
-          col.three
-        thead#client_head
-          .div
-            span.align_left.header.style
-              strong First Name
-            span.align_left.header.style
-              strong Last Name
-            span.align_left.header.style
-              strong Email Address
-    - @saved_children.each do |saved_child|
-      span.style
-        = saved_child['first_name'].present? ? saved_child['first_name'] : '<strong>Missing</strong>'.html_safe
-      span.style
-        = saved_child['last_name'].present? ? saved_child['last_name'] : '<strong>Missing</strong>'.html_safe
-      span.style
-        = saved_child['email'].present? ? saved_child['email'] : '<strong>Email Address</strong>'.html_safe
-      br
+.clients
+  .content_top
+    .primary_heading
+      h1 = t 'views.students.saved_students'
 
-  - else
-    | No Invalid parent is found.
+  .content_middle
+    - if @saved_children.size > 0
+      .grid_table
+        table.table.table_listing.client_listing.border_collaspe_none cellpadding="0" cellspacing="0" class=" <%= I18n.locale %>"
+          colgroup
+            col.two
+            col.three
+            col.four
+            col.five
+          thead#client_head
+            tr
+              th.align_left.header.remove-bg-img = t('views.students.first_name').capitalize
+              th.align_left.header.remove-bg-img = t('views.students.last_name').capitalize
+              th.align_left.header.remove-bg-img = t('views.common.email')
+              th.align_left.header.remove-bg-img = t('views.parents.parent')
+          thead#client_body
+            - @saved_children.each do |saved_child|
+              tr
+                td.align_left
+                  = saved_child.first_name
+                td.align_left
+                  = saved_child.last_name
+                td.align_left
+                  = saved_child.email
+                td.align_left
+                  = saved_child.parent.email
+
+    - else
+      = t 'views.students.no_student_created'

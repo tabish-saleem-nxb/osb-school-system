@@ -86,4 +86,8 @@ module ClientsHelper
     child_data['email'].present? && child_data['first_name'].present? && child_data['last_name'].present?
   end
 
+  def missing_attribute_msg
+    "<strong class='danger'>#{t('views.common.attr_missing')}</strong>".html_safe
+  end
+
 end
