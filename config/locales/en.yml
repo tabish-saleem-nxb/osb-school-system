@@ -201,6 +201,7 @@ en:
       no: "No"
       pdf: "PDF"
       select_estimate_currency: "Select currency..."
+      attr_missing: 'Missing'
 
     pagination:
       previous: "Previous"
@@ -369,6 +370,10 @@ en:
       students: "Students"
       new_student: "New Student"
       edit_student: "Edit Student"
+      saved_students: 'Saved Students'
+      invalid_students: 'Invalid Students'
+      no_student_created: 'No student is created in system.'
+      no_invalid_student_found: 'No Invalid student is found for valid parent.'
       import: 'Import Parents and Students'
       select_grade: 'Select a grade'
       create_student: "Create Student"
@@ -413,6 +418,10 @@ en:
       new_parent: "New Parent"
       edit_parent: "Edit Parent"
       alt_email: 'Alternate Email'
+      saved_parents: 'Saved Parents'
+      invalid_parents: 'Invalid Parents'
+      no_parent_created: 'No parent is created in system.'
+      no_invalid_parent_found: 'No Invalid parent is found.'
       select: 'Select Parent'
       select_parent: "Select a parent"
       fee_date: 'Fee Date'
