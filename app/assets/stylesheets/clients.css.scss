@@ -291,8 +291,23 @@
   }
 }
 
-.clients > .content_top > .primary_btn.import_students {
-  margin-right: 20px;
+.import_btn {
+  display: inline-block !important;
+  height: 53px !important;
+  margin: 20px !important;
+  padding: 15px 25px 25px 20px !important;
+  text-decoration:none !important;
+}
+
+.import_btn:hover {
+  color:#FFFFFF !important;
+}
+
+.btn-fix {
+  margin-right: 20px !important;
+  height: 39px !important;
+  display: inline !important;
+  padding: 9px !important;;
 }
 
 .danger{
@@ -306,4 +321,14 @@
 
 .style{
   margin:50px;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-file input[type=file] {
+  color: black !important;
+  font-weight: bolder;
 }

@@ -140,6 +140,9 @@ class ClientsController < ApplicationController
   end
 
   def import_parents_and_students
+  end
+
+  def import_json_or_xml_for_parents_and_students
     redirect_to :back, alert: 'Sorry! File not found.' and return if params[:file].nil?
     extension  = File.extname(params[:file].original_filename)
     if extension.eql?('.json')

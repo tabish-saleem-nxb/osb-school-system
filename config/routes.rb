@@ -99,7 +99,8 @@ Osb::Application.routes.draw do
     get '/students/:id/edit', to: 'clients#edit', as: :edit_student, defaults: {type: 'student'}
     get '/students/bulk_actions', to: 'clients#bulk_actions', as: :bulk_actions_students, defaults: {type: 'student'}
     get '/students/undo_actions', to: 'clients#undo_actions', as: :undo_actions_students, defaults: {type: 'student'}
-    post '/students/import_parents_and_students', to: 'clients#import_parents_and_students', as: :import_parents_and_students, defaults: {type: 'student'}
+    post '/students/import_json_or_xml_for_parents_and_students', to: 'clients#import_json_or_xml_for_parents_and_students', as: :import_json_or_xml_for_parents_and_students, defaults: {type: 'student'}
+    get '/import_parents_and_students', to: 'clients#import_parents_and_students'
 
     resources :clients do
       collection do

@@ -1,0 +1,13 @@
+.clients
+  .content_top
+    .primary_heading
+      h1
+        = t '.title', :default => 'Import Parents and Students'
+
+  | Please click below to import JSON or XML file.
+  .content_bottom
+    = form_tag import_json_or_xml_for_parents_and_students_path, multipart: true do
+      span.btn.btn-large.btn-default.btn-file
+        = file_field_tag 'file'
+      span
+        = submit_tag t('views.students.import'), class: 'btn_large import_btn'
