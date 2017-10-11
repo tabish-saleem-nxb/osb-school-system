@@ -209,6 +209,16 @@ class ClientsController < ApplicationController
     end
   end
 
+  def select_fee_item_for_student
+    if params[:student_id].present?
+      student = Client.find params[:student_id]
+      grade = student.grade
+      @fee_items = grade.items
+      # item = Item.find_by_id(params[:id]).present? ?  Item.find(params[:id]) : Item.unscoped.find_by_id(params[:id])
+      # render :text => [item.item_description || "", item.unit_cost.to_f || 1, item.quantity.to_i || 1, item.tax_1 || 0, item.tax_2 || 0, item.item_name || ""]
+    end
+  end
+
   def bulk_actions
     options = params.merge(per: session["#{controller_name}-per_page"], user: current_user, sort_column: sort_column, sort_direction: sort_direction, current_company: session['current_company'], company_id: get_company_id)
     result = Services::ClientBulkActionsService.new(options).perform

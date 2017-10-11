@@ -70,7 +70,7 @@
               <div class="small_field">
                 <%#= collection_select :invoice, :client_id, load_clients(action_name, @invoice.company_id) , :id, :organization_name, {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a client...", :class => "invoice_client medium chzn-select", "data-form-container" => "clients_holder", "data-dropdown-width" => "300", :required => ""} %>
                 <% selected_client = @client.present? ? @client.id : f.object.client_id %>
-                <%= f.select :client_id, options_for_select(@students.collect{|student|[student.contact_name + ' - ' + student.parent.contact_name, student.id]}, selected: selected_client), {prompt: '', include_blank: ''}, {'data-placeholder' => t('views.invoices.select_client'), class: 'invoice_client medium chzn-select', 'data-form-container' => 'clients_holder', 'data-dropdown-width' => '300'} %>
+                <%= f.select :client_id, options_for_select(@students.collect{|student|[student.contact_name + ' - ' + student.parent.contact_name, student.id]}, selected: selected_client), {prompt: '', include_blank: ''}, {'data-placeholder' => t('views.invoices.select_client'), class: 'invoice_client medium chzn-select', 'data-form-container' => 'clients_holder', 'data-dropdown-width' => '300', onchange: 'selectFeeItem(this.value);'} %>
                 <ul class="field_description select">
                   <li><%= t('views.invoices.client_hint') %></li>
                   <span id="last_invoice" style="display: none;"></span>
@@ -254,3 +254,45 @@
     </div>
     <!--invoice_form-->
 <% end %>
+
+<script type="text/javascript">
+
+  $( document ).ready(function(){
+    this.selectFeeItem = function(value){
+      jQuery.ajax('/students/select_fee_item_for_student', {
+        type: 'POST',
+        data: {student_id: value},
+        dataType: 'html'
+      });
+    }
+  });
+
+//  jQuery.ajax('/items/load_item_data', {
+//    type: 'POST',
+//    data: "id=" + jQuery(this).val(),
+//    dataType: 'html',
+//    error: function(jqXHR, textStatus, errorThrown) {
+//      return alert("Error: " + textStatus);
+//    },
+//    success: function(data, textStatus, jqXHR) {
+//      var container, item;
+//      item = JSON.parse(data);
+//      container = elem.parents("tr.fields");
+//      container.find("input.description").val(item[0]);
+//      container.find("input.cost").val(item[1].toFixed(2));
+//      container.find("input.qty").val(item[2]);
+//      container.find("select.tax1,select.tax2").val('').trigger("liszt:updated");
+//      if (item[3] !== 0) {
+//        container.find("select.tax1").val(item[3]).trigger("liszt:updated");
+//      }
+//      if (item[4] !== 0) {
+//        container.find("select.tax2").val(item[4]).trigger("liszt:updated");
+//      }
+//      container.find("input.item_name").val(item[5]);
+//      updateLineTotal(elem);
+//      return updateInvoiceTotal();
+//    }
+//  });
+
+
+</script>

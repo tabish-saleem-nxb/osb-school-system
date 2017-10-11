@@ -101,6 +101,7 @@ Osb::Application.routes.draw do
     get '/students/undo_actions', to: 'clients#undo_actions', as: :undo_actions_students, defaults: {type: 'student'}
     post '/students/import_json_or_xml_for_parents_and_students', to: 'clients#import_json_or_xml_for_parents_and_students', as: :import_json_or_xml_for_parents_and_students, defaults: {type: 'student'}
     get '/students/import_parents_and_students', to: 'clients#import_parents_and_students', as: :import_parents_and_students
+    post '/students/select_fee_item_for_student', to: 'clients#select_fee_item_for_student', as: :select_fee_item_for_student
 
     resources :clients do
       collection do
