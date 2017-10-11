@@ -78,6 +78,7 @@
             <ul>
               <li><%= active_link_to t("header.links.clients.listing"), main_app.students_path(type: 'student') %></li>
               <li><%= active_link_to t("header.links.clients.new"), main_app.new_student_path(type: 'student') %></li>
+              <li><%= active_link_to t('header.links.students.import_parents_and_students'), main_app.import_parents_and_students_path %></li>
               <li><%= active_link_to t("header.links.clients.sent_emails"), main_app.sent_emails_path %></li>
             </ul>
           </div>
@@ -86,8 +87,7 @@
         <li class='dropdown'>
           <%= active_link_to t('header.links.parents.parents'), main_app.parents_path(type: 'parent'), class: 'dropdown-toggle disabled', 'data-toggle' => 'dropdown' %>
           <ul class='sub'>
-            <li><%= active_link_to t('header.links.parents.listing'), main_app.parents_path(type: 'parent') %></li>
-            <li><%= active_link_to t('header.links.parents.new'), main_app.new_parent_path(type: 'parent') %></li>
+            <li><%= active_link_to t('header.links.parents.parents'), main_app.parents_path(type: 'parent') %></li>
           </ul>
           <div class='dropdown-menu' role='menu' aria-labelledby='dropdownMenu'>
             <ul>
@@ -116,8 +116,7 @@
         <li class='dropdown'>
           <%= active_link_to t('header.links.grades.grades'), main_app.grades_path, class: 'dropdown-toggle disabled', 'data-toggle' => 'dropdown' %>
           <ul class='sub'>
-            <li><%= active_link_to t('header.links.grades.listing'), main_app.grades_path %></li>
-            <li><%= active_link_to t('header.links.grades.new'), main_app.new_grade_path %></li>
+            <li><%= active_link_to t('header.links.grades.grades'), main_app.grades_path %></li>
           </ul>
           <div class='dropdown-menu' role='menu' aria-labelledby='dropdownMenu'>
             <ul>

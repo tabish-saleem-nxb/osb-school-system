@@ -113,6 +113,7 @@ en:
         students: 'Students'
         listing: 'Students Listing'
         new: 'New Student'
+        import_parents_and_students: 'Import Parents and Students'
       grades:
         grades: "Grades"
         new: "New Grade"
