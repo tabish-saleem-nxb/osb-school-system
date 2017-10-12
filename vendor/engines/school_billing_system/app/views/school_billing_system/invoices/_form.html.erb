@@ -262,37 +262,85 @@
       jQuery.ajax('/students/select_fee_item_for_student', {
         type: 'POST',
         data: {student_id: value},
-        dataType: 'html'
+        dataType: 'html',
+        error: function(jqXHR, textStatus, errorThrown) {
+          return alert("Error: " + textStatus);
+        },
+        success: function(data, textStatus, jqXHR) {
+          var container, item;
+          items = JSON.parse(data);
+          items_length = items.length;
+          $(items).each(function(i){
+            elem = jQuery('table').find('#fee_item_'+(i+1));
+
+            container = elem.parents("tr.fields");
+            container.find("input.description").val(item[0]);
+            container.find("input.cost").val(item[1].toFixed(2));
+            container.find("input.qty").val(item[2]);
+            container.find("select.tax1,select.tax2").val('').trigger("liszt:updated");
+            if (item[3] !== 0) {
+              container.find("select.tax1").val(item[3]).trigger("liszt:updated");
+            }
+            if (item[4] !== 0) {
+              container.find("select.tax2").val(item[4]).trigger("liszt:updated");
+            }
+            container.find("input.item_name").val(item[5]);
+            updateLineTotal(elem);
+            return updateInvoiceTotal();
+          });
+        }
       });
-    }
+    };
+
+    var updateInvoiceTotal, updateLineTotal;
+
+    updateLineTotal = function(elem) {
+      var container, cost, line_total, qty;
+      container = elem.parents("tr.fields");
+      cost = jQuery(container).find("input.cost").val();
+      qty = jQuery(container).find("input.qty").val();
+      if ((cost == null) || cost === "" || !jQuery.isNumeric(cost)) {
+        cost = 0;
+      }
+      if ((qty == null) || qty === "" || !jQuery.isNumeric(qty)) {
+        qty = 0;
+      }
+      line_total = (parseFloat(cost) * parseFloat(qty)).toFixed(2);
+      return jQuery(container).find(".line_total").text(line_total);
+    };
+
+    updateInvoiceTotal = function() {
+      var discount_amount, tax_amount, total, total_balance;
+      total = 0;
+      tax_amount = 0;
+      discount_amount = 0;
+      jQuery("table.invoice_grid_fields tr:visible .line_total").each(function() {
+        var line_total;
+        line_total = parseFloat(jQuery(this).text());
+        total += line_total;
+        jQuery("#invoice_sub_total, #recurring_profile_sub_total").val(total.toFixed(2));
+        jQuery("#invoice_sub_total_lbl").text(total.toFixed(2));
+        jQuery("#invoice_invoice_total, #recurring_profile_invoice_total").val(total.toFixed(2));
+        jQuery("#invoice_total_lbl").text(total.toFixed(2));
+        return tax_amount += applyTax(line_total, jQuery(this));
+      });
+      discount_amount = applyDiscount(total);
+      jQuery("#invoice_tax_amount_lbl").text(tax_amount.toFixed(2));
+      jQuery("#invoice_tax_amount, #recurring_profile_tax_amount").val(tax_amount.toFixed(2));
+      jQuery("#invoice_discount_amount, #recurring_profile_discount_amount").val((discount_amount * -1).toFixed(2));
+      total_balance = parseFloat(jQuery("#invoice_total_lbl").text() - discount_amount) + tax_amount;
+      jQuery("#invoice_invoice_total, #recurring_profile_invoice_total").val(total_balance.toFixed(2));
+      jQuery("#invoice_total_lbl").text(total_balance.toFixed(2));
+      jQuery("#invoice_total_lbl").formatCurrency({
+        symbol: window.currency_symbol
+      });
+      return window.taxByCategory();
+    };
+
+
+
   });
 
-//  jQuery.ajax('/items/load_item_data', {
-//    type: 'POST',
-//    data: "id=" + jQuery(this).val(),
-//    dataType: 'html',
-//    error: function(jqXHR, textStatus, errorThrown) {
-//      return alert("Error: " + textStatus);
-//    },
-//    success: function(data, textStatus, jqXHR) {
-//      var container, item;
-//      item = JSON.parse(data);
-//      container = elem.parents("tr.fields");
-//      container.find("input.description").val(item[0]);
-//      container.find("input.cost").val(item[1].toFixed(2));
-//      container.find("input.qty").val(item[2]);
-//      container.find("select.tax1,select.tax2").val('').trigger("liszt:updated");
-//      if (item[3] !== 0) {
-//        container.find("select.tax1").val(item[3]).trigger("liszt:updated");
-//      }
-//      if (item[4] !== 0) {
-//        container.find("select.tax2").val(item[4]).trigger("liszt:updated");
-//      }
-//      container.find("input.item_name").val(item[5]);
-//      updateLineTotal(elem);
-//      return updateInvoiceTotal();
-//    }
-//  });
 
 
 </script>

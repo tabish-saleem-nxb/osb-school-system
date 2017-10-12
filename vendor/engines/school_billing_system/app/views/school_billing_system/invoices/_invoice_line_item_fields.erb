@@ -1,4 +1,6 @@
-<tr class="fields" id="fee_item">
+<% @num = 0 if @num.eql?(nil)%>
+<% @num = @num + 1 %>
+<tr class="fields" id="fee_item_<%=@num%>">
   <td class="align_center">
     <div class="action_links">
       <%= f.hidden_field :_destroy%>
