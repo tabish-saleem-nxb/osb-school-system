@@ -214,7 +214,9 @@ class ClientsController < ApplicationController
       student = Client.find params[:student_id]
       grade = student.grade
       @fee_items = grade.items
-      render text: @fee_items.to_json
+      respond_to do |format|
+        format.js
+      end
     end
   end
 
@@ -226,7 +228,6 @@ class ClientsController < ApplicationController
     @action = result[:action]
     respond_to { |format| format.js }
   end
-
 
   def undo_actions
     params[:archived] ? Client.recover_archived(params[:ids]) : Client.recover_deleted(params[:ids])
