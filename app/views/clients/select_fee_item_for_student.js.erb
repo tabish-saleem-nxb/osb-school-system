@@ -1,1 +1,2 @@
-jQuery('#invoice_grid_fields > tbody > tr:first').html('<%= escape_javascript render("invoice_line_item_fields") %>');
+$('table#invoice_grid_fields').find('.dynamic_fee_item').remove();
+$('#invoice_grid_fields > tbody > tr:first').after('<%= escape_javascript render("invoice_line_item_fields") %>');
