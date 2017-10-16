@@ -3,9 +3,11 @@
     <tr class="fields dynamic_fee_item">
       <td class="align_center">
         <div class="action_links">
-          <%#= hidden_field_tag :_destroy%>
+          <%= hidden_field_tag "[invoice][invoice_line_items_attributes][#{i}][:_destroy]" %>
         </div>
       </td>
+        <%= hidden_field_tag "[invoice][invoice_line_items_attributes][#{i}][item_id]", fee_item.id%>
+
       <td class="align_left">
         <%= text_field_tag "[invoice][invoice_line_items_attributes][#{i}][item_name]", fee_item.item_name, :class => 'grid_large description' %>
       </td>

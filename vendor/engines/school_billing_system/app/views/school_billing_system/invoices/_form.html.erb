@@ -258,12 +258,6 @@
 <script type="text/javascript">
 
   $( document ).ready(function(){
-    this.selectFeeItem = function(value){
-      jQuery.ajax('/students/select_fee_item_for_student', {
-        type: 'POST',
-        data: {student_id: value}
-      });
-    };
     $('#invoice_submit').click(function() {
       console.log('before trigerring submit');
       $("#new_invoice").trigger('submit.rails');
