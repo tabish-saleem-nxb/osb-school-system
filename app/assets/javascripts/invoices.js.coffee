@@ -500,12 +500,20 @@ jQuery ->
     $(".top_links.recover_deleted").click();
 
   @selectFeeItem = (value) ->
-    elem = jQuery(this)
+    elem = jQuery(".invoice_grid_fields select.items_list");
+    console.log jQuery(this);
     jQuery.ajax '/students/select_fee_item_for_student',
       type: 'POST'
       data: student_id: value
       error: (jqXHR, textStatus, errorThrown) ->
         alert "Error: #{textStatus}"
       success: (data, textStatus, jqXHR) ->
-        updateLineTotal(elem)
-        updateInvoiceTotal()
+        jQuery(".invoice_grid_fields tr:visible .line_total").each ->
+          updateLineTotal(jQuery(this))
+          # dont use decimal points in quantity and make cost 2 decimal points
+          container = jQuery(this).parents("tr.fields")
+          cost = jQuery(container).find("input.cost")
+          qty = jQuery(container).find("input.qty")
+          cost.val(parseFloat(cost.val()).toFixed(2)) if cost.val()
+          qty.val(parseInt(qty.val())) if qty.val()
+          updateInvoiceTotal()
