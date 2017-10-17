@@ -54,10 +54,14 @@ class GradesController < ApplicationController
   # DELETE /grades/1
   # DELETE /grades/1.json
   def destroy
-    @grade.destroy
-    respond_to do |format|
-      format.html { redirect_to grades_url, notice: 'Grade was successfully destroyed.' }
-      format.json { head :no_content }
+    if @grade.clients.exists?
+      redirect_to grades_url, alert: "Please delete all students of <strong>Grade #{@grade.title}</strong> first!".html_safe
+    else
+      @grade.destroy
+      respond_to do |format|
+        format.html { redirect_to grades_url, notice: 'Grade was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
 

@@ -1,0 +1,18 @@
+- if @grades.length > 0
+  - @grades.each do |grade|
+    tr
+      td.align_center style='visibility:hidden'
+      td.align_center style='visibility:hidden'
+      td.align_center = grade.title
+      td.align_center = grade.description
+      td
+        = link_to t('.edit', :default => t("helpers.links.edit")), edit_grade_path(grade), :class => 'edit_action'
+        ' |
+        = link_to t('.delete', :default => t("helpers.links.delete")), grade, data: { confirm: 'Are you sure?' }, method: :delete
+      td.align_center style='visibility:hidden'
+
+- else
+  tr
+    td colspan="6"
+      .no_record_container
+        = t('views.grades.not_found')

@@ -1,6 +1,5 @@
 Osb::Application.routes.draw do
 
-  resources :grades
   mount SchoolBillingSystem::Engine => '/'
   mount OsbApi::Engine => "/api"
   use_doorkeeper :scope => 'developer'
@@ -103,6 +102,7 @@ Osb::Application.routes.draw do
     get '/students/import_parents_and_students', to: 'clients#import_parents_and_students', as: :import_parents_and_students
     post '/students/select_fee_item_for_student', to: 'clients#select_fee_item_for_student', as: :select_fee_item_for_student
 
+    resources :grades
     resources :clients do
       collection do
         post :client_detail

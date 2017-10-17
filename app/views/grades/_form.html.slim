@@ -1,15 +1,20 @@
-= form_for @grade do |f|
-  - if @grade.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@grade.errors.count, "error")} prohibited this grade from being saved:"
-      ul
-        - @grade.errors.full_messages.each do |message|
-          li = message
+.grade
+  = form_for(@grade) do |f|
+    .content_middle
+      - if @grade.errors.any?
+        - flash[:alert] = @grade.errors.full_messages
 
-  .field
-    = f.label :title
-    = f.text_field :title
-  .field
-    = f.label :description
-    = f.text_area :description
-  .actions = f.submit
+      .fields_content_container
+        .fields_content_data
+          .field_row
+            .label_field.left.single = t('views.grades.title')
+            .large_field
+              = f.text_field :title
+
+          .field_row
+            .label_field.left.single = t('views.grades.description')
+            .large_field
+              = f.text_area :description
+
+      .content_bottom
+        = f.submit class: 'btn_large submit'

@@ -501,7 +501,6 @@ jQuery ->
 
   @selectFeeItem = (value) ->
     elem = jQuery(".invoice_grid_fields select.items_list");
-    console.log jQuery(this);
     jQuery.ajax '/students/select_fee_item_for_student',
       type: 'POST'
       data: student_id: value

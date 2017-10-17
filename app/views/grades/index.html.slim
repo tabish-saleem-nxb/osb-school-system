@@ -1,23 +1,26 @@
-h1 Listing grades
+- model_class = Grade
+.grades
+  .content_top
+    .primary_heading
+      h1
+        = t '.title', default: t('header.links.grades.listing')
+    .primary_btn
+      = link_to (content_tag(:span, t("header.links.grades.new"))), new_grade_path, :class => 'btn_large'
 
-table
-  thead
-    tr
-      th Title
-      th Description
-      th
-      th
-      th
+  .content_middle
+    .grid_control
+      .grid_table
+        table.table.table_listing.client_listing cellpadding="0" cellspacing="0" class=("#{ I18n.locale}")
+          colgroup
+            col.one
+            col.two
+            col.three
+          thead#grade_head
+            = render partial: 'grade_header'
+          tbody#grade_body
+            = render partial: 'grade_body'
 
-  tbody
-    - @grades.each do |grade|
-      tr
-        td = grade.title
-        td = grade.description
-        td = link_to 'Show', grade
-        td = link_to 'Edit', edit_grade_path(grade)
-        td = link_to 'Destroy', grade, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-
-= link_to 'New Grade', new_grade_path
+          tfoot#paging_links
+      /= render 'application_partials/paging'
+      .content_bottom
+        = link_to (content_tag(:span, t("header.links.grades.new"))), new_grade_path, :class => 'btn_large'
