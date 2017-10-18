@@ -128,6 +128,10 @@
               </div>
             </li>
 
+            <li class='dropdown'>
+              <%= active_link_to t('header.links.invoices.bulk_operations'), school_billing_system.bulk_operations_invoices_path, class: 'dropdown-toggle disabled', 'data-toggle' => 'dropdown' %>
+            </li>
+
             <li class="dropdown">
               <%= active_link_to t("header.links.payments.payments"), payments_path, :class => "dropdown-toggle disabled", "data-toggle" => "dropdown"  %>
               <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">

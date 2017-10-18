@@ -21,6 +21,8 @@ SchoolBillingSystem::Engine.routes.draw do
         get 'selected_currency'
         get 'term_invoices', as: :term
         post 'generate_term_invoices', as: :generate_term
+        get 'bulk_operations', as: :bulk_operations
+        post 'perform_bulk_operations', as: :perform_bulk_operations
       end
     end
 

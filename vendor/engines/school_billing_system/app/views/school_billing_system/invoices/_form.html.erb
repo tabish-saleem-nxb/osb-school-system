@@ -254,18 +254,3 @@
     </div>
     <!--invoice_form-->
 <% end %>
-
-<script type="text/javascript">
-
-  $( document ).ready(function(){
-    $('#invoice_submit').click(function() {
-      console.log('before trigerring submit');
-      $("#new_invoice").trigger('submit.rails');
-      console.log('after trigerring submit');
-    });
-
-  });
-
-
-
-</script>

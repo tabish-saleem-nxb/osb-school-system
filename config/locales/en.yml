@@ -47,6 +47,7 @@ en:
         recurring: "Recurring"
         time_tracking: "Time Tracking"
         invoice: 'Fee Invoice'
+        bulk_operations: "Bulk Operations"
       time_tracking:
         time_tracking: "Time Tracking"
         time_sheet: "Timesheet"
@@ -297,6 +298,12 @@ en:
       no_archived_msg: "You haven't any archived invoice."
       no_deleted_msg: "You haven't any deleted invoice."
       select_client: 'Select a student...'
+      perform_bulk_operations_for_all_invoices: "Perform Bulk Operations On All Invoices"
+      edit_all_invoices: "Edit All Invoices"
+      perform_operation: "Perform Operation"
+      select_operation: "Select a Operation"
+      select_item: 'Select a Item'
+      select_grade: 'Select grade'
       recurring:
         recurring_profile: "Recurring Profile"
         start_date: "Start date"

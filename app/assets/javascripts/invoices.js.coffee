@@ -516,3 +516,14 @@ jQuery ->
           cost.val(parseFloat(cost.val()).toFixed(2)) if cost.val()
           qty.val(parseInt(qty.val())) if qty.val()
           updateInvoiceTotal()
+
+  $('#invoice_submit').click ->
+    $('#new_invoice').trigger 'submit.rails'
+
+  $('#edit_all_invoices').click ->
+    if $('#bulk_operations').is(':visible')
+      $('#edit_all_invoices').html 'Edit All Invoices'
+      $('#bulk_operations').removeClass 'show-form'
+    else if $('#bulk_operations').is(':hidden')
+      $('#edit_all_invoices').html 'Cancel'
+      $('#bulk_operations').addClass 'show-form'

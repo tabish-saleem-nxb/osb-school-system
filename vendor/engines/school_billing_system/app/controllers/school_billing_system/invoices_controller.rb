@@ -188,6 +188,12 @@ module SchoolBillingSystem
       end
     end
 
+    def bulk_operations
+    end
+
+    def perform_bulk_operations
+    end
+
     def unpaid_invoices
       company = get_company_id
       company_filter = company.present? ? "invoices.company_id=#{company}" : ""
