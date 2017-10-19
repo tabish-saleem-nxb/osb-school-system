@@ -7,7 +7,7 @@
     = button_tag t('views.invoices.edit_all_invoices'), class: 'btn_large submit pull-left', id: 'edit_all_invoices'
 
   #bulk_operations.content_middle.hidden-form
-    = form_tag(perform_bulk_operations_invoices_path, class: 'bulk_operations_form') do |f|
+    = form_tag(perform_bulk_operations_invoices_path, id: 'bulk_operations_form') do |f|
 
       .content_bottom
         .primary_heading
@@ -21,20 +21,22 @@
             = t('header.links.bulk_operations')
           ul.field_description
             li
-              = select_tag :operation, options_for_select(BULK_OPERATIONS), include_blank: t('views.invoices.select_operation'), class: 'select_bulk_operation'
+              = select_tag :operation, options_for_select(BULK_OPERATIONS), include_blank: t('views.invoices.select_operation'), id: 'select_bulk_operation'
 
         .small_field.right
           .label_field.left.single.left-margin
             = t('header.links.items.items')
           ul.field_description
             li
-              = select_tag :item, options_for_select(Item.all.collect{|item| [item.item_name, item.id]}), include_blank: t('views.invoices.select_item')
+              = select_tag :item_id, options_for_select(Item.all.collect{|item| [item.item_name, item.id]}), include_blank: t('views.invoices.select_item'), id: 'bulk_operations_item'
 
         .small_field.right
           .label_field.left.single.left-margin
             = t('header.links.grades.grades')
           ul.field_description
             li
-              = select_tag :grade, options_for_select(Grade.all.collect{|grade| [grade.title, grade.id]}), include_blank: t('views.invoices.select_grade')
+              = select_tag :grade_id, options_for_select(Grade.all.collect{|grade| [grade.title, grade.id]}),
+                    include_blank: t('views.invoices.select_grade'), id: 'bulk_operations_grade'
+
       .content_bottom
         = submit_tag t('views.invoices.perform_operation'), class: 'btn_large submit'

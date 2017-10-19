@@ -527,3 +527,26 @@ jQuery ->
     else if $('#bulk_operations').is(':hidden')
       $('#edit_all_invoices').html 'Cancel'
       $('#bulk_operations').addClass 'show-form'
+
+  jQuery("form#bulk_operations_form").submit ->
+    flag = true
+    if jQuery('#select_bulk_operation').val() is ""
+      console.log 'Select Bulk Operation!'
+      applyPopover(jQuery("#select_bulk_operation"),"bottomMiddle","topLeft", "Select a operation")
+      flag = false
+    else if jQuery('#bulk_operations_item').val() is ""
+      console.log 'Select Item!'
+      applyPopover(jQuery("#bulk_operations_item"),"bottomMiddle","topLeft", "Select an item")
+      flag = false
+    else if jQuery('#bulk_operations_grade').val() is ""
+      console.log 'Select Grade!'
+      applyPopover(jQuery("#bulk_operations_grade"),"bottomMiddle","topLeft", "Select a grade")
+      flag = false
+    flag
+
+  jQuery("#select_bulk_operation").change ->
+    hidePopover(jQuery("#select_bulk_operation"))
+  jQuery("#bulk_operations_item").change ->
+    hidePopover(jQuery("#bulk_operations_item"))
+  jQuery("#bulk_operations_grade").change ->
+    hidePopover(jQuery("#bulk_operations_grade"))

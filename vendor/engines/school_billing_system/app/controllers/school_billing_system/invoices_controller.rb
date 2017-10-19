@@ -192,6 +192,13 @@ module SchoolBillingSystem
     end
 
     def perform_bulk_operations
+      # if params[:invoice][:select_bulk_operation].present? && params[:invoice][:bulk_operations_item].present? && params[:invoice][:bulk_operations_grade].present?
+      #   item = Item.find params[:invoice][:bulk_operations_item]
+      #   item_cost = item.unit_cost
+      #   grade = Grade.find params[:invoice][:bulk_operations_grade]
+      #   operation = [:invoice][:select_bulk_operation]
+      #   students = grade.students
+      # end
     end
 
     def unpaid_invoices
