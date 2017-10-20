@@ -499,7 +499,11 @@ jQuery ->
     $(this).parent().parent().find("input[type=checkbox]").attr("checked", "checked");
     $(".top_links.recover_deleted").click();
 
-  @selectFeeItem = (value) ->
+  $(window).load ->
+    student_id = $('.invoice_client.medium.chzn-select.chzn-done#invoice_client_id').val()
+    window.selectFeeItem(student_id) if student_id isnt ""
+
+  window.selectFeeItem = (value) ->
     elem = jQuery(".invoice_grid_fields select.items_list");
     jQuery.ajax '/students/select_fee_item_for_student',
       type: 'POST'
