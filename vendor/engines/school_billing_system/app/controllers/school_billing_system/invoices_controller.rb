@@ -192,13 +192,22 @@ module SchoolBillingSystem
     end
 
     def perform_bulk_operations
-      # if params[:invoice][:select_bulk_operation].present? && params[:invoice][:bulk_operations_item].present? && params[:invoice][:bulk_operations_grade].present?
-      #   item = Item.find params[:invoice][:bulk_operations_item]
-      #   item_cost = item.unit_cost
-      #   grade = Grade.find params[:invoice][:bulk_operations_grade]
-      #   operation = [:invoice][:select_bulk_operation]
-      #   students = grade.students
-      # end
+      items_ids = params[:item_ids].reject { |item| item.blank? }
+      grades_ids = params[:grade_ids].reject { |grade| grade.blank? }
+
+      if params[:operation].present? && items_ids.present? && grades_ids.present?
+        items = Item.find params[:item_ids]
+        students = []
+        items_unit_costs = []
+        # taxes of items and unit costs in big decimals should be added there
+        items.each do |item|
+          items_unit_costs << item.unit_cost
+        end
+        grades = Grade.find params[:grade_ids]
+        grades.each do |grade|
+          students = grade.students
+        end
+      end
     end
 
     def unpaid_invoices
@@ -385,7 +394,8 @@ module SchoolBillingSystem
                                       :notes, :po_number, :status, :sub_total, :tax_amount, :terms,
                                       :invoice_total, :invoice_line_items_attributes, :archive_number,
                                       :archived_at, :deleted_at, :payment_terms_id, :due_date,
-                                      :last_invoice_status, :company_id,:currency_id,
+                                      :last_invoice_status, :company_id,:currency_id, :item_ids[],
+                                      :last_invoice_status, :company_id,:currency_id, :item_ids[], :grade_ids[],
                                       invoice_line_items_attributes:
                                           [
                                             :id, :invoice_id, :item_description, :item_id, :item_name,

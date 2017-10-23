@@ -24,6 +24,7 @@ class Item < ActiveRecord::Base
   scope :multiple, lambda { |ids| where('id IN(?)', ids.is_a?(String) ? ids.split(',') : [*ids]) }
   scope :archive_multiple, lambda { |ids| multiple(ids).map(&:archive) }
   scope :delete_multiple, lambda { |ids| multiple(ids).map(&:destroy) }
+  scope :generic_items, lambda { where('grade_id is ?', nil)}
 
   # associations
   has_many :invoice_line_items
