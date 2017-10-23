@@ -500,8 +500,12 @@ jQuery ->
     $(".top_links.recover_deleted").click();
 
   $(window).load ->
+    console.log $(window)
     student_id = $('.invoice_client.medium.chzn-select.chzn-done#invoice_client_id').val()
-    window.selectFeeItem(student_id) if student_id isnt ""
+
+    urlParams = new URLSearchParams(window.location.search)
+    new_invoice_param = urlParams.has 'invoice_for_student'
+    window.selectFeeItem(student_id) if student_id isnt "" and new_invoice_param
 
   window.selectFeeItem = (value) ->
     elem = jQuery(".invoice_grid_fields select.items_list");
