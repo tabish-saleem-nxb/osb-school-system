@@ -526,7 +526,16 @@ jQuery ->
           updateInvoiceTotal()
 
   $('#invoice_submit').click ->
-    $('#new_invoice').trigger 'submit.rails'
+    flag = true
+    if jQuery('#invoice_client_id').val() is ""
+      applyPopover(jQuery("#invoice_client_id_chzn"),"bottomMiddle","topLeft","Select a student")
+      flag = false
+    else if jQuery('#invoice_currency_id').val() is ""
+      applyPopover(jQuery("#invoice_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
+      flag = false
+    else
+      $('#new_invoice').trigger 'submit.rails'
+    flag
 
   $('#edit_all_invoices').click ->
     if $('#bulk_operations').is(':visible')
