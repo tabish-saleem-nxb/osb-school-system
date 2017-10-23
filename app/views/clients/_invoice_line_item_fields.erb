@@ -9,26 +9,26 @@
         <%= hidden_field_tag "[invoice][invoice_line_items_attributes][#{i}][item_id]", fee_item.id%>
 
       <td class="align_left">
-        <%= text_field_tag "[invoice][invoice_line_items_attributes][#{i}][item_name]", fee_item.item_name, :class => 'grid_large description' %>
+        <%= text_field_tag "[invoice][invoice_line_items_attributes][#{i}][item_name]", fee_item.item_name, :class => 'grid_large description', readonly: true %>
       </td>
 
       <td class="align_left">
-        <%= text_field_tag "[invoice][invoice_line_items_attributes][#{i}][item_description]", fee_item.item_description, :class => 'grid_large description' %>
+        <%= text_field_tag "[invoice][invoice_line_items_attributes][#{i}][item_description]", fee_item.item_description, :class => 'grid_large description', readonly: true  %>
       </td>
       <td class="align_right">
-        <%= text_field_tag "[invoice][invoice_line_items_attributes][#{i}][item_unit_cost]", fee_item.unit_cost, :class => 'grid_small align_right cost line_item_qtip' %>
+        <%= text_field_tag "[invoice][invoice_line_items_attributes][#{i}][item_unit_cost]", fee_item.unit_cost, :class => 'grid_small align_right cost line_item_qtip', readonly: true %>
       </td>
       <td class="align_right">
-        <%= text_field_tag "[invoice][invoice_line_items_attributes][#{i}][item_quantity]", fee_item.quantity, :class => 'grid_small align_right qty line_item_qtip' %>
+        <%= text_field_tag "[invoice][invoice_line_items_attributes][#{i}][item_quantity]", fee_item.quantity, :class => 'grid_small align_right qty line_item_qtip', readonly: true %>
       </td>
       <td class="align_left">
-        <%= text_field_tag "[invoice][invoice_line_items_attributes][#{i}][tax_1]", fee_item.tax_1, :class => 'tax tax1 chzn-select grid_small' %>
+        <%= text_field_tag "[invoice][invoice_line_items_attributes][#{i}][tax_1]", fee_item.tax_1, :class => 'tax tax1 chzn-select grid_small', readonly: true %>
       </td>
       <td class="align_left draf">
-        <%= text_field_tag "[invoice][invoice_line_items_attributes][#{i}][tax_2]", fee_item.tax_2, :class => 'tax tax2 chzn-select grid_small' %>
+        <%= text_field_tag "[invoice][invoice_line_items_attributes][#{i}][tax_2]", fee_item.tax_2, :class => 'tax tax2 chzn-select grid_small', readonly: true %>
       </td>
       <td class="align_right">
-        <%= label_tag "[invoice][invoice_line_items_attributes][#{i}][line total]", '0.00', :class => 'blank_input grid_medium line_total' %>
+        <%= label_tag "[invoice][invoice_line_items_attributes][#{i}][line total]", '0.00', :class => 'blank_input grid_medium line_total', readonly: true %>
       </td>
     </tr>
 <% end %>
