@@ -18,9 +18,6 @@ jQuery ->
     else if jQuery("#item_unit_cost").val() isnt "" and  isNaN(jQuery("#item_unit_cost").val())
       applyPopover(jQuery("#item_unit_cost"),"Must be numeric")
       flag = false
-    else if jQuery("#item_grade_id").val() is ""
-      applyPopover(jQuery("#item_grade_id_chzn"), "Select a grade")
-      flag = false
     else if jQuery('#company_association').is(':checked')
       if jQuery('.options_content input[type=checkbox]:checked').length is 0
        applyPopover(jQuery("#company_association"),"Select a company")
