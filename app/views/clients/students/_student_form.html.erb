@@ -65,11 +65,13 @@
 
               </div>
               <!--field_row-->
-
-              <div class="label_field right single"><%= t('views.students.grade') %></div>
-              <div class="small_field">
-                <% selected_grade = @client.grade_id.present? ? @client.grade_id : nil %>
-                <%=f.select :grade_id, options_for_select(@grades.collect{|grade|[grade.title, grade.id]}, selected: selected_grade), {prompt: '', include_blank: ''}, {'data-placeholder' => t('views.students.select_grade'), class: 'invoice_client medium chzn-select', 'data-form-container' => 'clients_holder', 'data-dropdown-width' => '300'}%>
+              <div class="field_row">
+                <div class="label_field left single"><%= t('views.students.grade') %></div>
+                <div class="medium_field">
+                  <% selected_grade = @client.grade_id.present? ? @client.grade_id : nil %>
+                  <%=f.select :grade_id, options_for_select(@grades.collect{|grade|[grade.title, grade.id]}, selected: selected_grade), {prompt: '', include_blank: ''},
+                              {'data-placeholder' => t('views.students.select_grade'), class: 'medium chzn-select', 'data-form-container' => 'clients_holder', 'data-dropdown-width' => '300'}%>
+                </div>
               </div>
 
               <!--field_row-->
