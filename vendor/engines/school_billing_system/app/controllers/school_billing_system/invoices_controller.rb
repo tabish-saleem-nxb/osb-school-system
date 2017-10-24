@@ -196,16 +196,12 @@ module SchoolBillingSystem
       grades_ids = params[:grade_ids].reject { |grade| grade.blank? }
 
       if params[:operation].present? && items_ids.present? && grades_ids.present?
-        items = Item.find params[:item_ids]
-        students = []
-        items_unit_costs = []
-        # taxes of items and unit costs in big decimals should be added there
-        items.each do |item|
-          items_unit_costs << item.unit_cost
-        end
-        grades = Grade.find params[:grade_ids]
-        grades.each do |grade|
-          students = grade.students
+        student_ids = Client.where(grade_id: grades_ids).pluck :id
+        invoices = Invoice.where(client_id: student_ids)
+        invoices.each do |invoice|
+          items_ids.each do |item_id|
+            invoice.invoice_line_items.create(item_id: item_id, item_quantity: 1)
+          end
         end
       end
     end

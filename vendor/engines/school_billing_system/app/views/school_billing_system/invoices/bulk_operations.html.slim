@@ -22,24 +22,25 @@
         .small_field.right
           .label_field.left.single.left-margin
             = t('header.links.bulk_operations')
-          ul.field_description
-            li
-              = select_tag :operation, options_for_select(BULK_OPERATIONS), include_blank: t('views.invoices.select_operation'), id: 'select_bulk_operation', class: 'invoice_client medium chzn-select'
+          .left.single.left-margin
+            = select_tag :operation, options_for_select(BULK_OPERATIONS),
+                           include_blank: t('views.invoices.select_operation'),
+                           id: 'select_bulk_operation',
+                           class: 'invoice_client medium chzn-select'
 
         .small_field.right
           .label_field.left.single.left-margin
             = t('header.links.items.items')
-          ul.field_description
-            li
-              = select_tag :items_ids, options_for_select(Item.generic_items.collect{|item| [item.item_name, item.id]}), multiple: true, include_blank: t('views.invoices.select_item'), id: 'bulk_operations_item', class: 'chzn-select'
+          .left.single.left-margin
+            = select_tag :items_ids, options_for_select(Item.all.collect{|item| [item.item_name, item.id]}), multiple: true, include_blank: t('views.invoices.select_item'), id: 'bulk_operations_item', class: 'chzn-select remove-add-new'
 
         .small_field.right
           .label_field.left.single.left-margin
             = t('header.links.grades.grades')
-          ul.field_description
-            li
-              = select_tag :grades_ids, options_for_select(Grade.all.collect{|grade| [grade.title, grade.id]}), multiple: true,
-                    include_blank: t('views.invoices.select_grade'), id: 'bulk_operations_grade', class: 'invoice_client medium chzn-select'
+          .left.single.left-margin
+            = select_tag :grades_ids, options_for_select(Grade.all.collect{|grade| [grade.title, grade.id]}), multiple: true,
+                    include_blank: t('views.invoices.select_grade'), id: 'bulk_operations_grade', class: 'invoice_client medium chzn-select',
+              'data-form-container' => 'items_holder'
 
       .content_bottom
         = submit_tag t('views.invoices.perform_operation'), class: 'btn_large submit'
