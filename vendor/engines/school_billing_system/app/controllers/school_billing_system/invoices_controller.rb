@@ -192,16 +192,20 @@ module SchoolBillingSystem
     end
 
     def perform_bulk_operations
-      items_ids = params[:item_ids].reject { |item| item.blank? }
-      grades_ids = params[:grade_ids].reject { |grade| grade.blank? }
+      item_ids = params[:item_ids].reject { |item| item.blank? }
+      grade_ids = params[:grade_ids].reject { |grade| grade.blank? }
 
-      if params[:operation].present? && items_ids.present? && grades_ids.present?
-        student_ids = Client.where(grade_id: grades_ids).pluck :id
+      if params[:operation].present? && item_ids.present? && grade_ids.present?
+        student_ids = Client.where(grade_id: grade_ids).pluck :id
         invoices = Invoice.where(client_id: student_ids)
-        invoices.each do |invoice|
-          items_ids.each do |item_id|
-            invoice.invoice_line_items.create(item_id: item_id, item_quantity: 1)
+        if params[:operation].eql?('Add') or params[:operation].eql?('Fine') or params[:operation].eql?('Discount')
+          invoices.each do |invoice|
+            item_ids.each do |item_id|
+              invoice.invoice_line_items.create(item_id: item_id, item_quantity: 1)
+            end
           end
+        elsif params[:operation].eql?('Remove')
+          # subtract amount w.r.t items's line_items_total
         end
       end
     end
