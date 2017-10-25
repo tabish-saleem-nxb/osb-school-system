@@ -198,7 +198,7 @@ module SchoolBillingSystem
       if params[:operation].present? && item_ids.present? && grade_ids.present?
         student_ids = Client.where(grade_id: grade_ids).pluck :id
         invoices = Invoice.where(client_id: student_ids)
-        if params[:operation].eql?('Add') or params[:operation].eql?('Fine') or params[:operation].eql?('Discount')
+        if params[:operation].eql?('Add') or params[:operation].eql?('Fine')
           invoices.each do |invoice|
             item_ids.each do |item_id|
               invoice.invoice_line_items.create(item_id: item_id, item_quantity: 1)
@@ -206,8 +206,12 @@ module SchoolBillingSystem
           end
         elsif params[:operation].eql?('Remove')
           # subtract amount w.r.t items's line_items_total
+        elsif params[:operation].eql?('Discount')
         end
+        redirect_to bulk_operations_invoices_path, notice: 'Bulk operations has been done successfully.'
       end
+      redirect_to bulk_operations_invoices_path, alert: 'Bulk operations has been failed.'
+
     end
 
     def unpaid_invoices
@@ -394,8 +398,7 @@ module SchoolBillingSystem
                                       :notes, :po_number, :status, :sub_total, :tax_amount, :terms,
                                       :invoice_total, :invoice_line_items_attributes, :archive_number,
                                       :archived_at, :deleted_at, :payment_terms_id, :due_date,
-                                      :last_invoice_status, :company_id,:currency_id, :item_ids[],
-                                      :last_invoice_status, :company_id,:currency_id, :item_ids[], :grade_ids[],
+                                      :last_invoice_status, :company_id,:currency_id,
                                       invoice_line_items_attributes:
                                           [
                                             :id, :invoice_id, :item_description, :item_id, :item_name,
