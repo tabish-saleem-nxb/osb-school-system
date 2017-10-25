@@ -1,5 +1,5 @@
-#items_holder.quick_create_wrapper style=("display: none;")
-  = render 'items/new_item'
+#grades_holder.quick_create_wrapper style=("display: none;")
+  = render 'grades/new_grade'
 
 .invoice
   .content_top
@@ -26,7 +26,7 @@
             = select_tag :operation, options_for_select(BULK_OPERATIONS),
                            include_blank: t('views.invoices.select_operation'),
                            id: 'select_bulk_operation',
-                           class: 'invoice_client medium chzn-select'
+                           class: 'invoice_client medium chzn-select remove-add-new'
 
         .small_field.right
           .label_field.left.single.left-margin
@@ -40,7 +40,10 @@
           .left.single.left-margin
             = select_tag :grades_ids, options_for_select(Grade.all.collect{|grade| [grade.title, grade.id]}), multiple: true,
                     include_blank: t('views.invoices.select_grade'), id: 'bulk_operations_grade', class: 'invoice_client medium chzn-select',
-              'data-form-container' => 'items_holder'
+              'data-form-container' => 'grades_holder'
 
       .content_bottom
+        br
+        br
+        br
         = submit_tag t('views.invoices.perform_operation'), class: 'btn_large submit'

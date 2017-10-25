@@ -1,0 +1,35 @@
+.tiny_form_container
+  #create_client.tiny_create_form
+    .tiny_form_inner
+      .tiny_form_top
+        .tiny_form_heading
+          h4 = t('header.links.grades.new')
+        .close_btn = link_to 'x', 'javascript:'
+      /! tiny_form_top
+      .tiny_form_middle
+        .fields_content_data
+          .field_row
+            .label_field.left
+              = t('views.grades.title')
+            .small_field
+              = text_field_tag 'grade[title]', '', required: 'required', 'data-unique' => ''
+          /! field_row
+          .field_row
+            .label_field.left.single
+              = t('views.grades.description')
+            .small_field
+              = text_field_tag 'grade[description]', '', required: 'required'
+          .field_row
+            .small_field
+              = hidden_field_tag :quick_create
+              = hidden_field_tag :association, 'account'
+          /! field_row
+          #clientModal.client-modal
+            .cross_btn
+              button.close aria-hidden='true' data-dismiss='modal' type='button'
+                = image_tag 'cross.png', size: '7x7', alt: ''
+      /! fields_content_data
+      /! tiny_form_middle
+      .tiny_form_btm
+        = button_tag 'save', name: 'save', class: 'btn_large tiny_btn btn_save', style: 'width:40px;'
+        = button_tag 'save & Add More', name: 'add_more', class: 'btn_large tiny_btn btn_save_and_add_more'
