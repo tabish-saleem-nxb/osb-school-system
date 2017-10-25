@@ -35,10 +35,6 @@ class GradesController < ApplicationController
     end
     @grade = Grade.new(grade_params)
 
-    #TODO: What for associate entity
-    # options = params[:quick_create] ? params.merge(company_ids: company_id) : params
-    # associate_entity(options, @grade)
-
     respond_to do |format|
       if @grade.save
         format.js
@@ -80,25 +76,6 @@ class GradesController < ApplicationController
       end
     end
   end
-
-  # def associate_entity(params, entity)
-  #   ids, controller = params[:company_ids], params[:controller]
-  #
-  #   ActiveRecord::Base.transaction do
-  #     # delete existing associations
-  #     if action_name == 'update'
-  #       entities = controller == 'email_templates' ? CompanyEmailTemplate.where(template_id: entity.id) : CompanyEntity.where(entity_id: entity.id, entity_type: entity.class.to_s)
-  #       entities.map(&:destroy) if entities.present?
-  #     end
-  #
-  #     # associate item with whole account or selected companies
-  #     if params[:association] == 'account'
-  #       current_user.accounts.first.send(controller) << entity
-  #     else
-  #       Company.multiple(ids).each { |company| company.send(controller) << entity } unless ids.blank?
-  #     end
-  #   end
-  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
