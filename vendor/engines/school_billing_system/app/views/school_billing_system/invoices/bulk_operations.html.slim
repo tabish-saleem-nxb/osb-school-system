@@ -35,12 +35,13 @@
             = select_tag :item_ids, options_for_select(Item.generic_items.collect{|item| [item.item_name, item.id]}), multiple: true, include_blank: t('views.invoices.select_item'), id: 'bulk_operations_item', class: 'chzn-select remove-add-new'
 
         .small_field.right
-          .label_field.left.single.left-margin
+          .single.left-margin
             = t('header.links.grades.grades')
           .left.single.left-margin
-            = select_tag :grade_ids, options_for_select(Grade.all.collect{|grade| [grade.title, grade.id]}), multiple: true,
-                    include_blank: t('views.invoices.select_grade'), id: 'bulk_operations_grade', class: 'invoice_client medium chzn-select',
-              'data-form-container' => 'grades_holder'
+          = select_tag :grade_ids, options_for_select(Grade.all.collect{|grade| [grade.title, grade.id]}), multiple: true,
+                  include_blank: t('views.invoices.select_grade'), id: 'bulk_operations_grade', class: 'invoice_client medium chzn-select',
+            'data-form-container' => 'grades_holder',
+            'data-dropdown-width' => '300'
 
       .content_bottom
         br
