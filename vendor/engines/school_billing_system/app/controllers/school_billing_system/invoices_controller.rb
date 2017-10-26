@@ -205,8 +205,27 @@ module SchoolBillingSystem
             end
           end
         elsif params[:operation].eql?('Remove')
-          # subtract amount w.r.t items's line_items_total
+          invoices.each do |invoice|
+            item_ids.each do |item_id|
+              item = invoice.invoice_line_items.find_by_item_id(item_id)
+              item.destroy if item
+            end
+          end
         elsif params[:operation].eql?('Discount')
+          invoices.each do |invoice|
+            invoice.discount_type = params[discount_type]
+            if invoice.discount_type.eql?('%')
+              invoice.discount_percentage = params[:invoice][:discount_percentage]
+              discount_amount = invoice = (invoice.sub_total * params[:invoice][:discount_percentage]) / 100
+              invoice.invoice_total = invoice.sub_total - discount_amount
+              invoice.save
+            elsif invoice.discount_type.eql?('$')
+              invoice.discount_amount = params[:invoice][:discount_amount]
+              invoice.invoice_total = invoice.sub_total - params[:invoice][:discount_amount]
+              invoice.save
+            end
+          end
+
         end
         redirect_to bulk_operations_invoices_path, notice: 'Bulk operations has been done successfully.'
       end
@@ -309,6 +328,7 @@ module SchoolBillingSystem
       @client = Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
       @client = @invoice.client if params[:id].present?
       @invoice.currency = @client.currency if @client.present?
+      @grades = Grade.all
       get_clients_and_items
       @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
       respond_to do |format|
@@ -318,9 +338,10 @@ module SchoolBillingSystem
     end
 
     def generate_term_invoices
-      if Client.count > 0
-        students = Client.where(client_type_id: ClientType.where(title: 'student').first.id)
-        if !students.blank?
+      if params[:invoice][:grade].present?
+        grade = params[:invoice][:grade]
+        students = grade.clients.students
+        if students.count > 0
           students.each do |student|
             @invoice = Invoice.new(invoice_params)
             @invoice.client_id = student.id
@@ -338,11 +359,10 @@ module SchoolBillingSystem
           redirect_to(invoices_path, notice: 'Term fee invoices have been generated successfully')
           return
         else
-          redirect_to term_invoices_path, alert: 'No student found!'
-          return
+          redirect_to term_invoices_path, alert: 'No student is found for this grade!'
         end
       else
-        redirect_to term_invoices_path, alert: 'No student found!'
+        redirect_to term_invoices_path, alert: 'Please select any grade!'
       end
     end
 

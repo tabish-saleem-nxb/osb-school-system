@@ -63,6 +63,15 @@
                   <li><%= t('views.invoices.company_hint') %></li>
                 </ul>
               </div>
+
+              <div class="label_field left single"><%= f.label :company_id, content_tag(:span, t('company')) %></div>
+              <div class="medium_field">
+                <%= select_tag :grade_ids, options_for_select(@grades.collect{|grade| [grade.title, grade.id]}),
+                  include_blank: t('views.invoices.select_grade'), class: 'invoice_client medium chzn-select',
+                  'data-form-container' => 'grades_holder',
+                  'data-dropdown-width' => '300' %>
+              </div>
+
             </div>
 
             <!--field_row-->
