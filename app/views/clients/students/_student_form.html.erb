@@ -54,10 +54,17 @@
               <div class="field_row">
                 <div class="label_field left single"><span><%= t('views.parents.select') %></span></div>
                 <div class="medium_field">
-                  <% selected_parent = params[:action].eql?('edit') ? @client.parent.id : nil %>
-                  <%= f.select :parent_client_id, options_for_select(@parents.collect{|parent| [parent.contact_name, parent.id]}, selected: selected_parent),
-                   {prompt: '', include_blank: ''}, {'data-placeholder' => t('views.parents.select_parent'),
-                 class: 'invoice_client medium chzn-select', 'data-form-container' => 'clients_holder', 'data-dropdown-width' => '300'} %>
+                  <% unless @client.parent_client_id.eql?(0)%>
+                      <% selected_parent = params[:action].eql?('edit') ? @client.parent.id : nil %>
+                      <%= f.select :parent_client_id, options_for_select(@parents.collect{|parent| [parent.contact_name, parent.id]}, selected: selected_parent),
+                       {prompt: '', include_blank: ''}, {'data-placeholder' => t('views.parents.select_parent'),
+                     class: 'invoice_client medium chzn-select', 'data-form-container' => 'clients_holder', 'data-dropdown-width' => '300'} %>
+                 <% else %>
+                      <% selected_parent = nil %>
+                      <%= f.select :parent_client_id, options_for_select(@parents.collect{|parent| [parent.contact_name, parent.id]}, selected: selected_parent),
+                                   {prompt: '', include_blank: ''}, {'data-placeholder' => t('views.parents.select_parent'),
+                                                                     class: 'invoice_client medium chzn-select', 'data-form-container' => 'clients_holder', 'data-dropdown-width' => '300'} %>
+                  <% end %>
                 </div>
 
                 <div class="label_field right single"><%= t('views.students.fee_date') %></div>

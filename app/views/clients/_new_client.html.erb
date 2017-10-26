@@ -1,9 +1,11 @@
 <div class="tiny_form_container">
   <div id="create_client" class="tiny_create_form">
+    <% type = params[:type] %>
     <div class="tiny_form_inner">
+      <%= hidden_field_tag 'type', type %>
 
       <div class="tiny_form_top">
-        <div class="tiny_form_heading"><h4><%= t('views.clients.add_new_client') %></h4></div>
+        <div class="tiny_form_heading"><h4><%= t('header.links.students.new') %></h4></div>
         <div class="close_btn"><%= link_to 'x', 'javascript:' %></div>
       </div>
       <!--tiny_form_top-->
@@ -13,7 +15,7 @@
         <div class="fields_content_data">
 
           <div class="field_row">
-            <div class="label_field left single"><%= t('views.clients.organization') %></div>
+            <div class="label_field left single"><%= t("views.#{type}s.organization_name") %></div>
             <div class="small_field">
               <%= text_field_tag "client[organization_name]", '' %>
             </div>
@@ -29,7 +31,7 @@
           <!--field_row-->
 
           <div class="field_row">
-            <div class="label_field left single"><span><%= t('views.clients.first_name') %></span></div>
+            <div class="label_field left single"><%= t("views.#{type}s.first_name") %></div>
             <div class="small_field">
               <%= text_field_tag "client[first_name]", '', :required => true %>
             </div>
@@ -37,7 +39,7 @@
           <!--field_row-->
 
           <div class="field_row">
-            <div class="label_field left single"><span><%= t('views.clients.last_name') %></span></div>
+            <div class="label_field left single"><%= t("views.#{type}s.last_name") %></div>
             <div class="small_field">
               <%= text_field_tag "client[last_name]", '', :required => true %>
             </div>
@@ -45,13 +47,14 @@
           <!--field_row-->
 
           <div class="field_row">
-            <div class="label_field left"><span><%= t('views.clients.business_phone') %></span></div>
+            <div class="label_field left"><%= t("views.#{type}s.business_phone") %></div>
             <div class="small_field">
               <%= text_field_tag "client[business_phone]", '' %>
               <%= hidden_field_tag :quick_create %>
               <%#= hidden_field_tag :association, 'account' %>
             </div>
           </div>
+          <%= hidden_field_tag "client[parent_client_id]", 0 %>
           <!--field_row-->
 
 

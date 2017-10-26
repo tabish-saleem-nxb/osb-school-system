@@ -212,8 +212,12 @@ class ClientsController < ApplicationController
   def select_fee_item_for_student
     if params[:student_id].present?
       student = Client.find params[:student_id]
-      grade = student.grade
-      @fee_items = grade.items
+      if student.grade.present?
+        grade = student.grade
+        @fee_items = grade.items
+      else
+        @fee_items = nil
+      end
       respond_to do |format|
         format.js
       end

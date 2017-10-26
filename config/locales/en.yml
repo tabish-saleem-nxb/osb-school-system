@@ -422,6 +422,7 @@ en:
       add_new_student: "Add New Student"
       contact_title: "Contact title"
     parents:
+      no_parent: 'no parent'
       parent_name: "Parent Name"
       parent: "Parent"
       parents: "Parents"
