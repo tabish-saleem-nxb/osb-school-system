@@ -35,7 +35,7 @@ module Services
       elsif params[:controller].eql?('school_billing_system/invoices') && params[:action].eql?('term_invoices')
         company_id = get_company_id(params[:invoice_for_client])
         invoice = ::Invoice.new({:invoice_date => Date.today.strftime(date_format), :client_id => params[:invoice_for_client], :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id), :company_id => company_id, due_date: Date.tomorrow})
-        3.times { invoice.invoice_line_items.build() }
+        1.times { invoice.invoice_line_items.build() }
       else
         invoice = ::Invoice.new({:invoice_number => ::Invoice.get_next_invoice_number(nil), :invoice_date => Date.today.strftime(date_format), :payment_terms_id => (PaymentTerm.all.present? && PaymentTerm.first.id)})
         1.times { invoice.invoice_line_items.build() }

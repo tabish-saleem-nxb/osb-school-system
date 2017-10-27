@@ -1,0 +1,4 @@
+$('table#invoice_grid_fields').find('.dynamic_fee_item').remove();
+<% if @fee_items.present? %>
+    $('#invoice_grid_fields > tbody > tr:first').after('<%= escape_javascript render("clients/invoice_line_item_fields") %>');
+<% end %>

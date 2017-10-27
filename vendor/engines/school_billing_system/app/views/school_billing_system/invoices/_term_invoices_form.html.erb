@@ -1,4 +1,4 @@
-<%= nested_form_for @invoice, url: :generate_term_invoices, :html => {:class => 'invoice-form form-horizontal', :novalidate => ""} do |f| %>
+<%= nested_form_for @invoice, url: :generate_term_invoices, :html => {id: 'generate_term_invoices', :novalidate => ""} do |f| %>
     <% @parent_f = f %>
 
     <div class="invoice_form">
@@ -56,7 +56,7 @@
 
           <div class="fields_content_left">
             <div class="field_row description">
-              <div class="label_field left single"><%= f.label :company_id, content_tag(:span, t('company')) %></div>
+              <div class="label_field left"><%= t('company') %></div>
               <div class="medium_field">
                 <div> <%= text_field_tag 'company', get_invoice_company_name(@invoice), :readonly => '', :class => 'company_read_only' %> </div>
                 <ul class="field_description">
@@ -64,12 +64,12 @@
                 </ul>
               </div>
 
-              <div class="label_field left single"><%= f.label :company_id, content_tag(:span, t('company')) %></div>
+              <div class="label_field left single"><%= t('views.students.grade') %></div>
               <div class="medium_field">
-                <%= select_tag :grade_ids, options_for_select(@grades.collect{|grade| [grade.title, grade.id]}),
-                  include_blank: t('views.invoices.select_grade'), class: 'invoice_client medium chzn-select',
+                <%= select_tag :grade_id, options_for_select(@grades.collect{|grade| [grade.title, grade.id]}),
+                  include_blank: t('views.invoices.select_grade'), class: 'invoice_client medium chzn-select', id: 'term_invoice_grade_id',
                   'data-form-container' => 'grades_holder',
-                  'data-dropdown-width' => '300' %>
+                  'data-dropdown-width' => '300', onchange: 'selectFeeItemForGrade(this.value);' %>
               </div>
 
             </div>

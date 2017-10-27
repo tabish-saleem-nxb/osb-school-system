@@ -525,7 +525,27 @@ jQuery ->
           qty.val(parseInt(qty.val())) if qty.val()
           updateInvoiceTotal()
 
-  $('#invoice_submit').click ->
+  this.selectFeeItemForGrade = (grade_id) ->
+    action = window.location.pathname.split('/')[3]/
+    if grade_id isnt "" and action is 'term_invoices'
+      elem = jQuery(".invoice_grid_fields select.items_list");
+      jQuery.ajax '/grades/select_fee_item_for_grade',
+        type: 'POST'
+        data: grade_id: grade_id
+        error: (jqXHR, textStatus, errorThrown) ->
+          alert "Error: #{textStatus}"
+        success: (data, textStatus, jqXHR) ->
+          jQuery(".invoice_grid_fields tr:visible .line_total").each ->
+            updateLineTotal(jQuery(this))
+            # dont use decimal points in quantity and make cost 2 decimal points
+            container = jQuery(this).parents("tr.fields")
+            cost = jQuery(container).find("input.cost")
+            qty = jQuery(container).find("input.qty")
+            cost.val(parseFloat(cost.val()).toFixed(2)) if cost.val()
+            qty.val(parseInt(qty.val())) if qty.val()
+            updateInvoiceTotal()
+
+  jQuery('#invoice_submit').click ->
     flag = true
     if jQuery('#invoice_client_id').val() is ""
       applyPopover(jQuery("#invoice_client_id_chzn"),"bottomMiddle","topLeft","Select a student")
@@ -545,18 +565,82 @@ jQuery ->
       $('#edit_all_invoices').html 'Cancel'
       $('#bulk_operations').addClass 'show-form'
 
+  jQuery('form#generate_term_invoices').submit ->
+    flag = true
+    if jQuery("#invoice_invoice_date").val() is ""
+      applyPopover(jQuery("#invoice_invoice_date"),"rightTop","leftMiddle","Select invoice date")
+      flag = false
+    else if jQuery("#invoice_invoice_date").val() isnt "" and !DateFormats.validate_date(jQuery("#invoice_invoice_date").val())
+      applyPopover(jQuery("#invoice_invoice_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
+      flag = false
+    else if jQuery("#invoice_due_date").val() is ""
+      applyPopover(jQuery("#invoice_due_date"),"rightTop","leftMiddle","Select invoice due date")
+      flag = false
+    else if jQuery("#invoice_due_date").val() isnt "" and !DateFormats.validate_date(jQuery("#invoice_due_date").val())
+      applyPopover(jQuery("#invoice_due_date"),"rightTop","leftMiddle","Make sure date format is in '#{DateFormats.format()}' format")
+      flag = false
+    else if jQuery('#term_invoice_grade_id').val() is ""
+      applyPopover(jQuery("#term_invoice_grade_id_chzn"),"bottomMiddle","topLeft","Select a grade")
+      flag = false
+      # Check if payment term is selected
+    else if jQuery("#invoice_payment_terms_id").val() is ""
+      applyPopover(jQuery("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
+      flag = false
+      # Check if discount percentage is an integer
+    else if jQuery("input#invoice_discount_percentage").val()  isnt "" and isNaN(jQuery("input#invoice_discount_percentage").val())
+      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")
+      flag = false
+      # Check if no item is selected
+    else if jQuery("tr.fields:visible").length < 1
+      applyPopover(jQuery("#add_line_item"),"bottomMiddle","topLeft","Add line item")
+      flag = false
+      # Check if item is selected
+    else if item_rows.find("select.items_list option:selected[value='']").length is item_rows.length
+      first_item = jQuery("table#invoice_grid_fields tr.fields:visible:first").find("select.items_list").next()
+      applyPopover(first_item,"bottomMiddle","topLeft","Select an item")
+      flag = false
+    else if discount_type == '%' and parseFloat(discount_percentage) > 100.00
+      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Percentage must be hundred or less")
+      flag = false
+    else if discount_type != '%' and parseFloat(discount_percentage) > parseFloat(sub_total)
+      applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Discount must be less than sub-total")
+      flag = false
+
+      # Item cost and quantity should be greater then 0
+    else
+      jQuery("tr.fields:visible").each ->
+        row = jQuery(this)
+        if row.find("select.items_list").val() isnt ""
+          cost = row.find(".cost")
+          qty =  row.find(".qty")
+          tax1 = row.find("select.tax1")
+          tax2 = row.find("select.tax2")
+          tax1_value = jQuery("option:selected",tax1).val()
+          tax2_value = jQuery("option:selected",tax2).val()
+
+          if not jQuery.isNumeric(cost.val()) and cost.val() isnt ""
+            applyPopover(cost,"bottomLeft","topLeft","Enter valid Item cost")
+            flag = false
+          else hidePopover(cost)
+
+          if not jQuery.isNumeric(qty.val())  and qty.val() isnt ""
+            applyPopover(qty,"bottomLeft","topLeft","Enter valid Item quantity")
+            flag = false
+          else if (tax1_value is tax2_value) and (tax1_value isnt "" and tax2_value isnt "")
+            applyPopover(tax2.next(),"bottomLeft","topLeft","Tax1 and Tax2 should be different")
+            flag = false
+          else hidePopover(qty)
+    flag
+
   jQuery("form#bulk_operations_form").submit ->
     flag = true
     if jQuery('#select_bulk_operation').val() is ""
-      console.log 'Select Bulk Operation!'
       applyPopover(jQuery("#select_bulk_operation"),"bottomMiddle","topLeft", "Select a operation")
       flag = false
     else if jQuery('#bulk_operations_item').val() is ""
-      console.log 'Select Item!'
       applyPopover(jQuery("#bulk_operations_item"),"bottomMiddle","topLeft", "Select an item")
       flag = false
     else if jQuery('#bulk_operations_grade').val() is ""
-      console.log 'Select Grade!'
       applyPopover(jQuery("#bulk_operations_grade"),"bottomMiddle","topLeft", "Select a grade")
       flag = false
     flag

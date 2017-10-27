@@ -350,7 +350,6 @@ module SchoolBillingSystem
             @invoice.company_id = get_company_id()
             @invoice.invoice_number = Invoice.get_next_invoice_number(nil)
             @invoice.create_line_item_taxes()
-
             if @invoice.save
               @invoice.notify(current_user, @invoice.id) if params[:commit].present?
               # new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft])

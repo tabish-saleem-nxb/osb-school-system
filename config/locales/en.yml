@@ -48,6 +48,7 @@ en:
         time_tracking: "Time Tracking"
         invoice: 'Fee Invoice'
         bulk_operations: "Bulk Operations"
+        term_invoices: 'Term Invoices'
       time_tracking:
         time_tracking: "Time Tracking"
         time_sheet: "Timesheet"

@@ -77,6 +77,20 @@ class GradesController < ApplicationController
     end
   end
 
+  def select_fee_item_for_grade
+    if params[:grade_id].present?
+      grade = Grade.find params[:grade_id]
+      if grade.present?
+        @fee_items = grade.items
+      else
+        @fee_items = nil
+      end
+      respond_to do |format|
+        format.js
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_grade
