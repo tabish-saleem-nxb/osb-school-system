@@ -526,7 +526,7 @@ jQuery ->
           updateInvoiceTotal()
 
   this.selectFeeItemForGrade = (grade_id) ->
-    action = window.location.pathname.split('/')[3]/
+    action = window.location.pathname.split('/')[3]
     if grade_id isnt "" and action is 'term_invoices'
       elem = jQuery(".invoice_grid_fields select.items_list");
       jQuery.ajax '/grades/select_fee_item_for_grade',
