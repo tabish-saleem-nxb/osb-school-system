@@ -650,13 +650,13 @@ jQuery ->
   jQuery("form#bulk_operations_form").submit ->
     flag = true
     if jQuery('#select_bulk_operation').val() is ""
-      applyPopover(jQuery("#select_bulk_operation"),"bottomMiddle","topLeft", "Select a operation")
+      applyPopover(jQuery("#select_bulk_operation_chzn"),"bottomMiddle","topLeft", "Select a operation")
       flag = false
-    else if jQuery('#bulk_operations_item').val() is ""
-      applyPopover(jQuery("#bulk_operations_item"),"bottomMiddle","topLeft", "Select an item")
+    else if jQuery('#bulk_operations_item').val() is "" || jQuery('#bulk_operations_item').val() is null
+      applyPopover(jQuery("#bulk_operations_item_chzn"),"bottomMiddle","topLeft", "Select an item")
       flag = false
-    else if jQuery('#bulk_operations_grade').val() is ""
-      applyPopover(jQuery("#bulk_operations_grade"),"bottomMiddle","topLeft", "Select a grade")
+    else if jQuery('#bulk_operations_grade').val() is "" || jQuery('#bulk_operations_grade').val() is null
+      applyPopover(jQuery("#bulk_operations_grade_chzn"),"bottomMiddle","topLeft", "Select a grade")
       flag = false
     flag
 
