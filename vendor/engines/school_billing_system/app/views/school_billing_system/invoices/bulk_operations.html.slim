@@ -27,9 +27,10 @@
                            include_blank: t('views.invoices.select_operation'),
                            id: 'select_bulk_operation',
                            class: 'invoice_client medium chzn-select remove-add-new'
+                          /,onchange: 'replaceWithDiscDropDown(this.value);'
 
         .small_field.right
-          .label_field.left.single.left-margin
+          #items_operations_drop_down.label_field.left.single.left-margin
             = t('header.links.items.items')
           .left.single.left-margin
             = select_tag :item_ids, options_for_select(Item.generic_items.collect{|item| [item.item_name, item.id]}), multiple: true, include_blank: t('views.invoices.select_item'), id: 'bulk_operations_item', class: 'chzn-select remove-add-new'
@@ -42,6 +43,9 @@
                   include_blank: t('views.invoices.select_grade'), id: 'bulk_operations_grade', class: 'invoice_client medium chzn-select',
             'data-form-container' => 'grades_holder',
             'data-dropdown-width' => '300'
+
+          /= select_tag :discount_type, '',
+          /  {:class => "discount_select chzn-select", :id => "discount_type"}
 
       .content_bottom
         br
