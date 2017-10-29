@@ -525,26 +525,6 @@ jQuery ->
           qty.val(parseInt(qty.val())) if qty.val()
           updateInvoiceTotal()
 
-  this.selectFeeItemForGrade = (grade_id) ->
-    action = window.location.pathname.split('/')[3]
-    if grade_id isnt "" and action is 'term_invoices'
-      elem = jQuery(".invoice_grid_fields select.items_list");
-      jQuery.ajax '/grades/select_fee_item_for_grade',
-        type: 'POST'
-        data: grade_id: grade_id
-        error: (jqXHR, textStatus, errorThrown) ->
-          alert "Error: #{textStatus}"
-        success: (data, textStatus, jqXHR) ->
-          jQuery(".invoice_grid_fields tr:visible .line_total").each ->
-            updateLineTotal(jQuery(this))
-            # dont use decimal points in quantity and make cost 2 decimal points
-            container = jQuery(this).parents("tr.fields")
-            cost = jQuery(container).find("input.cost")
-            qty = jQuery(container).find("input.qty")
-            cost.val(parseFloat(cost.val()).toFixed(2)) if cost.val()
-            qty.val(parseInt(qty.val())) if qty.val()
-            updateInvoiceTotal()
-
   jQuery('#invoice_submit').click ->
     flag = true
     if jQuery('#invoice_client_id').val() is ""
@@ -565,7 +545,13 @@ jQuery ->
       $('#edit_all_invoices').html 'Cancel'
       $('#bulk_operations').addClass 'show-form'
 
-  jQuery('form#generate_term_invoices').submit ->
+  jQuery('#term_invoices_form_button, #term_invoices_form_draft_button').click ->
+    discount_percentage = jQuery("#invoice_discount_percentage").val() || jQuery("#recurring_profile_discount_percentage").val()
+    discount_type = jQuery("select#discount_type").val()
+    sub_total = jQuery('#invoice_sub_total').val()
+    discount_percentage = 0 if not discount_percentage? or discount_percentage is ""
+    item_rows = jQuery("table#invoice_grid_fields tr.fields:visible")
+
     flag = true
     if jQuery("#invoice_invoice_date").val() is ""
       applyPopover(jQuery("#invoice_invoice_date"),"rightTop","leftMiddle","Select invoice date")
@@ -581,6 +567,10 @@ jQuery ->
       flag = false
     else if jQuery('#term_invoice_grade_id').val() is ""
       applyPopover(jQuery("#term_invoice_grade_id_chzn"),"bottomMiddle","topLeft","Select a grade")
+      flag = false
+      # if currency is not selected
+    else if jQuery("#invoice_currency_id").val() is ""
+      applyPopover(jQuery("#invoice_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
       flag = false
       # Check if payment term is selected
     else if jQuery("#invoice_payment_terms_id").val() is ""
@@ -607,30 +597,55 @@ jQuery ->
       flag = false
 
       # Item cost and quantity should be greater then 0
+#    else
+#      jQuery("tr.fields:visible").each ->
+#        row = jQuery(this)
+#        if row.find("select.items_list").val() isnt ""
+#          cost = row.find(".cost")
+#          qty =  row.find(".qty")
+#          tax1 = row.find("select.tax1")
+#          tax2 = row.find("select.tax2")
+#          tax1_value = jQuery("option:selected",tax1).val()
+#          tax2_value = jQuery("option:selected",tax2).val()
+#
+#          if not jQuery.isNumeric(cost.val()) and cost.val() isnt ""
+#            applyPopover(cost,"bottomLeft","topLeft","Enter valid Item cost")
+#            flag = false
+#          else hidePopover(cost)
+#
+#          if not jQuery.isNumeric(qty.val())  and qty.val() isnt ""
+#            applyPopover(qty,"bottomLeft","topLeft","Enter valid Item quantity")
+#            flag = false
+#          else if (tax1_value is tax2_value) and (tax1_value isnt "" and tax2_value isnt "")
+#            applyPopover(tax2.next(),"bottomLeft","topLeft","Tax1 and Tax2 should be different")
+#            flag = false
+#          else hidePopover(qty)
+#    flag
     else
-      jQuery("tr.fields:visible").each ->
-        row = jQuery(this)
-        if row.find("select.items_list").val() isnt ""
-          cost = row.find(".cost")
-          qty =  row.find(".qty")
-          tax1 = row.find("select.tax1")
-          tax2 = row.find("select.tax2")
-          tax1_value = jQuery("option:selected",tax1).val()
-          tax2_value = jQuery("option:selected",tax2).val()
-
-          if not jQuery.isNumeric(cost.val()) and cost.val() isnt ""
-            applyPopover(cost,"bottomLeft","topLeft","Enter valid Item cost")
-            flag = false
-          else hidePopover(cost)
-
-          if not jQuery.isNumeric(qty.val())  and qty.val() isnt ""
-            applyPopover(qty,"bottomLeft","topLeft","Enter valid Item quantity")
-            flag = false
-          else if (tax1_value is tax2_value) and (tax1_value isnt "" and tax2_value isnt "")
-            applyPopover(tax2.next(),"bottomLeft","topLeft","Tax1 and Tax2 should be different")
-            flag = false
-          else hidePopover(qty)
+      $('#new_invoice').trigger 'submit.rails'
     flag
+
+  this.selectFeeItemForGrade = (grade_id) ->
+    action = window.location.pathname.split('/')[3]
+    if grade_id isnt "" and action is 'term_invoices'
+      elem = jQuery(".invoice_grid_fields select.items_list");
+      jQuery.ajax '/grades/select_fee_item_for_grade',
+        type: 'POST'
+        data: grade_id: grade_id
+        error: (jqXHR, textStatus, errorThrown) ->
+          alert "Error: #{textStatus}"
+        success: (data, textStatus, jqXHR) ->
+          jQuery(".invoice_grid_fields tr:visible .line_total").each ->
+            updateLineTotal(jQuery(this))
+            # dont use decimal points in quantity and make cost 2 decimal points
+            container = jQuery(this).parents("tr.fields")
+            cost = jQuery(container).find("input.cost")
+            qty = jQuery(container).find("input.qty")
+            cost.val(parseFloat(cost.val()).toFixed(2)) if cost.val()
+            qty.val(parseInt(qty.val())) if qty.val()
+            updateInvoiceTotal()
+
+
 
   jQuery("form#bulk_operations_form").submit ->
     flag = true

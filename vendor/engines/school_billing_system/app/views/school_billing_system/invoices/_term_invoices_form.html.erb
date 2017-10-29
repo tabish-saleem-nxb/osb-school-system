@@ -63,15 +63,34 @@
                   <li><%= t('views.invoices.company_hint') %></li>
                 </ul>
               </div>
+            </div>
 
+            <div class="field_row description">
               <div class="label_field left single"><%= t('views.students.grade') %></div>
-              <div class="medium_field">
-                <%= select_tag :grade_id, options_for_select(@grades.collect{|grade| [grade.title, grade.id]}),
+              <div class="small_field">
+                <%= select_tag '[invoice][grade_id]', options_for_select(@grades.collect{|grade| [grade.title, grade.id]}),
                   include_blank: t('views.invoices.select_grade'), class: 'invoice_client medium chzn-select', id: 'term_invoice_grade_id',
                   'data-form-container' => 'grades_holder',
                   'data-dropdown-width' => '300', onchange: 'selectFeeItemForGrade(this.value);' %>
               </div>
+            </div>
 
+            <div class="field_row description" id="invoice_currency">
+              <div class="label_field left single"><%= f.label :currency_id, content_tag(:span, t('views.common.currency')) %></div>
+              <div class="small_field">
+                <%= f.select :currency_id, options_for_select(Currency.all.collect{|c| ["#{c.unit} #{c.title}",c.id] }),  {:prompt => "", :include_blank => ""}, {"data-placeholder" => t("views.common.select_invoice_currency"), :class => "invoice_currency medium chzn-select", "data-dropdown-width" => "300"} %>
+              </div>
+            </div>
+
+            <div class="field_row description">
+              <div class="label_field left single"><%= f.label :payment_terms_id, content_tag(:span, t('views.invoices.due_date_terms')) %></div>
+              <div class="small_field">
+                <%= f.select :payment_terms_id, options_for_select(PaymentTerm.all.map { |p| [p.description, p.id, {'number_of_days' => p.number_of_days}] }), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a payment term...", :class => "payment_terms medium chzn-select", "data-form-container" => "payment_terms_holder", "data-dropdown-width" => "300"} %>
+                <ul class="field_description select">
+                  <li><%= t('views.invoices.terms_hint') %></li>
+                </ul>
+              </div>
+            </div>
             </div>
 
             <!--field_row-->
@@ -90,7 +109,7 @@
             <!--field_row-->
 
             <div class="field_row description right-fields">
-              <div class="label_field left single"><%= f.label :due_date, t("views.invoices.due_date") %></div>
+              <div class="label_field left single"><%= f.label :due_date, content_tag(:span, t("views.invoices.due_date")) %></div>
               <div class="small_field">
                 <%= f.text_field :due_date, class: 'setDueDate' %>
               </div>
@@ -212,9 +231,9 @@
 
     <div class="content_bottom">
         <% button_text = action_name == 'term_invoices' ? t('views.common.save_as_draft') : t('views.common.save') %>
-        <%= f.submit t('views.invoices.send_invoice'), :class => 'btn_large submit' %>
-        <%= f.submit "#{button_text}", :class => 'btn_large submit', :name => "save_as_draft" %>
-        <%= link_to t("views.common.cancel"), params[:invoice_for_client] ? clients_path : invoices_path, :class => 'btn_large grey' %>
+        <%= f.submit t('views.invoices.send_invoice'), :class => 'btn_large submit', id: 'term_invoices_form_draft_button' %>
+        <%= f.submit "#{button_text}", :class => 'btn_large submit', :name => "save_as_draft", id: 'term_invoices_form_button' %>
+        <%= link_to t("views.common.cancel"), params[:invoice_for_student] ? students_path : invoices_path, :class => 'btn_large grey' %>
     </div>
 
       <!--content_bottom-->

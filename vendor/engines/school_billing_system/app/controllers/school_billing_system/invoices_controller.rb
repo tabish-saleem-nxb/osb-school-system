@@ -325,7 +325,12 @@ module SchoolBillingSystem
 
     def term_invoices
       @invoice = Services::InvoiceService.build_new_invoice(params)
-      @client = Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
+      params[:invoice_for_client] = if params[:invoice_for_parent].present?
+                                      params[:invoice_for_parent]
+                                    elsif params[:invoice_for_student].present?
+                                      params[:invoice_for_student]
+                                    end
+      @client = ::Client.find params[:invoice_for_client] if params[:invoice_for_client].present?
       @client = @invoice.client if params[:id].present?
       @invoice.currency = @client.currency if @client.present?
       @grades = Grade.all
@@ -338,8 +343,8 @@ module SchoolBillingSystem
     end
 
     def generate_term_invoices
-      if params[:invoice][:grade].present?
-        grade = params[:invoice][:grade]
+      if params[:invoice][:grade_id].present?
+        grade = Grade.find params[:invoice][:grade_id]
         students = grade.clients.students
         if students.count > 0
           students.each do |student|
@@ -352,10 +357,10 @@ module SchoolBillingSystem
             @invoice.create_line_item_taxes()
             if @invoice.save
               @invoice.notify(current_user, @invoice.id) if params[:commit].present?
-              # new_invoice_message = new_invoice(@invoice.id, params[:save_as_draft])
             end
           end
-          redirect_to(invoices_path, notice: 'Term fee invoices have been generated successfully')
+          msg = success_msg(students, grade.title)
+          redirect_to(invoices_path, notice: msg)
           return
         else
           redirect_to term_invoices_path, alert: 'No student is found for this grade!'

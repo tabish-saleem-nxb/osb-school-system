@@ -250,5 +250,13 @@ module SchoolBillingSystem
       end
     end
 
+    def success_msg(client_students, title)
+      if client_students.size > 1
+        "Term fee invoices have been generated successfully for <strong>#{title}</strong> students.".html_safe
+      else
+        "Term fee invoice has been generated successfully for <strong>#{title}</strong> student.".html_safe
+      end
+    end
+
   end
 end

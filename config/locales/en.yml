@@ -256,6 +256,7 @@ en:
     invoices:
       invoice: "Invoices"
       due_date: "Due date"
+      term_invoices: "Term Invoices"
       enter_payment: "Enter payment"
       enter_payment_on_invoice: "Enter payment on fee invoice"
       dispute_history: "Dispute History"
@@ -268,7 +269,7 @@ en:
       invoices: "Auto Generated"
       invoice_date: " Invoice Date"
       add_line_item: "Add Line Item"
-      terms_hint: "select specific day(s) term for due date"
+      terms_hint: "select a term to add specific day(s) in due date"
       auto_generated: "Auto Generated"
       invoice_date: "Invoice Date"
       due_date_terms: "Due Date Terms"
