@@ -80,7 +80,7 @@ module SchoolBillingSystem
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def term_rule_params
-      params.require(:term_rule).permit(:name, :description, :frequency, :client_type_id)
+      params.require(:term_rule).permit(:name, :description, :frequency)
     end
 
   end

@@ -26,10 +26,5 @@
             .large_field
               = f.select :frequency, TERM_FREQUENCY
 
-          .field_row
-            .label_field.left.single = t('views.term_rules.client_type')
-            .large_field
-              = f.select :client_type_id, options_for_select(ClientType.all.collect { |client_type| [client_type.title, client_type.id] }, @term_rule.client_type_id)
-
       .content_bottom
         = f.submit class: 'btn_large submit'
