@@ -1,14 +1,6 @@
 .term_rule
   = form_for(@term_rule) do |f|
     .content_middle
-      - if @term_rule.errors.any?
-        #error_explanation
-          h2 = pluralize(@term_rule.errors.count, "error")
-          | prohibited this term rule from being saved:
-          ul
-            - @term_rule.errors.full_messages.each do |message|
-            li = message
-
       .fields_content_container
         .fields_content_data
           .field_row

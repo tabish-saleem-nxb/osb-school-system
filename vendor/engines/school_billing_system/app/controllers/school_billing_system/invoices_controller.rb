@@ -335,6 +335,7 @@ module SchoolBillingSystem
       @invoice.currency = @client.currency if @client.present?
       @grades = Grade.all
       get_clients_and_items
+      @term_rules = TermRule.all
       @discount_types = @invoice.currency.present? ? ['%', @invoice.currency.unit] : DISCOUNT_TYPE
       respond_to do |format|
         format.html # new.html.erb
@@ -345,25 +346,32 @@ module SchoolBillingSystem
     def generate_term_invoices
       if params[:invoice][:grade_id].present?
         grade = Grade.find params[:invoice][:grade_id]
-        students = grade.clients.students
-        if students.count > 0
-          students.each do |student|
-            @invoice = Invoice.new(invoice_params)
-            @invoice.client_id = student.id
-            @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
-            @invoice.invoice_type = "Invoice"
-            @invoice.company_id = get_company_id()
-            @invoice.invoice_number = Invoice.get_next_invoice_number(nil)
-            @invoice.create_line_item_taxes()
-            if @invoice.save
-              @invoice.notify(current_user, @invoice.id) if params[:commit].present?
+        if params[:term_rule_id].present?
+          term_rule = TermRule.find params[:term_rule_id]
+          # loop_iterations = term_rule.frequency.gsub('.months','.times')
+          students = grade.clients.students
+          if students.count > 0
+            students.each do |student|
+              @invoice = Invoice.new(invoice_params)
+              # @invoice.due_date = params[:invoice][:due_date]
+              @invoice.client_id = student.id
+              @invoice.status = params[:save_as_draft] ? 'draft' : 'sent'
+              @invoice.invoice_type = "Invoice"
+              @invoice.company_id = get_company_id()
+              @invoice.invoice_number = Invoice.get_next_invoice_number(nil)
+              @invoice.create_line_item_taxes()
+              if @invoice.save
+                @invoice.notify(current_user, @invoice.id) if params[:commit].present?
+              end
             end
+            msg = success_msg(students, grade.title)
+            redirect_to(invoices_path, notice: msg)
+            return
+          else
+            redirect_to term_invoices_path, alert: 'No student is found for this grade!'
           end
-          msg = success_msg(students, grade.title)
-          redirect_to(invoices_path, notice: msg)
-          return
         else
-          redirect_to term_invoices_path, alert: 'No student is found for this grade!'
+          redirect_to term_invoices_path, alert: 'Please select a term rule to proceed!'
         end
       else
         redirect_to term_invoices_path, alert: 'Please select any grade!'

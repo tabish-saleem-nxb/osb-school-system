@@ -34,10 +34,12 @@ module SchoolBillingSystem
 
       respond_to do |format|
         if @term_rule.save
-          format.html { redirect_to term_rules_path, notice: 'Term Rule was successfully created.' }
-          format.json { render :show, status: :created, location: @term_rule }
+          format.html { redirect_to edit_term_rule_path(@term_rule), notice: 'Term Rule was successfully created.' }
+          format.json { render :edit, status: :created, location: @term_rule }
         else
-          format.html { render :new }
+          alert_message = @term_rule.errors.messages[:frequency].present? ? "Frequency "+@term_rule.errors.messages[:frequency].join(",") : @term_rule.errors.messages
+          flash[:alert] = "#{alert_message}"
+          format.html { render :new}
           format.json { render json: @term_rule.errors, status: :unprocessable_entity }
         end
       end

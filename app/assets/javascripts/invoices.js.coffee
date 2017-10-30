@@ -576,6 +576,9 @@ jQuery ->
     else if jQuery("#invoice_payment_terms_id").val() is ""
       applyPopover(jQuery("#invoice_payment_terms_id_chzn"),"bottomMiddle","topLeft","Select a payment term")
       flag = false
+    else if jQuery("#term_rule_for_term_invoices").val() is ""
+      applyPopover(jQuery("#term_rule_for_term_invoices_chzn"),"bottomMiddle","topLeft","Select a term rule")
+      flag = false
       # Check if discount percentage is an integer
     else if jQuery("input#invoice_discount_percentage").val()  isnt "" and isNaN(jQuery("input#invoice_discount_percentage").val())
       applyPopover(jQuery("#invoice_discount_percentage"),"bottomMiddle","topLeft","Enter Valid Discount")

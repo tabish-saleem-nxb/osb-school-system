@@ -493,7 +493,7 @@ en:
       frequency: 'Frequency'
       description: 'Description'
       term_rules: 'Term Rules'
-      client_type: 'Client Type'
+      select_term_rules: 'Select a term rule'
 
     penalty_rules:
       name: 'Name'

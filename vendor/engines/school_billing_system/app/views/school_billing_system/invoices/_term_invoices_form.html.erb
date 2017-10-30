@@ -1,3 +1,7 @@
+<div id="grades_holder" class="quick_create_wrapper" style="display: none;">
+  <%= render 'grades/new_grade'%>
+</div>
+
 <%= nested_form_for @invoice, url: :generate_term_invoices, :html => {id: 'generate_term_invoices', :novalidate => ""} do |f| %>
     <% @parent_f = f %>
 
@@ -91,7 +95,16 @@
                 </ul>
               </div>
             </div>
+
+            <div class="field_row description">
+              <div class="label_field left single"><%= label_tag :term_rule, content_tag(:span, t('views.term_rules.term_rules')) %></div>
+              <div class="small_field">
+                <%= select_tag :term_rule_id, options_for_select(@term_rules.collect{|term_rule| [term_rule.name, term_rule.id]}),
+                               include_blank: t('views.term_rules.select_term_rules'), id: 'term_rule_for_term_invoices',
+                               class: 'remove-add-new invoice_client medium chzn-select', 'data-dropdown-width' => '300'%>
+              </div>
             </div>
+          </div>
 
             <!--field_row-->
             <script>$(".field_row.description").last().css('min-height', '46px');</script>
@@ -114,6 +127,7 @@
                 <%= f.text_field :due_date, class: 'setDueDate' %>
               </div>
             </div>
+
             <!--field_row-->
             <script>$(".field_row.description").last().css('min-height', '46px');</script>
 
