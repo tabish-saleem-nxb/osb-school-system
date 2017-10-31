@@ -198,11 +198,14 @@ module SchoolBillingSystem
       if params[:operation].present? && item_ids.present? && grade_ids.present?
         student_ids = Client.where(grade_id: grade_ids).pluck :id
         invoices = Invoice.where(client_id: student_ids)
-        if params[:operation].eql?('Add') or params[:operation].eql?('Fine')
+        if params[:operation].eql?('Add') or params[:operation].eql?('Fine') or params[:operation].eql?('Discount')
           invoices.each do |invoice|
             item_ids.each do |item_id|
               invoice.invoice_line_items.create(item_id: item_id, item_quantity: 1)
             end
+            invoice.sub_total = invoice.calculate_sub_total
+            invoice.invoice_total = invoice.calculate_invoice_total
+            invoice.save
           end
         elsif params[:operation].eql?('Remove')
           invoices.each do |invoice|
@@ -210,21 +213,11 @@ module SchoolBillingSystem
               item = invoice.invoice_line_items.find_by_item_id(item_id)
               item.destroy if item
             end
+            invoice.sub_total = invoice.calculate_sub_total
+            invoice.invoice_total = invoice.calculate_invoice_total
+            invoice.save
           end
-        elsif params[:operation].eql?('Discount')
-          invoices.each do |invoice|
-            invoice.discount_type = params[discount_type]
-            if invoice.discount_type.eql?('%')
-              invoice.discount_percentage = params[:invoice][:discount_percentage]
-              discount_amount = invoice = (invoice.sub_total * params[:invoice][:discount_percentage]) / 100
-              invoice.invoice_total = invoice.sub_total - discount_amount
-              invoice.save
-            elsif invoice.discount_type.eql?('$')
-              invoice.discount_amount = params[:invoice][:discount_amount]
-              invoice.invoice_total = invoice.sub_total - params[:invoice][:discount_amount]
-              invoice.save
-            end
-          end
+        end
 
         end
         redirect_to bulk_operations_invoices_path, notice: 'Bulk operations has been done successfully.'

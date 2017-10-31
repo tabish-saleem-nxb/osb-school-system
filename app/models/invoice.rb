@@ -68,9 +68,28 @@ class Invoice < ActiveRecord::Base
 
   paginates_per 10
 
+  def calculate_sub_total
+    total = 0
+    self.invoice_line_items.each do |li|
+      unless li.item.item_type.eql?('discount')
+        total += li.item.actual_price
+      else
+        total -= li.item.actual_price
+      end
+    end
+    total
+  end
+
+  def calculate_invoice_total
+    calculate_sub_total + arrears_amount - discount_amount
+  end
+
+  def calculate_discount
+
+  end
 
   def arrears_amount
-    self.arrear_invoice.try(:invoice_total)
+    self.arrear_invoice.try(:invoice_total) || 0
   end
 
   def set_default_currency
