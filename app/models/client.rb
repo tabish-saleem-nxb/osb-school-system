@@ -47,6 +47,10 @@ class Client < ActiveRecord::Base
 
   paginates_per 10
 
+  def last_unpaid_invoice
+    last_invoice.unpaid? ? last_invoice : nil
+  end
+
   def organization_name
     self[:organization_name].blank? ? self.contact_name : self[:organization_name]
   end

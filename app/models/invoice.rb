@@ -40,7 +40,7 @@ class Invoice < ActiveRecord::Base
 
   # associations
   belongs_to :client
-  belongs_to :invoice
+  belongs_to :arrear_invoice, class_name: 'Invoice', foreign_key: 'arrear_invoice_id'
   belongs_to :payment_term
   belongs_to :company
   belongs_to :project
@@ -67,6 +67,11 @@ class Invoice < ActiveRecord::Base
   has_paper_trail :on => [:update], :only => [:last_invoice_status], :if => Proc.new { |invoice| invoice.last_invoice_status == 'disputed' }
 
   paginates_per 10
+
+
+  def arrears_amount
+    self.arrear_invoice.try(:invoice_total)
+  end
 
   def set_default_currency
     self.currency = Currency.default_currency unless self.currency_id.present?
