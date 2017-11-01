@@ -60,6 +60,7 @@ class Invoice < ActiveRecord::Base
   before_create :set_invoice_number
   after_destroy :destroy_credit_payments
   before_save :set_default_currency
+  before_create :set_arrear_invoice_id
 
   # archive and delete
   acts_as_archival
@@ -78,6 +79,18 @@ class Invoice < ActiveRecord::Base
       end
     end
     total
+  end
+
+  # Reset arrear_invoice_id to nil
+  # re-calculate sub-total etc by using alerady placed methods.
+
+  def set_arrear_invoice_id
+    last_unpaid_past_due_invoive = client.last_unpaid_past_due_invoice
+    self.arrear_invoice_id = last_unpaid_past_due_invoive.try(:id)
+  end
+
+  def past_due?
+    due_date < Date.today
   end
 
   def calculate_invoice_total

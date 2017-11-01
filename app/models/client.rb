@@ -51,6 +51,10 @@ class Client < ActiveRecord::Base
     last_invoice.unpaid? ? last_invoice : nil
   end
 
+  def last_unpaid_past_due_invoice
+    last_unpaid_invoice.past_due? ? last_unpaid_invoice : nil
+  end
+
   def organization_name
     self[:organization_name].blank? ? self.contact_name : self[:organization_name]
   end

@@ -181,7 +181,8 @@
           <div class="grid_summary_row">
             <div class="grid_summary_title"> <strong><%=t('views.invoices.arrears')%></strong> </div>
             <div class="grid_summary_description">
-              <%= text_field_tag '', '', class: 'invoice_arrears'%>
+              <% last_invoice = Invoice.find @invoice.arrear_invoice_id %>
+              <%= text_field_tag :arrears_amount, "$ "+"#{last_invoice.invoice_total}", readonly: "", class: 'invoice_arrears'%>
             </div>
           </div>
         <% end %>
