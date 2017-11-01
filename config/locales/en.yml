@@ -274,6 +274,7 @@ en:
       invoice_date: "Invoice Date"
       due_date_terms: "Due Date Terms"
       subtotal: "Subtotal"
+      arrears: "Arrears"
       net_total: "Net Total"
       send_invoice: "Send Invoice"
       line_total: "Line Total"
@@ -513,6 +514,8 @@ en:
       unit_code: "Unit cost"
       quantity: "Quantity"
       tax: "Tax"
+      type: "Type"
+      select_a_type: 'Select a type'
       make_this_item_available_to: "Make this Item available to"
       no_item_msg: "You haven't created any item yet. Please click on New Item button to create new item."
       no_archived_msg: "You haven't any archived item."
@@ -663,9 +666,10 @@ en:
       add_team: "Add Team Member"
       select_a_member: "Select a Member.."
 
-      grades:
-        title: "Title"
-        description: "Description"
+    grades:
+      grade: "Grade"
+      title: "Title"
+      description: "Description"
 
     import_data:
       import_data: "Import Data"

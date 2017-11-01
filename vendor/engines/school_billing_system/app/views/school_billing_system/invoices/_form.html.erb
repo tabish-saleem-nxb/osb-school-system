@@ -177,6 +177,14 @@
 
     <div class="grid_summary custom">
       <div class="grid_summary_content">
+        <% if @invoice.arrear_invoice_id.present? %>
+          <div class="grid_summary_row">
+            <div class="grid_summary_title"> <strong><%=t('views.invoices.arrears')%></strong> </div>
+            <div class="grid_summary_description">
+              <%= text_field_tag '', '', class: 'invoice_arrears'%>
+            </div>
+          </div>
+        <% end %>
         <div class="grid_summary_row">
           <div class="grid_summary_title">
             <%= t('views.invoices.subtotal') %>

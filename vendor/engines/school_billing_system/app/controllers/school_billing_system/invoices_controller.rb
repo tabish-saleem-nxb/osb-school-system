@@ -201,7 +201,7 @@ module SchoolBillingSystem
         if params[:operation].eql?('Add') or params[:operation].eql?('Fine') or params[:operation].eql?('Discount')
           invoices.each do |invoice|
             item_ids.each do |item_id|
-              invoice.invoice_line_items.create(item_id: item_id, item_quantity: 1)
+              invoice.invoice_line_items.find_or_create_by(item_id: item_id, item_quantity: 1)
             end
             invoice.sub_total = invoice.calculate_sub_total
             invoice.invoice_total = invoice.calculate_invoice_total
@@ -218,12 +218,9 @@ module SchoolBillingSystem
             invoice.save
           end
         end
-
-        end
         redirect_to bulk_operations_invoices_path, notice: 'Bulk operations has been done successfully.'
       end
       redirect_to bulk_operations_invoices_path, alert: 'Bulk operations has been failed.'
-
     end
 
     def unpaid_invoices

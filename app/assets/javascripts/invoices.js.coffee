@@ -669,8 +669,3 @@ jQuery ->
     hidePopover(jQuery("#bulk_operations_item"))
   jQuery("#bulk_operations_grade").change ->
     hidePopover(jQuery("#bulk_operations_grade"))
-
-#  this.replaceWithDiscDropDown = (OptionValue) ->
-#    if OptionValue is 'Discount'
-#      jQuery('#items_operations_drop_down').html('Discount')
-#      jQuery('#bulk_operations_item_chzn').remove();

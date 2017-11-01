@@ -84,10 +84,6 @@ class Invoice < ActiveRecord::Base
     calculate_sub_total + arrears_amount - discount_amount
   end
 
-  def calculate_discount
-
-  end
-
   def arrears_amount
     self.arrear_invoice.try(:invoice_total) || 0
   end

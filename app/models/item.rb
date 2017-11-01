@@ -41,6 +41,8 @@ class Item < ActiveRecord::Base
 
   paginates_per 10
 
+  ITEM_TYPES = %w(General Grade Fine Discount)
+
   def self.is_exists? item_name, company_id = nil
     company = Company.find company_id if company_id.present?
     company.present? ? company.items.where(:item_name => item_name).present? : where(:item_name => item_name).present?
