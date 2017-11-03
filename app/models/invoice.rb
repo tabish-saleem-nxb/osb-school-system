@@ -61,6 +61,7 @@ class Invoice < ActiveRecord::Base
   after_destroy :destroy_credit_payments
   before_save :set_default_currency
   before_create :set_arrear_invoice_id
+  # before_update :reset_arrear_invoice_id
 
   # archive and delete
   acts_as_archival
@@ -68,6 +69,11 @@ class Invoice < ActiveRecord::Base
   has_paper_trail :on => [:update], :only => [:last_invoice_status], :if => Proc.new { |invoice| invoice.last_invoice_status == 'disputed' }
 
   paginates_per 10
+
+  def reset_arrear_invoice_id
+    # reset arrear_invoice_id
+    # total is not updated in newly created invoice, having arrear_invoice_id
+  end
 
   def calculate_sub_total
     total = 0
