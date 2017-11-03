@@ -48,7 +48,12 @@ class Client < ActiveRecord::Base
   paginates_per 10
 
   def last_unpaid_invoice
-    last_invoice.unpaid? ? last_invoice : nil
+    if last_invoice.integer?
+      last_invoice_of_client = Invoice.find_by_id last_invoice
+      last_invoice_of_client.unpaid? ? last_invoice_of_client : nil
+    else
+      last_invoice.unpaid? ? last_invoice : nil
+    end
   end
 
   def last_unpaid_past_due_invoice

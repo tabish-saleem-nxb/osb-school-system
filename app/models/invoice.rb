@@ -90,7 +90,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def past_due?
-    due_date < Date.today
+    due_date.to_date < Date.today
   end
 
   def calculate_invoice_total
