@@ -500,7 +500,6 @@ jQuery ->
     $(".top_links.recover_deleted").click();
 
   $(window).load ->
-    console.log $(window)
     student_id = $('.invoice_client.medium.chzn-select.chzn-done#invoice_client_id').val()
 
     urlParams = new URLSearchParams(window.location.search)

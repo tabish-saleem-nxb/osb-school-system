@@ -53,21 +53,20 @@
               </div>
 
               <div class="field_row">
+                <div class="label_field left single"><span><%= t('views.items.type') %></span></div>
+                <div class="small_field">
+                  <% selected_grade = @item.item_type.present? ? @item.item_type : nil %>
+                  <%= f.select :item_type, options_for_select(Item::ITEM_TYPES, selected: selected_grade), {prompt: '', include_blank: ''}, {'data-placeholder' => t('views.items.select_a_type'), class: 'invoice_client medium chzn-select extra_small', 'data-form-container' => 'clients_holder', 'data-dropdown-width' => '300', onchange: 'showHideGradeDropDown(this.value);'} %>
+                </div>
+              </div>
+
+              <div id="item_grade" class="field_row d-none">
                 <div class="label_field left single"><%= t('views.grades.grade') %></div>
                 <div class="small_field">
                   <% selected_grade = @item.grade_id.present? ? @item.grade_id : nil %>
                   <%= f.select :grade_id, options_for_select(@grades.collect{|grade| [grade.title, grade.id]}, selected: selected_grade), {prompt: '', include_blank: ''}, {'data-placeholder' => t('views.students.select_grade'), class: 'invoice_client medium chzn-select extra_small', 'data-form-container' => 'clients_holder', 'data-dropdown-width' => '300'} %>
                 </div>
               </div>
-
-              <div class="field_row">
-                <div class="label_field left single"><span><%= t('views.items.type') %></span></div>
-                <div class="small_field">
-                  <% selected_grade = @item.item_type.present? ? @item.item_type : nil %>
-                  <%= f.select :item_type, options_for_select(Item::ITEM_TYPES, selected: selected_grade), {prompt: '', include_blank: ''}, {'data-placeholder' => t('views.items.select_a_type'), class: 'invoice_client medium chzn-select extra_small', 'data-form-container' => 'clients_holder', 'data-dropdown-width' => '300'} %>
-                </div>
-              </div>
-
 
               <div class="options_row clients">
                 <div class="label_field left single options template"><%= t('views.items.make_this_item_available_to') %>:</div>

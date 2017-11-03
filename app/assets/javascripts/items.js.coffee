@@ -48,3 +48,18 @@ jQuery ->
 
   jQuery("#item_item_name").click ->
     hidePopover(jQuery(this))
+
+  # show grade dropdown in form if item type is Grade
+  url = window.location.pathname
+  this.showHideGradeDropDown = (type) ->
+    if url.split('/')[2] is 'items' and url.split('/')[3] is 'new' or url.split('/')[4] is 'edit'
+      if type is 'Grade'
+        jQuery('#item_grade').removeClass('d-none')
+      else
+        jQuery('#item_grade').addClass('d-none')
+        jQuery('#item_grade_id').val('').trigger('liszt:updated')
+
+  jQuery(window).load ->
+    if url.split('/')[2] is 'items' and url.split('/')[4] is 'edit'
+      if jQuery('#item_item_type').val() is 'Grade'
+        jQuery('#item_grade').removeClass('d-none')
