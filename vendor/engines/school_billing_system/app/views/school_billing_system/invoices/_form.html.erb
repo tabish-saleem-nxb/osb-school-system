@@ -182,7 +182,7 @@
             <div class="grid_summary_title"><%=t('views.invoices.arrears')%></div>
             <div class="grid_summary_description right-pull">
               <% last_invoice = Invoice.find @invoice.arrear_invoice_id %>
-                <div class='invoice_arrears'><%="#{f.object.currency.unit}"+"#{last_invoice.invoice_total}" %></div>
+                <div id='arrear_amount_id' class='invoice_arrears'><%="#{f.object.currency.unit}"+"#{last_invoice.invoice_total}" %></div>
             </div>
           </div>
         <% end %>
