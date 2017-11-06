@@ -179,10 +179,10 @@
       <div class="grid_summary_content">
         <% if @invoice.arrear_invoice_id.present? %>
           <div class="grid_summary_row">
-            <div class="grid_summary_title"> <strong><%=t('views.invoices.arrears')%></strong> </div>
-            <div class="grid_summary_description">
+            <div class="grid_summary_title"><%=t('views.invoices.arrears')%></div>
+            <div class="grid_summary_description right-pull">
               <% last_invoice = Invoice.find @invoice.arrear_invoice_id %>
-              <%= text_field_tag :arrears_amount, "$ "+"#{last_invoice.invoice_total}", readonly: "", class: 'invoice_arrears'%>
+                <div class='invoice_arrears'><%="#{f.object.currency.unit}"+"#{last_invoice.invoice_total}" %></div>
             </div>
           </div>
         <% end %>

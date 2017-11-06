@@ -236,9 +236,8 @@ table.invoice_grid_fields {
 }
 
 .invoice_arrears{
-  width: 42px;
-  border: 1px solid #d7d7d7;
-  height: 28px;
-  margin-left: 10px !important;
-  margin-bottom: 15px !important;
+  font-weight: bold;
+}
+.right-pull{
+  margin-right: 7px;
 }
