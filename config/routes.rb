@@ -141,6 +141,7 @@ Osb::Application.routes.draw do
         post 'load_item_data'
         get 'duplicate_item'
         get 'undo_actions'
+        post 'load_operation_type_items', as: :load_operation_type
       end
     end
 

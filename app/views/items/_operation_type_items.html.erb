@@ -1,0 +1,9 @@
+<div id='operation_type_items' class='small_field right'>
+  <div id='items_operations_drop_down' class='label_field left single left-margin'>
+    <%= t('header.links.items.items')%>
+  </div>
+  <div class='left single left-margin'>
+    <%= select_tag :item_ids, options_for_select(@grade_excluded_items.collect{|item| [item.item_name, item.id]}),
+                   multiple: true, include_blank: t('views.invoices.select_item'), id: 'bulk_operations_item', class: 'chzn-select remove-add-new' %>
+  </div>
+</div>

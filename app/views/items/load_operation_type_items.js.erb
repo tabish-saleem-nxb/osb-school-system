@@ -1,0 +1,15 @@
+$('form#bulk_operations_form').find('#operation_type_items').remove();
+<% if @grade_excluded_items.present? %>
+    $('#dynamic_items_drop_down').append("<%= j render('items/operation_type_items') %>");
+    var dropdowns;
+    dropdowns = typeof single_row === "undefined" || single_row === null ? jQuery(".chzn-select") : jQuery(single_row);
+    dropdowns.chosen(
+                        {
+                            allow_single_deselect: true,
+                            disable_search_threshold: 10
+                        }
+                    ).trigger("liszt:ready", this);
+
+<% else %>
+    $('#error_message_for_bulk_operations').append("<%= j render('items/error_message_for_bulk_operations') %>");
+<% end %>

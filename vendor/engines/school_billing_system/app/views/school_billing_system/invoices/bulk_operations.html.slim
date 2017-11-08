@@ -16,9 +16,9 @@
         .primary_heading
           h1
             = t('views.invoices.perform_bulk_operations_for_all_invoices')
+      #error_message_for_bulk_operations
 
       .field_row.description
-
         .small_field.right
           .label_field.left.single.left-margin
             = t('header.links.bulk_operations')
@@ -26,26 +26,27 @@
             = select_tag :operation, options_for_select(BULK_OPERATIONS),
                            include_blank: t('views.invoices.select_operation'),
                            id: 'select_bulk_operation',
-                           class: 'invoice_client medium chzn-select remove-add-new'
-                          /,onchange: 'replaceWithDiscDropDown(this.value);'
+                           class: 'invoice_client medium chzn-select remove-add-new',
+                           onchange: 'loadOperationTypeItems(this.value);'
 
-        .small_field.right
-          #items_operations_drop_down.label_field.left.single.left-margin
-            = t('header.links.items.items')
-          .left.single.left-margin
-            = select_tag :item_ids, options_for_select(Item.generic_items.collect{|item| [item.item_name, item.id]}), multiple: true, include_blank: t('views.invoices.select_item'), id: 'bulk_operations_item', class: 'chzn-select remove-add-new'
+        #dynamic_items_drop_down
 
         .small_field.right
           .single.left-margin
             = t('header.links.grades.grades')
           .left.single.left-margin
-          = select_tag :grade_ids, options_for_select(Grade.all.collect{|grade| [grade.title, grade.id]}), multiple: true,
+          = select_tag :grade_ids, options_for_select(@grades.collect{|grade| [grade.title, grade.id]}), multiple: true,
                   include_blank: t('views.invoices.select_grade'), id: 'bulk_operations_grade', class: 'invoice_client medium chzn-select',
             'data-form-container' => 'grades_holder',
             'data-dropdown-width' => '300'
 
-          /= select_tag :discount_type, '',
-          /  {:class => "discount_select chzn-select", :id => "discount_type"}
+        .small_field.right
+          .single.left-margin
+            = t('header.links.invoices.invoices')
+          .left.single.left-margin
+          = select_tag :invoices_ids, options_for_select(@invoices.collect{|invoice| [invoice.invoice_number, invoice.id]}), multiple: true,
+                  include_blank: t('views.invoices.select_grade'), id: 'bulk_operations_invoice', class: 'invoice_client medium chzn-select remove-add-new',
+            'data-dropdown-width' => '300'
 
       .content_bottom
         br

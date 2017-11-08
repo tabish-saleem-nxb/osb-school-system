@@ -189,9 +189,13 @@ module SchoolBillingSystem
     end
 
     def bulk_operations
+      @grades = Grade.all
+      @invoices = Invoice.all
+      @grade_excluded_items = Item.generic_items
     end
 
     def perform_bulk_operations
+      invoice_ids = params[:invoices_ids].reject { |invoice| invoice.blank? }
       item_ids = params[:item_ids].reject { |item| item.blank? }
       grade_ids = params[:grade_ids].reject { |grade| grade.blank? }
 

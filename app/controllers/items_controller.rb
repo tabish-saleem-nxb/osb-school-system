@@ -139,6 +139,16 @@ class ItemsController < ApplicationController
     end
   end
 
+  def load_operation_type_items
+    @grade_excluded_items = if params[:operation].eql?('Add') or params[:operation].eql?('Remove')
+                              Item.generic_items
+                            elsif params[:operation].eql?('Discount')
+                              Item.discount_items
+                            elsif params[:operation].eql?('Fine')
+                              Item.fine_items
+                            end
+  end
+
 #  # Load invoice line items data when an item is selected from drop down list
   def load_item_data
     item = Item.find_by_id(params[:id]).present? ?  Item.find(params[:id]) : Item.unscoped.find_by_id(params[:id])

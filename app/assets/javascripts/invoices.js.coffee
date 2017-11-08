@@ -649,6 +649,11 @@ jQuery ->
 
 
 
+  this.loadOperationTypeItems = (operation) ->
+    jQuery.ajax '/items/load_operation_type_items',
+      type: 'POST'
+      data: operation: operation
+
   jQuery("form#bulk_operations_form").submit ->
     flag = true
     if jQuery('#select_bulk_operation').val() is ""
