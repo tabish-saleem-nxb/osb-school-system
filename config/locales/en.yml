@@ -305,8 +305,10 @@ en:
       edit_all_invoices: "Edit All Invoices"
       perform_operation: "Perform Operation"
       select_operation: "Select a Operation"
-      select_item: 'Select a Item'
-      select_grade: 'Select grade'
+      select_item(s): 'Select Item(s)'
+      select_grade(s): 'Select grade(s)'
+      select_invoice(s): 'Select invoice(s)'
+
       recurring:
         recurring_profile: "Recurring Profile"
         start_date: "Start date"
@@ -521,6 +523,7 @@ en:
       no_archived_msg: "You haven't any archived item."
       no_deleted_msg: "You haven't any deleted item."
       no_item_found_for_operation: "No item found for operation: "
+      no_operation_selected: 'No operation selected'
 
     taxes:
       taxes: "Taxes"

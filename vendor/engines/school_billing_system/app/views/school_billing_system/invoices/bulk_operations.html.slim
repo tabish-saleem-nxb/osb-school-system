@@ -36,7 +36,7 @@
             = t('header.links.grades.grades')
           .left.single.left-margin
           = select_tag :grade_ids, options_for_select(@grades.collect{|grade| [grade.title, grade.id]}), multiple: true,
-                  include_blank: t('views.invoices.select_grade'), id: 'bulk_operations_grade', class: 'invoice_client medium chzn-select',
+                  'data-placeholder'=> t('views.invoices.select_grade(s)'), id: 'bulk_operations_grade', class: 'invoice_client medium chzn-select',
             'data-form-container' => 'grades_holder',
             'data-dropdown-width' => '300'
 
@@ -44,8 +44,8 @@
           .single.left-margin
             = t('header.links.invoices.invoices')
           .left.single.left-margin
-          = select_tag :invoices_ids, options_for_select(@invoices.collect{|invoice| [invoice.invoice_number, invoice.id]}), multiple: true,
-                  include_blank: t('views.invoices.select_grade'), id: 'bulk_operations_invoice', class: 'invoice_client medium chzn-select remove-add-new',
+          = select_tag :invoice_ids, options_for_select(@invoices.collect{|invoice| [invoice.invoice_number, invoice.id]}), multiple: true,
+                  'data-placeholder'=> t('views.invoices.select_invoice(s)'), id: 'bulk_operations_invoice', class: 'invoice_client medium chzn-select remove-add-new',
             'data-dropdown-width' => '300'
 
       .content_bottom
@@ -56,4 +56,4 @@
         br
         br
 
-        = submit_tag t('views.invoices.perform_operation'), class: 'btn_large submit'
+        = submit_tag t('views.invoices.perform_operation'), class: 'btn_large submit', id: 'bulk_operation_form_btn', disabled: true

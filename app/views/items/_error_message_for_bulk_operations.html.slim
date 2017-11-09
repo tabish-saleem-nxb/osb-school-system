@@ -1,2 +1,16 @@
-- msg = t('views.items.no_item_found_for_operation')+"<strong>#{params[:operation]}</strong>"
-.alert.alert-error =msg.html_safe
+- if params[:operation].blank?
+  - msg = t('views.items.no_operation_selected')
+- else
+  - msg = t('views.items.no_item_found_for_operation')+"<strong>#{params[:operation]}</strong>"
+
+#bulk_operation_error_box.alert.alert-error
+  button#close_button_error_box.close type="button"  &times
+  table
+    tbody
+      tr
+        td
+          span = msg.html_safe
+
+coffee:
+  $('#close_button_error_box').click ->
+    $('#bulk_operation_error_box').remove()

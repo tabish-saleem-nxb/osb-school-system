@@ -662,8 +662,8 @@ jQuery ->
     else if jQuery('#bulk_operations_item').val() is "" || jQuery('#bulk_operations_item').val() is null
       applyPopover(jQuery("#bulk_operations_item_chzn"),"bottomMiddle","topLeft", "Select an item")
       flag = false
-    else if jQuery('#bulk_operations_grade').val() is "" || jQuery('#bulk_operations_grade').val() is null
-      applyPopover(jQuery("#bulk_operations_grade_chzn"),"bottomMiddle","topLeft", "Select a grade")
+    else if (jQuery('#bulk_operations_grade').val() is "" || jQuery('#bulk_operations_grade').val() is null) and (jQuery('#bulk_operations_invoice').val() is "" || jQuery('#bulk_operations_invoice').val() is null)
+      applyPopover(jQuery("#bulk_operations_grade_chzn"),"bottomMiddle","topLeft", "Select a grade or invoice")
       flag = false
     flag
 

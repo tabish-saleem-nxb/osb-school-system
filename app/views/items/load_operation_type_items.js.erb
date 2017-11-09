@@ -9,7 +9,8 @@ $('form#bulk_operations_form').find('#operation_type_items').remove();
                             disable_search_threshold: 10
                         }
                     ).trigger("liszt:ready", this);
-
+    $('#bulk_operation_form_btn').removeAttr('disabled');
 <% else %>
     $('#error_message_for_bulk_operations').append("<%= j render('items/error_message_for_bulk_operations') %>");
+    $('#bulk_operation_form_btn').attr('disabled', 'disabled');
 <% end %>
