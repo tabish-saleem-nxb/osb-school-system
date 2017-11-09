@@ -33,6 +33,16 @@
 
         .small_field.right
           .single.left-margin
+            | Select Grade(s) OR Invoice(s) at a time
+          .left.single.left-margin
+          = label_tag :grades, :Grades, :item_wrapper_class => 'inline'
+          = radio_button_tag :grades_or_invoices, 'grades', :item_wrapper_class => 'inline'
+          br
+          = label_tag :invoices, :Invoices, :item_wrapper_class => 'inline'
+          = radio_button_tag :grades_or_invoices, :invoices, :item_wrapper_class => 'inline'
+
+        .small_field.right
+          .single.left-margin
             = t('header.links.grades.grades')
           .left.single.left-margin
           = select_tag :grade_ids, options_for_select(@grades.collect{|grade| [grade.title, grade.id]}), multiple: true,
