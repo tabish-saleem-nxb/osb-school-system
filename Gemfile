@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 gem 'rails', '~> 4.1.8'
 
-gem 'bundler', '1.12.5'
+# gem 'bundler', '1.12.5'
 gem 'railties', '4.1.15'
 gem 'sprockets', '~> 2.12.3'
 gem 'sprockets-rails', '~> 2.2.2'
@@ -44,7 +44,9 @@ gem 'hashie_rails', '0.0.4'
 group :development do
   gem 'better_errors', '2.1.1'
   gem "binding_of_caller", ">= 0.6.9"
-  gem 'pry', '0.10.3'
+  # gem 'pry', '0.10.3'
+  gem 'pry'
+  gem 'pry-nav'
   gem 'rspec-rails', '~> 3.1.0'
   gem 'awesome_print', '1.7.0'
   gem 'quiet_assets', '1.1.0'
@@ -88,6 +90,7 @@ gem 'oauth', '0.4.7'
 gem 'roxml', '3.3.1'
 gem 'nokogiri', '1.6.8'
 gem 'quickbooks-ruby', '0.4.4'
+gem 'crack'
 
 
 # Use unicorn as the app server
