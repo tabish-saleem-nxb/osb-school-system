@@ -232,7 +232,7 @@ jQuery ->
       flag = false
       # Check if client is selected
     else if jQuery("#invoice_client_id").val() is ""
-      applyPopover(jQuery("#invoice_client_id_chzn"),"bottomMiddle","topLeft","Select a client")
+      applyPopover(jQuery("#invoice_client_id_chzn"),"bottomMiddle","topLeft","Select a student")
       flag = false
       # if currency is not selected
     else if jQuery("#invoice_currency_id").val() is "" and jQuery("#invoice_currency_id").is( ":hidden" ) == false
@@ -292,7 +292,7 @@ jQuery ->
           if not jQuery.isNumeric(qty.val())  and qty.val() isnt ""
             applyPopover(qty,"bottomLeft","topLeft","Enter valid Item quantity")
             flag = false
-          else if (tax1_value is tax2_value) and (tax1_value isnt "" and tax2_value isnt "")
+          else if (tax1_value is tax2_value) and (tax1_value isnt "" and tax2_value isnt "") and (tax1_value == "undefined" and tax2_value == "undefined")
             applyPopover(tax2.next(),"bottomLeft","topLeft","Tax1 and Tax2 should be different")
             flag = false
           else hidePopover(qty)
@@ -524,17 +524,6 @@ jQuery ->
           qty.val(parseInt(qty.val())) if qty.val()
           updateInvoiceTotal()
 
-  jQuery('#invoice_submit').click ->
-    flag = true
-    if jQuery('#invoice_client_id').val() is ""
-      applyPopover(jQuery("#invoice_client_id_chzn"),"bottomMiddle","topLeft","Select a student")
-      flag = false
-    else if jQuery('#invoice_currency_id').val() is ""
-      applyPopover(jQuery("#invoice_currency_id_chzn"),"bottomMiddle","topLeft","Select currency")
-      flag = false
-    else
-      $('#new_invoice').trigger 'submit.rails'
-    flag
 
   $('#edit_all_invoices').click ->
     if $('#bulk_operations').is(':visible')
