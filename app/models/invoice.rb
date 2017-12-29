@@ -60,7 +60,7 @@ class Invoice < ActiveRecord::Base
   before_create :set_invoice_number
   after_destroy :destroy_credit_payments
   before_save :set_default_currency
-  before_create :set_arrear_invoice_id
+  before_create :set_arrear_invoice_id, if: :client_has_last_invoice?
   # before_update :reset_arrear_invoice_id
 
   # archive and delete
@@ -69,6 +69,10 @@ class Invoice < ActiveRecord::Base
   has_paper_trail :on => [:update], :only => [:last_invoice_status], :if => Proc.new { |invoice| invoice.last_invoice_status == 'disputed' }
 
   paginates_per 10
+
+  def client_has_last_invoice?
+    client.last_invoice.present?
+  end
 
   def reset_arrear_invoice_id
     # reset arrear_invoice_id
@@ -253,7 +257,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def notify(current_user, id = nil)
-    InvoiceMailer.delay.new_invoice_email(self.client, self, self.encrypted_id, current_user)
+    InvoiceMailer.delay.new_invoice_email(self.client.parent, self, self.encrypted_id, current_user)
   end
 
   def send_invoice current_user, id

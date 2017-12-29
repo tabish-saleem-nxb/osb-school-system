@@ -22,14 +22,14 @@ class InvoiceMailer < ActionMailer::Base
   default :from => 'info@osb.com'
   @@response_to_client = ''
   @@reason_by_client =  ''
-  def new_invoice_email(client, invoice, e_id , current_user)
+  def new_invoice_email(parent, invoice, e_id , current_user)
     template = replace_template_body(current_user, invoice, 'New Invoice') #(logged in user,invoice,email type)
     @email_html_body = template.body
-    email_body = mail(:to => client.email, :subject => template.subject).body.to_s
+    email_body = mail(:to => parent.email, :subject => template.subject).body.to_s
     invoice.sent_emails.create({
                                    :content => email_body,
                                    :sender => current_user.email, #User email
-                                   :recipient => client.email, #client email
+                                   :recipient => parent.email, #parent email
                                    :subject => template.subject,
                                    :type => 'Invoice',
                                    :company_id => invoice.company_id,
