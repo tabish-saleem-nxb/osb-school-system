@@ -25,16 +25,26 @@ class InvoiceMailer < ActionMailer::Base
   def new_invoice_email(parent, invoice, e_id , current_user)
     template = replace_template_body(current_user, invoice, 'New Invoice') #(logged in user,invoice,email type)
     @email_html_body = template.body
-    email_body = mail(:to => parent.email, :subject => template.subject).body.to_s
+    email_body = mail(:to => push_parent_emails_in_array(parent), :subject => template.subject).body.to_s
+
     invoice.sent_emails.create({
                                    :content => email_body,
                                    :sender => current_user.email, #User email
-                                   :recipient => parent.email, #parent email
+                                   :recipient => get_parent_emails(parent), #parent email(s)
                                    :subject => template.subject,
                                    :type => 'Invoice',
                                    :company_id => invoice.company_id,
                                    :date => Date.today
                                })
+  end
+
+  def get_parent_emails(parent)
+    parent.parent_alt_email.present? ? (parent.email + ',' + parent.parent_alt_email) : parent.email
+  end
+
+  def push_parent_emails_in_array(parent)
+    parent_emails = []
+    parent.parent_alt_email.present? ? (parent_emails.push(parent.email, parent.parent_alt_email)) : (parent_emails.push(parent.email))
   end
 
   def send_note_email(response_to_client, invoice, client, current_user)
