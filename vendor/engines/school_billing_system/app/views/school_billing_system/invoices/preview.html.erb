@@ -14,7 +14,7 @@
               <!--<a href="#">Print</a>-->
               <%= link_to t("views.common.print"), {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank' %>
             </li>
-            <li><%= link_to t('views.invoices.payment_history'), {:controller => 'payments', :action => 'payments_history', :id => @invoice.id, :encrypted_id => params[:inv_id]}, :class => "no_padding" %></li>
+            <li><%= link_to t('views.invoices.payment_history'), main_app.payments_history_payments_path(id: @invoice.id, encrypted_id: params[:inv_id]), :class => "no_padding" %></li>
           </ul>
         </div>
       </div>
