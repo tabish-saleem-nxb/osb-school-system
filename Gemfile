@@ -19,7 +19,7 @@ group :assets do
 end
 
 gem 'active_link_to', '1.0.3'
-gem 'jquery-rails', '~> 2.1.4'
+gem 'jquery-rails', '~> 3.1.3'
 gem 'nested_form', '0.3.2'
 gem 'kaminari', '0.17.0'
 gem 'acts_as_archival', '1.1.1'
