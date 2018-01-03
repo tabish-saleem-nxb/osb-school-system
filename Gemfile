@@ -1,22 +1,21 @@
 source 'https://rubygems.org'
 ruby '2.1.0'
-gem 'rails', '~> 4.1.8'
+gem 'rails', '~> 4.2.7.1'
 
 # gem 'bundler', '1.12.5'
-gem 'railties', '4.1.15'
-gem 'sprockets', '~> 2.12.3'
-gem 'sprockets-rails', '~> 2.2.2'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'xlsx_writer', '0.4.4'
 gem 'mysql2', '0.3.20'
-gem 'devise', '3.2.3'
+gem 'devise', '3.4.1'
 gem 'devise-encryptable', '0.2.0'
 gem 'slim-rails', '3.1.0'
 #gem 'doorkeeper', '~> 1.4.0'
 #gem 'grape-doorkeeper', '~> 0.0.2'
 gem 'twitter-bootstrap-rails', '~> 2.1.9'
-gem 'rails-settings-cached', '0.4.1'
+gem 'rails-settings-cached'
+gem 'rake', '< 11.0'
+gem 'responders', '~> 2.0'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -24,7 +23,6 @@ group :assets do
   gem 'coffee-rails', '4.1.1'
   gem 'therubyracer', '0.12.2', :platforms => :ruby
   gem 'uglifier', '3.0.0'
-  gem 'turbo-sprockets-rails3', '0.2.9'
 end
 
 gem 'active_link_to', '1.0.3'
@@ -78,7 +76,6 @@ group :test do
 end
 
 gem 'money', '~>  6.5.0'
-gem 'dj_mon', git: 'https://github.com/akshayrawat/dj_mon'
 gem 'osb_api', path: 'vendor/engines/osb_api'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
