@@ -20,6 +20,7 @@ gem 'responders', '~> 2.0'
 # in production environments by default.
 group :assets do
   gem 'sass-rails', '5.0.4'
+  gem 'yajl-ruby', '~>1.3.1'
   gem 'coffee-rails', '4.1.1'
   gem 'therubyracer', '0.12.2', :platforms => :ruby
   gem 'uglifier', '3.0.0'
