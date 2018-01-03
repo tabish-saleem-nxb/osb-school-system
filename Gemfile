@@ -85,7 +85,7 @@ gem 'jbuilder', '~> 2.0'
 
 gem 'oauth', '0.4.7'
 gem 'roxml', '3.3.1'
-gem 'nokogiri', '1.6.8'
+gem 'nokogiri', '~> 1.8.1'
 gem 'quickbooks-ruby', '0.4.4'
 gem 'crack'
 
