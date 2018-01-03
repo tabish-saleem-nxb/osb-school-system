@@ -463,7 +463,7 @@ DEPENDENCIES
   xlsx_writer (= 0.4.4)
 
 RUBY VERSION
-   ruby 2.0.0p451
+   ruby 2.1.0p0
 
 BUNDLED WITH
-   1.15.4
+   1.16.1
